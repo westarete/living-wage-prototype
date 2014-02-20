@@ -1,0 +1,27 @@
+class Metro < ActiveRecord::Base
+	attr_accessible  :state_id,
+                   :cbsa,
+                   :cbsa_name,
+                   :geography,
+                   :familycomposition,
+                   :familysize,
+                   :house_cost,
+                   :childcare_cost,
+                   :health_cost,
+                   :food_cost,
+                   :trans_cost,
+                   :other_cost,
+                   :income,
+                   :income_pretax,
+                   :tax,
+                   :poverty,
+                   :minwage_hrly,
+                   :minwage,
+                   :income_hrly,
+                   :income_pretax_hrly,
+                   :poverty_hrly,
+                   :state2,
+                   :state3,
+                   :state4
+
+end
