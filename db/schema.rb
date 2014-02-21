@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140220183951) do
+ActiveRecord::Schema.define(:version => 20140221004625) do
 
   create_table "counties", :force => true do |t|
     t.integer  "state_id"
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(:version => 20140220183951) do
   end
 
   add_index "counties", ["state_id"], :name => "index_counties_on_state_id"
+
+  create_table "counties_metros", :force => true do |t|
+    t.integer "county_id"
+    t.integer "metro_id"
+  end
+
+  add_index "counties_metros", ["county_id", "metro_id"], :name => "index_counties_metros_on_county_id_and_metro_id"
 
   create_table "metros", :force => true do |t|
     t.integer  "state_id"
@@ -71,6 +78,13 @@ ActiveRecord::Schema.define(:version => 20140220183951) do
   end
 
   add_index "metros", ["state_id"], :name => "index_metros_on_state_id"
+
+  create_table "metros_counties", :force => true do |t|
+    t.integer "metro_id"
+    t.integer "county_id"
+  end
+
+  add_index "metros_counties", ["metro_id", "county_id"], :name => "index_metros_counties_on_metro_id_and_county_id"
 
   create_table "states", :force => true do |t|
     t.integer  "region_id"

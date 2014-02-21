@@ -3,7 +3,7 @@ require 'spec_helper'
 describe State do
   
   before { @state = State.new(  region_id: 1,
-                         statefips: 1,
+                         statefips: 13,
                          state_name: "Alabama",
                          geography: "State",
                          familycomposition: "2A1LF0C",
