@@ -1,8 +1,7 @@
 class County < ActiveRecord::Base
   attr_accessible  :state_id,
                    :countyfips,
-                   :countyname,
-                   :geography
+                   :countyname
 
   belongs_to :state
   has_and_belongs_to_many :metros
@@ -10,6 +9,5 @@ class County < ActiveRecord::Base
   
   validates :state_id, presence: true, numericality: { less_than_or_equal_to: 56, greater_than: 0 }
   validates  :countyfips,
-             :countyname,
-             :geography, presence: true
+             :countyname, presence: true
 end
