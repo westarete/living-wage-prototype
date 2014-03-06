@@ -166,7 +166,7 @@ def aggregations
   end
 end
 
-# states
-# counties
-# metros
+states
+counties
+metros
 aggregations
