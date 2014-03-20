@@ -1,4 +1,5 @@
 Lwc::Application.routes.draw do
+ # root to: "ember#start"
   get "ember/start"
 
   get "aggregation/index"
@@ -17,21 +18,20 @@ Lwc::Application.routes.draw do
 
   get "state/show"
 
-  resources :state
+  resources :states
   resources :metro
-  resources :county
+  resources :counties
   resources :aggregation
 
   namespace :api do
     namespace :v1 do
-      resources :state
+      resources :states
       resources :metro
-      resources :county
+      resources :counties
       resources :aggregation
     end
   end
 
-  root to: "ember#start"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
