@@ -1,37 +1,9 @@
 Lwc::Application.routes.draw do
- # root to: "ember#start"
-  get "ember/start"
-
-  get "aggregation/index"
-
-  get "aggregation/show"
-
-  get "county/index"
-
-  get "county/show"
-
-  get "metro/index"
-
-  get "metro/show"
-
-  get "state/index"
-
-  get "state/show"
 
   resources :states
-  resources :metro
   resources :counties
-  resources :aggregation
-
-  namespace :api do
-    namespace :v1 do
-      resources :states
-      resources :metro
-      resources :counties
-      resources :aggregation
-    end
-  end
-
+  resources :metros
+  resources :aggregations
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

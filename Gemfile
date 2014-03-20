@@ -6,6 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem "ember-rails"
 gem 'pg', '0.12.2'
+gem 'rabl'
 # gem 'sqlite3', '1.3.4'
 # gem 'bluecloth'
 # gem 'validates_timeliness', '~> 3.0'

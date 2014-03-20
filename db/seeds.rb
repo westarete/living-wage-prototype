@@ -1,10 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# encoding: UTF-8
 
 require 'csv'
 
@@ -27,11 +21,11 @@ def states
 end
 
 def counties
-  CSV.foreach('db/fixtures/LW_Alldata_2814.csv', headers: true) do |row|
+  CSV.foreach('db/fixtures/CountyLW_3_14_14.csv', headers: true) do |row|
 
     statefips = row['statefips']
     countyfips = row['countyfips']
-    countyname = "placeholder"
+    countyname = row['countyname']
 
     record = County.find_by_countyfips(countyfips)
 
@@ -65,7 +59,7 @@ def metros
 end
 
 def aggregations
-  CSV.foreach('db/fixtures/LW_Alldata_2814.csv', headers: true) do |row|
+  CSV.foreach('db/fixtures/CountyLW_3_14_14.csv', headers: true) do |row|
 
     familycomposition = row['familycomposition']
     familysize = row['familysize']
@@ -166,7 +160,7 @@ def aggregations
   end
 end
 
-states
+# states
 counties
-metros
+# metros
 aggregations
