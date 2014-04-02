@@ -4,10 +4,12 @@ gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-gem "ember-rails"
+gem 'ember-rails'
 gem 'pg', '0.12.2'
 gem 'rabl'
-# gem 'sqlite3', '1.3.4'
+gem 'bootstrap-sass', '2.1'
+gem 'bootstrap-will_paginate', '0.0.6'
+gem 'leaflet-rails'
 # gem 'bluecloth'
 # gem 'validates_timeliness', '~> 3.0'
 # gem 'paperclip', '~> 3.0'
@@ -39,7 +41,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails','1.0.19'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

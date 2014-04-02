@@ -1,0 +1,12 @@
+<h1><%= @metro.cbsa_name %></h1>
+
+<% unless @metro.aggregations.empty? %>
+
+  <div id="comments">
+  <% for aggregation in @metro.aggregations %>
+    <div class="comment">
+      <strong><%= aggregation.familycomposition %></strong>
+    </div>
+  <% end %>
+  </div>
+<% end %>
