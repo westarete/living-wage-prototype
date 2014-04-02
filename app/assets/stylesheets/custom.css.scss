@@ -183,43 +183,41 @@ input {
 }
 
 .data-panel {
-
+  padding:0;
+  margin:0;
   ul { /* also works with ol */
     width: 100%; /* or your desired width */
     text-align: center; /* this will center the list items */
-  }
-  li {
-    width: 300px;
-    background-color: DodgerBlue;
-    display: inline-block; /* the key bit */
-    *display: inline; /* IE7 hack */
-    *zoom: 1; /* IE7 hack */
-    border-radius:15px;
-    box-shadow: 10px 10px 5px #999999;
-    text-align: center;
-    padding: 0px;
-    margin: 5px;
-    div {
-      display: table;
-      height: 180px;
-      overflow: hidden;
-      width: 100%;
+    list-style:none;
+
+    li {
+      width: 300px;
+      background-color: DodgerBlue;
+      display: inline-block; /* the key bit */
+      *display: inline; /* IE7 hack */
+      *zoom: 1; /* IE7 hack */
+      border-radius:15px;
+      box-shadow: 10px 10px 5px #999999;
+      text-align: center;
+      padding: 0px;
+      margin: 5px;
       div {
-          display: table-cell;
-          vertical-align: middle;
-          width: 100%;
-          margin: 0 auto;
-          text-align: center;
+        display: table;
+        overflow: hidden;
+        width: 100%;
+        height: 180px;
         div {
-            text-decoration: none;
-            padding: 0px 10px;
-            display: block;
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+          div {
+
+          }
         }
       }
     }
   }
-
-  .rollout {
-    font-weight: bold;
-  }
 }
+
