@@ -1,8 +1,11 @@
 object @metro
-attributes :id, :cbsa_name
+attributes :cbsa_name
 
-child :aggregations do
-  attributes :explainable_id,
+node(:id) { |metro| metro.cbsa }
+
+child :aggregations, :object_root => false do
+  attributes :id,
+             :explainable_id,
     		 :explainable_type,
     		 :familycomposition,
              :familysize,
@@ -25,5 +28,4 @@ end
 
 child :state do
   attributes :state_name, :statefips
-  node(:url) { '...' }
 end

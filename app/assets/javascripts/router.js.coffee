@@ -1,10 +1,15 @@
 # For more information see: http://emberjs.com/guides/routing/
 
 Lwc.Router.map ->
-  @resource "states", ->
-    @resource "state",
-      path: "/:state_id"
+  @resource "states",
+    path: "/states"
 
+  @resource "state",
+    path: "states/:state_id"
+
+  @resource "counties", ->
+    @resource "county",
+      path: "/:county_id"
     return
 
   @resource "landscape",

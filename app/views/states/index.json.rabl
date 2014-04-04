@@ -1,2 +1,4 @@
-collection @states => :states
-attributes :id, :state_name, :statefips
+collection @states, :root => "states"
+attributes :state_name
+
+node(:id) { |state| state.statefips }

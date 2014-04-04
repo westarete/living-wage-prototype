@@ -2,36 +2,11 @@
 
 {{outlet}}
 
-<div class="data-panel">
-	<ul>
-		<li>
-			<div>
-				<div>
-					<h4>$12 <sub>per hr</sub></h4> <h4>Living Wage</h4>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div>
-				<div>
-					<h4>$12 <sub>per hr</sub></h4> <h4>Poverty Wage</h4>
-				</div>
-			</div>
-		</li>
-		<li>
-			<div>
-				<div>
-					<h4>$12 <sub>per hr</sub></h4> <h4>Minimum Wage</h4>
-				</div>
-			</div>
-		</li>
-	</ul>
-</div>
-
-
+{{wage-panel}}
 
 <h2>States</h2>
-Select:
+<h2>{{model}}</h2>
+<h2>Select:</h2>
 {{#each}}
-	{{state_name}}<br />
+	{{#link-to 'state' this}} {{state_name}}: {{id}} {{/link-to}} <br />
 {{/each}}

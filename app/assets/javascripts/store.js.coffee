@@ -1,8 +1,11 @@
 # http://emberjs.com/guides/models/using-the-store/
+
 window.Lwc = Ember.Application.create({
 	LOG_TRANSITIONS: true
 })
 
+Ember.Inflector.inflector.irregular "county", "counties"
+Ember.Inflector.inflector.irregular "metro", "metros"
 
 
 Lwc.Store = DS.Store.extend
@@ -10,14 +13,7 @@ Lwc.Store = DS.Store.extend
   # is built to work nicely with the ActiveModel::Serializers gem.
   adapter: 'Lwc.ApplicationAdapter'
 
-Lwc.ApplicationAdapter = DS.RESTAdapter.extend(
-  host: "states"
-  # namespace: "states.json"
-  suffix: ".json"
-  pathForType: (type) ->
-    @_super(type) + @get("suffix")
-    return
-)
+Lwc.ApplicationAdapter = DS.RESTAdapter.extend()
 
 Lwc.IndexView = EmberLeaflet.MapView.extend(
   center: L.latLng(40.713282, -74.006978)
