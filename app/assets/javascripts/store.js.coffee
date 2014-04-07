@@ -14,12 +14,3 @@ Lwc.Store = DS.Store.extend
   adapter: 'Lwc.ApplicationAdapter'
 
 Lwc.ApplicationAdapter = DS.RESTAdapter.extend()
-
-Lwc.IndexView = EmberLeaflet.MapView.extend(
-  center: L.latLng(40.713282, -74.006978)
-  zoom: 18
-  options:
-    maxZoom: 19
-    minZoom: 0
-)
-

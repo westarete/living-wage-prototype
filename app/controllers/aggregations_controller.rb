@@ -1,6 +1,6 @@
 class AggregationsController < ApplicationController
   def index
-    @aggregations = Aggregation.all
+  	@aggregations = State.find_by_statefips(params[:state_id]).aggregations
   end
 
   def show

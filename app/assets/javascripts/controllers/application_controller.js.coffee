@@ -1,3 +1,3 @@
-Lwc.ApplicationController = Ember.ArrayController.extend(
+Lwc.ApplicationController = Ember.Controller.extend(
 	sortProperties: ["state_name"], sortAscending: false
 )

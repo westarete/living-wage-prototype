@@ -1,9 +1,16 @@
 Lwc::Application.routes.draw do
   root to: 'application#index'
-  resources :states
-  resources :counties
-  resources :metros
-  resources :aggregations
+  resources :states, :shallow => true do
+    resources :aggregations
+  end
+
+  resources :counties, :shallow => true do
+    resources :aggregations
+  end
+
+  resources :metros, :shallow => true do
+    resources :aggregations
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

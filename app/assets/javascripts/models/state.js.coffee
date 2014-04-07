@@ -2,7 +2,10 @@
 
 Lwc.State = DS.Model.extend(
 	state_name: DS.attr('string'),
-	aggregations: DS.hasMany('aggregation')
-	metros: DS.hasMany('metro'),
-	counties: DS.hasMany('county')
+	aggregations: DS.hasMany 'aggregation',
+		async: true,
+	# metros: DS.hasMany 'metro',
+	# 	async: true,
+	# counties: DS.hasMany 'county',
+	# 	async: true,
 )
