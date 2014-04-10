@@ -1,6 +1,6 @@
 class MetrosController < ApplicationController
   def index
-    @metros = Metro.all
+    @metros = State.find_by_statefips(params[:state_id]).metros
   end
 
   def show

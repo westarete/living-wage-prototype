@@ -1,3 +1,4 @@
-collection @states
+collection @metros, :root => "metros"
+attributes :id,
+    :cbsa_name
 
-extends "states/show"

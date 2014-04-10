@@ -2,7 +2,15 @@
 
 <h2>For a family of... </h2> 
 
+{{view Ember.Select content=familycompositions
+                    prompt="Select a family type"
+                    valueBinding="selectedPerson"}}
+
 {{wage-panel}}
+
+{{view Ember.Select content=states
+                    prompt="Select a state:"
+                    valueBinding="selectedPerson"}}
 
 {{outlet}}
 

@@ -1,4 +1,3 @@
-object @county
-attributes :id, :countyname
-
-extends "counties/show"
+collection @counties, :root => "counties"
+attributes :id,
+    :countyname

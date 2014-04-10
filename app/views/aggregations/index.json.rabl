@@ -1,5 +1,6 @@
 collection @aggregations, :root => "aggregations"
 attributes :id,
+    :explainable_id,
     :explainable_type,
     :familycomposition,
     :familysize,

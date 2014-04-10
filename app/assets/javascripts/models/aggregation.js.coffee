@@ -1,6 +1,6 @@
 # for more details see: http://emberjs.com/guides/models/defining-models/
 
-Lwc.Aggregation = DS.Model.extend(
+Lwc.Aggregation = DS.Model.extend
   explainable_id: DS.attr(),
   explainable_type: DS.attr(),
   familycomposition: DS.attr(),
@@ -18,6 +18,5 @@ Lwc.Aggregation = DS.Model.extend(
   minwage_hrly: DS.attr(),
   minwage: DS.attr(),
   income_hrly: DS.attr(),
-  income_pretax_hrly: DS.attr(),
-  state_id: DS.belongsTo('state')
-)
+  income_pretax_hrly: DS.attr()
+
