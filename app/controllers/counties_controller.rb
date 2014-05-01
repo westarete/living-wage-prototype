@@ -1,6 +1,6 @@
 class CountiesController < ApplicationController
   def index
-    @counties = State.find_by_statefips(params[:state_id]).counties
+    @counties = County.all
   end
 
   def show

@@ -5,8 +5,23 @@
   <div id="comments">
   <% for aggregation in @metro.aggregations %>
     <div class="comment">
-      <strong><%= aggregation.familycomposition %></strong>
-    </div>
+      <strong><%= aggregation.familycomposition %>:</strong>
+      <%= aggregation.familysize %>
+      <%= aggregation.house_cost %>
+      <%= aggregation.childcare_cost %>
+      <%= aggregation.health_cost %>
+      <%= aggregation.food_cost %>
+      <%= aggregation.trans_cost %>
+      <%= aggregation.other_cost %>
+      <%= aggregation.income %>
+      <%= aggregation.income_pretax %>
+      <%= aggregation.tax %>
+      <%= aggregation.poverty %>
+      <%= aggregation.minwage_hrly %>
+      <%= aggregation.minwage %>
+      <%= aggregation.income_hrly %>
+      <%= aggregation.income_pretax_hrly %>
+      <%= aggregation.poverty_hrly %>    </div>
   <% end %>
   </div>
 <% end %>

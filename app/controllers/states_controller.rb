@@ -5,5 +5,6 @@ class StatesController < ApplicationController
 
   def show
     @state = State.find_by_statefips(params[:id])
+    gon.state = @state.aggregations
   end
 end

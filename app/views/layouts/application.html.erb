@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lwc</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= include_gon %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+	<%= render 'layouts/shim' %>
+</head>
+	<body>
+    <header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <a href="/">LWC</a>
+          <nav>
+            <ul class="nav pull-right">
+              <li>National</li>
+              <li>Recalculate</li>
+              <li>Occupations </li>
+              <li>Contribute </li>
+            </ul>
+          </nav>    
+        </div>
+      </div>
+    </header>
+    <div class="container">
+    <%= render 'profile/datapanels' %>
+
+    <%= render 'profile/recalculate' %>
+    <%= yield %>
+
+    </div>
+    <footer class="footer">
+      <%= debug(params) if Rails.env.development? %>
+    </footer>
+
+	</body>
+</html>
