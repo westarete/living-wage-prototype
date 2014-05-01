@@ -1,3 +1,4 @@
 collection @counties, :root => "counties"
-attributes :id,
-    :countyname
+attributes :countyname
+
+node(:id) { |county| county.countyfips } 

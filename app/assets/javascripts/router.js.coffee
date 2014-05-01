@@ -4,15 +4,15 @@ Lwc.Router.map ->
   @resource "landscape", ->
     @resource "states", ->
       @resource "state",
-      	path: ":state_id"
+      	path: ":state_id", ->
 
-    @resource "metros", ->
-        @resource "metro",
-            path: ":metro_id"
+          @resource "metros", ->
+            @resource "metro",
+              path: ":metro_id"
 
-    @resource "counties", ->
-        @resource "county",
-            path: ":county_id"
+          @resource "counties", ->
+            @resource "county",
+              path: ":county_id"
 
     return
 

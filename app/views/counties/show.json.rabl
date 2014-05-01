@@ -2,7 +2,7 @@ object @county
 attributes :id, :countyname
 
 child :aggregations do
-  attributes :explainable_id,
+    attributes :explainable_id,
     		 :explainable_type,
     		 :familycomposition,
              :familysize,
