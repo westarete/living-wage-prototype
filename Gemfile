@@ -8,7 +8,6 @@ gem 'ember-rails'
 gem 'pg', '0.12.2'
 gem 'rabl'
 gem 'bootstrap-sass', '2.1'
-gem 'bootstrap-will_paginate', '0.0.6'
 gem 'leaflet-rails'
 gem 'rails_12factor'
 gem 'gon'
@@ -45,7 +44,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails','1.0.19'
+gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

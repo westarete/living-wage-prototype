@@ -1,7 +1,7 @@
-@import "bootstrap";
 
 $grayMediumLight: #eaeaea;
-
+$light-border: 1px solid #DDD;
+$grid-paper: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQYV2OMqXogyUAEYAQpXNKm8JyQ2lGFeEOI6OABABiIJdpw6/JOAAAAAElFTkSuQmCC) repeat;
 @mixin box_sizing {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -10,11 +10,12 @@ $grayMediumLight: #eaeaea;
 
 html {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 body {
-  padding-top: 60px;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQYV2OMqXogyUAEYAQpXNKm8JyQ2lGFeEOI6OABABiIJdpw6/JOAAAAAElFTkSuQmCC) repeat;
+  padding-top: 50px;
+  background: $grid-paper
 }
 
 section {
@@ -34,6 +35,16 @@ textarea {
 }
 
 /* typography */
+
+#map {
+  min-height: 300px;
+  margin: 0px;
+}
+
+#donutchart {
+  display: block;
+  margin: 0 auto;
+}
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1;
@@ -124,7 +135,7 @@ footer {
 aside {
   section {
     padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid;
     &:first-child {
       border: 0;
       padding-top: 0;
@@ -141,6 +152,16 @@ aside {
       margin-bottom: 3px;
       margin-top: 0px;
     }
+  }
+}
+
+.sectional {
+  background: gray;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+  h1 {
+    color: white;
   }
 }
 
@@ -171,53 +192,76 @@ input {
   }
 }
 
-.field_with_errors {
-  @extend .control-group;
-  @extend .error;
-}
-
 /* users index */
 
 .navbar {
-  box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.5);
+  height: 50px;
+}
+
+.navbar-header {
+  float:      left;
+  padding:    15px;
+  text-align: center;
+  width:      100%;
+}
+
+.navbar-brand { 
+  float: none;  
+}
+
+.navbar-default, .navbar-brand {
+  color: #000000;
+}
+
+.navbar-nav {
+  position: relative;
+  top: -50px;
+}
+
+.navbar {
+  background-color: #FFF;
+  margin-bottom: 0px;
+  border-bottom: $light-border;
+  opacity:    0.9;
 }
 
 .data-panel {
-  padding:0;
-  margin:0;
-  ul { /* also works with ol */
-    width: 100%; /* or your desired width */
-    text-align: center; /* this will center the list items */
-    list-style:none;
-
-    li {
-      width: 300px;
-      background-color: DodgerBlue;
-      display: inline-block; /* the key bit */
-      *display: inline; /* IE7 hack */
-      *zoom: 1; /* IE7 hack */
-      border-radius:15px;
-      box-shadow: 10px 10px 5px #999999;
-      text-align: center;
-      padding: 0px;
-      margin: 5px;
-      div {
-        display: table;
-        overflow: hidden;
+  width: 80%;
+  background-color: DodgerBlue;
+  display: inline-block; /* the key bit */
+  *display: inline; /* IE7 hack */
+  *zoom: 1; /* IE7 hack */
+  border-radius:15px;
+  box-shadow: 10px 10px 5px #999999;
+  text-align: center;
+  padding: 0px;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  div {
+    display: table;
+    overflow: hidden;
+    width: 100%;
+    height: 180px;
+    div {
+        display: table-cell;
+        vertical-align: middle;
         width: 100%;
-        height: 180px;
-        div {
-            display: table-cell;
-            vertical-align: middle;
-            width: 100%;
-            margin: 0 auto;
-            text-align: center;
-          div {
+        margin: 0 auto;
+        text-align: center;
+      div {
 
-          }
-        }
       }
     }
   }
+}
+
+.label {
+  fill: white;
+  font-size: 1.1em;
+}
+
+
+.center {
+  text-align: center;
 }
 
