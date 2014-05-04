@@ -12,4 +12,7 @@ class State < ActiveRecord::Base
             :region_id,
              presence: true
 
+   alias_attribute :name, :state_name
+   alias_attribute :census_id, :statefips
+
 end

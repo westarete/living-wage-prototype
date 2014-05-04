@@ -1,9 +1,9 @@
-<h1><%= @metro.cbsa_name %></h1>
+<h1><%= @geography.name %></h1>
 
-<% unless @metro.aggregations.empty? %>
+<% unless @geography.aggregations.empty? %>
 
   <div id="comments">
-  <% for aggregation in @metro.aggregations %>
+  <% for aggregation in @geography.aggregations %>
     <div class="comment">
       <strong><%= aggregation.familycomposition %>:</strong>
       <%= aggregation.familysize %>

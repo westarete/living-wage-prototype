@@ -1,11 +1,11 @@
 
 <div class="container">
-<h1><%= @state.state_name %></h1>
+<h1><%= @geography.state_name %></h1>
 
-<% unless @state.aggregations.empty? %>
+<% unless @geography.aggregations.empty? %>
 
   <div id="comments">
-  <% for aggregation in @state.aggregations %>
+  <% for aggregation in @geography.aggregations %>
     <div class="comment">
       <strong><%= aggregation.familycomposition %>:</strong>
       <%= aggregation.familysize %>

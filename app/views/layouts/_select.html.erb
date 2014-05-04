@@ -3,16 +3,37 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h5>Select a Geography</h5>
       </div>
       <div class="modal-body">
-        <form>
-
-        </form>
+        <div class="scrollable-modal">
+          <div class="row">
+            <div class="col-md-4" id="states">
+              <h5>States</h5>
+              <form action="">
+                <ul>
+                  <% @states.each do |state| %>
+                    <li class="state" id="<%= state.census_id %>">
+                      <input type="radio" name="geography" value="<%=state.census_id%>" data="<%=state.census_id%>"> <%= state.state_name %>
+                    </li>
+                  <% end %>
+                </ul>
+              </form>
+            </div>
+            <div class="col-md-4">
+              <h5>Metros</h5>
+              <div id="metros"></div>
+            </div>
+            <div class="col-md-4">
+              <h5>Counties</h5>
+              <div id="counties"></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Go</button>
       </div>
     </div>
   </div>

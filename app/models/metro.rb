@@ -12,4 +12,7 @@ class Metro < ActiveRecord::Base
             :cbsa_name,
              presence: true
 
+   alias_attribute :name, :cbsa_name
+   alias_attribute :census_id, :cbsa
+
 end

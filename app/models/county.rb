@@ -10,4 +10,8 @@ class County < ActiveRecord::Base
   validates :state_id, presence: true, numericality: { less_than_or_equal_to: 56, greater_than: 0 }
   validates  :countyfips,
              :countyname, presence: true
+
+  alias_attribute :name, :countyname
+  alias_attribute :census_id, :countyfips
+  
 end

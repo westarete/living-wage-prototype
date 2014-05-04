@@ -5,6 +5,16 @@ $(document).ready(function () {
       'trigger': 'hover',
       'html': true
   });
-});
 
-console.log("Test");
+  $("[type=radio]").on("click", function(information) { 
+
+    var id = $(this).attr('value');
+
+    $.getJSON("http://localhost:3000/states/" + id, "test", function (result) {
+      console.log(result);
+      $("#counties").empty().append(function () {
+        return "test";
+      });
+    });
+  });
+});

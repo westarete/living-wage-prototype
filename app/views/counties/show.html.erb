@@ -1,9 +1,9 @@
-<h1><%= @county.countyname %></h1>
+<h1><%= @geography.name %></h1>
 
-<% unless @county.aggregations.empty? %>
+<% unless @geography.aggregations.empty? %>
 
   <div id="comments">
-  <% for aggregation in @county.aggregations %>
+  <% for aggregation in @geography.aggregations %>
     <div class="comment">
       <strong><%= aggregation.familycomposition %>:</strong>
       <%= aggregation.familysize %>

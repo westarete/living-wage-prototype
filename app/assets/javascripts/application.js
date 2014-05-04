@@ -5,7 +5,6 @@
 // the compiled file.
 //
 //= require_self
-//= require jquery_ujs
 //= require bootstrap
 //= require_tree .
 //= require handlebars

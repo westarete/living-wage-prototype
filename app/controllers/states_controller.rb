@@ -1,10 +1,10 @@
 class StatesController < ApplicationController
   def index
-    @states = State.all
+    @geography = State.all
   end
 
   def show
-    @state = State.find_by_statefips(params[:id])
-    gon.state = @state.aggregations
+    @geography = State.find_by_statefips(params[:id])
+    gon.geography = @geography.aggregations
   end
 end

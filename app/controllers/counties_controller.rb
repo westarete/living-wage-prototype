@@ -1,9 +1,9 @@
 class CountiesController < ApplicationController
   def index
-    @counties = County.all
+    @geographies = County.all
   end
 
   def show
-    @county = County.find_by_countyfips(params[:id])
+    @geography = County.find_by_countyfips(params[:id])
   end
 end
