@@ -5,20 +5,20 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h5>Select a Geography</h5>
       </div>
+      <form action="/form" method="post">
       <div class="modal-body">
         <div class="scrollable-modal">
           <div class="row">
             <div class="col-md-4" id="states">
               <h5>States</h5>
-              <form action="">
-                <ul>
-                  <% @states.each do |state| %>
-                    <li class="state" id="<%= state.census_id %>">
-                      <input type="radio" name="geography" value="<%=state.census_id%>" data="<%=state.census_id%>"> <%= state.state_name %>
-                    </li>
-                  <% end %>
-                </ul>
-              </form>
+                <% @states.each do |state| %>
+                  <div class="radio">
+                    <label class="radio-inline">
+                      <input type="radio" name="geography" value="<%=state.census_id%>"> 
+                      <%= link_to "#{state.state_name}", controller: "states", action: "show", id: state.census_id %>
+                    </label> 
+                  </div>
+                <% end %>
             </div>
             <div class="col-md-4">
               <h5>Metros</h5>
@@ -28,13 +28,16 @@
               <h5>Counties</h5>
               <div id="counties"></div>
             </div>
+            
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Go</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
+
