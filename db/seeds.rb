@@ -2,23 +2,23 @@
 
 require 'csv'
 
-def states
-  CSV.foreach('db/fixtures/LW_Alldata_2814.csv', headers: true) do |row|
+# def states
+#   CSV.foreach('db/fixtures/LW_Alldata_2814.csv', headers: true) do |row|
 
-    region_id = row['censusregion']
-    statefips = row['statefips']
-    state_name = row['state']
+#     region_id = row['censusregion']
+#     statefips = row['statefips']
+#     state_name = row['state']
 
-    record = State.find_by_statefips(statefips)
+#     record = State.find_by_statefips(statefips)
 
-    if record.nil?
-      record = State.create( region_id: region_id,
-                             statefips: statefips,
-                             state_name: state_name)
-      puts record.inspect
-    end
-  end
-end
+#     if record.nil?
+#       record = State.create( region_id: region_id,
+#                              statefips: statefips,
+#                              state_name: state_name)
+#       puts record.inspect
+#     end
+#   end
+# end
 
 # def counties
 #   CSV.foreach('db/fixtures/CountyLW_3_14_14.csv', headers: true) do |row|
@@ -160,7 +160,43 @@ end
 #   end
 # end
 
-states
+# CSV filenames
+# Occupation_2013-csv.csv
+# Occupation_Metro_2013-csv.csv
+
+def occupation_states
+  CSV.foreach('db/fixtures/Occupation_2013-csv.csv', headers: true) do |row|
+    geography = row['geography']
+    state = row['state']
+    occ_type = row['occ_type']
+    occ_salary = row['occ_salary']
+
+    state = State.find_by_state_name(state)
+    record = state.occupations.create(
+      geography: geography,
+      occ_type: occ_type,
+      occ_salary: occ_salary)
+  end
+end
+
+def occupation_metros
+  CSV.foreach('db/fixtures/Occupation_Metro_2013-csv.csv', headers: true) do |row|
+    geography = row['geography']
+    cbsa = row['cbsa']
+    occ_type = row['occ_type']
+    occ_salary = row['occ_salary']
+
+    metro = Metro.find_by_cbsa(cbsa)
+    record = metro.occupations.create(
+      geography: geography,
+      occ_type: occ_type,
+      occ_salary: occ_salary)
+  end
+end
+
+occupation_metros
+# occupation_states
+# states
 # counties
 # metros
 # aggregations

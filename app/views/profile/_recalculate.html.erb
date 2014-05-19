@@ -64,7 +64,7 @@ dispatch.on("load.menu", function(stateById) {
   var select = d3.select("#donutchart")
     .append("div")
     .append("select")
-      .on("change", function() { dispatch.statechange(stateById.get(this.value)); });
+      .on("change", function() { dispatch.statechange(stateById.get(this.value)); })
 
   select.selectAll("option")
       .data(stateById.values())
@@ -73,40 +73,39 @@ dispatch.on("load.menu", function(stateById) {
       .text(function(d) { return d.familycomposition; });
 
   dispatch.on("statechange.menu", function(state) {
+     $("#contributions").empty(); 
     select.property("value", state.familycomposition);
   });
 });
 
 dispatch.on("load.bar", function(stateById) {
-  console.log(stateById.values());
+
+  console.log(stateById.values())
 
   var div = d3.select("#contributions")
+    var contributions = div.selectAll("div")
 
-  var contributions = div.selectAll("div")
-    .data(groups)
-  .enter().append("div")
-    .attr("class", "col-xs-4 center")
-      .append("div")
-        .attr("class", "panel panel-default")
-        .append("div")
-          .attr("class", "panel-body")
-
-  // var div = d3.select("#contributions")
-  //   .append("div")
-      // .attr("class", "col-xs-4 center")
-      // .append("div")
-      //   .attr("class", "panel panel-default")
-      //   .append("div", "panel-body")
+            
 
 
   dispatch.on("statechange.bar", function(d) {
-    console.log(d.childcare_cost);
-      contributions.data(d).text(console.log(d));
+contributions
+      .data(d.values)
+      .enter()
+        .append("div")
+        .attr("class", "col-xs-4 center")
+          .append("div")
+          .attr("class", "panel panel-default")
+            .append("div")
+            .attr("class", "panel-body")
+            .text(function(d) { return d.value})
+
   });
 });
 
 // A pie chart to show population by age group; uses the "pie" namespace.
 dispatch.on("load.pie", function(stateById) {
+
   var width = 350,
       height = 350,
       radius = Math.min(width, height) / 2;
@@ -148,11 +147,28 @@ dispatch.on("load.pie", function(stateById) {
 
 
 var stateById = d3.map();
-gon.contributions.forEach(function(d) { stateById.set(d.familycomposition, d); });
+
+gon.contributions.forEach(function(d) { 
+  var values = [];
+
+
+
+  for(var prop in d){
+    values.push({ name: prop, value: d[prop] })
+  }; 
+
+  values = values.filter(function(d) { console.log(d.name == "familycomposition"); return d.name !== "familycomposition" });
+
+  d.values = values;
+
+
+
+
+  stateById.set(d.familycomposition, d); 
+});
+
 dispatch.load(stateById);
 dispatch.statechange(stateById.get("2A1C"));
-
-
 
   </script>
 </div>

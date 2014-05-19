@@ -6,6 +6,7 @@ class State < ActiveRecord::Base
   has_many :metros
   has_many :counties
   has_many :aggregations, :as => :explainable
+  has_many :occupations, :as => :explainable
 
   validates :statefips, presence: true, numericality: { less_than_or_equal_to: 56, greater_than: 0 }
   validates :state_name,

@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <% @geography.occupations.each do |o| %>
+    <%= o.occ_type %>: <%= o.occ_salary %> <br />
+    <% end %>
+  </div>
+  <div class="col-md3"></div>
+</div>
