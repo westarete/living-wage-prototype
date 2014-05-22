@@ -1,4 +1,7 @@
 class StatesController < ApplicationController
+
+  autocomplete :state, :state_name
+
   def index
     @geography = State.all
   end

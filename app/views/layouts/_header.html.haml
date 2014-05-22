@@ -6,5 +6,5 @@
           Living Wage Calculator / 
           %span#breadcrumb= @geography.name
       %div.navbar-right
-        %a{ "data-target" => "#myModal", "data-toggle" => "modal"}
-          Change Geography ▾
+        = form_for @geography do |f|
+          - f.autocomplete_field :state_name, autocomplete_state_state_name_states_path

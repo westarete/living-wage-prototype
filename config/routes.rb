@@ -3,10 +3,11 @@ Lwc::Application.routes.draw do
   root to: 'profile#index'
 
   resources :counties
-  resources :states
   resources :metros
 
-  
+  resources :states do
+    get :autocomplete_state_state_name, :on => :collection
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -5,10 +5,11 @@
 // the compiled file.
 //
 //= require_self
+//= require jquery.ui.all
+//= require autocomplete-rails
 //= require bootstrap
 //= require_tree .
 //= require handlebars
 //= require lib/leaflet-src.js
 //= require d3
-
 
