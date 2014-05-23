@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140518193901) do
+ActiveRecord::Schema.define(:version => 20140523144547) do
 
   create_table "aggregations", :force => true do |t|
     t.string   "familycomposition"
@@ -54,6 +54,12 @@ ActiveRecord::Schema.define(:version => 20140518193901) do
   end
 
   add_index "counties_metros", ["county_id", "metro_id"], :name => "index_counties_metros_on_county_id_and_metro_id"
+
+  create_table "geographies", :force => true do |t|
+    t.string  "name"
+    t.string  "type"
+    t.integer "census_id"
+  end
 
   create_table "metros", :force => true do |t|
     t.integer  "state_id"

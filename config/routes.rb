@@ -2,11 +2,16 @@ Lwc::Application.routes.draw do
 
   root to: 'profile#index'
 
-  resources :counties
-  resources :metros
+  resources :counties do
+    get :autocomplete_geography_name, :on => :collection
+  end
+
+  resources :metros do
+    get :autocomplete_geography_name, :on => :collection
+  end
 
   resources :states do
-    get :autocomplete_state_state_name, :on => :collection
+    get :autocomplete_geography_name, :on => :collection
   end
 
   # The priority is based upon order of creation:

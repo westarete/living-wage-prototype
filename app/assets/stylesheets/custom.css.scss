@@ -47,7 +47,7 @@ textarea {
 /* typography */
 
 #map {
-  min-height: 300px;
+  min-height: 200px;
   margin: 0px;
 }
 
@@ -281,5 +281,19 @@ input {
   font-size: 1.1em;
 }
 
+.ui-front {
+  z-index: 2000;
+}
 
+.search {
+  form {
+    input {
+      padding: 0px;
+    }
+  }
+}
+
+#sticky-menu {
+  z-index: 2000;
+}
 

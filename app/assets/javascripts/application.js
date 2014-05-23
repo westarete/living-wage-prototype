@@ -8,6 +8,7 @@
 //= require jquery.ui.all
 //= require autocomplete-rails
 //= require bootstrap
+//= require lib/sticky-kit.min.js
 //= require_tree .
 //= require handlebars
 //= require lib/leaflet-src.js

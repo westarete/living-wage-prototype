@@ -15,6 +15,7 @@ gem 'd3-rails'
 gem 'haml', '~> 4.0.5'
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete'
+gem 'geocoder'
 
 # gem 'bluecloth'
 # gem 'validates_timeliness', '~> 3.0'

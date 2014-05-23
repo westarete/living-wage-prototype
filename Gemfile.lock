@@ -80,6 +80,7 @@ GEM
     erubis (2.7.0)
     execjs (2.0.2)
     ffi (1.9.3)
+    geocoder (1.1.9)
     gon (5.0.4)
       actionpack (>= 2.3.0)
       json
@@ -197,6 +198,7 @@ DEPENDENCIES
   d3-rails
   devise
   ember-rails
+  geocoder
   gon
   haml (~> 4.0.5)
   jquery-rails

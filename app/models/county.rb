@@ -14,5 +14,9 @@ class County < ActiveRecord::Base
 
   alias_attribute :name, :countyname
   alias_attribute :census_id, :countyfips
-  
+
+  def coordinates
+    Geocoder.search(countyname).first.coordinates
+  end
+
 end

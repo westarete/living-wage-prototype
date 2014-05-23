@@ -59,11 +59,17 @@ var groups = [
   "other_cost"
 ];
 
+
+var color = d3.scale.ordinal()
+    .domain(groups)
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
 // A drop-down menu for selecting a state; uses the "menu" namespace.
 dispatch.on("load.menu", function(stateById) {
-  var select = d3.select("#donutchart")
+  var select = d3.select("#donut-chart-menu")
     .append("div")
     .append("select")
+      .attr("class", "form-control")
       .on("change", function() { dispatch.statechange(stateById.get(this.value)); })
 
   select.selectAll("option")
@@ -85,9 +91,6 @@ dispatch.on("load.bar", function(stateById) {
   var div = d3.select("#contributions")
     var contributions = div.selectAll("div")
 
-            
-
-
   dispatch.on("statechange.bar", function(d) {
 contributions
       .data(d.values)
@@ -98,6 +101,11 @@ contributions
           .attr("class", "panel panel-default")
             .append("div")
             .attr("class", "panel-body")
+            .style("border-style", "solid")
+            .style("border-width", "thin")
+            .style("border-color", function (d,i) {
+              return color(i);
+            })
             .text(function(d) { return d.value})
 
   });
@@ -109,10 +117,6 @@ dispatch.on("load.pie", function(stateById) {
   var width = 350,
       height = 350,
       radius = Math.min(width, height) / 2;
-
-  var color = d3.scale.ordinal()
-      .domain(groups)
-      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
   var arc = d3.svg.arc()
       .outerRadius(radius - 20)

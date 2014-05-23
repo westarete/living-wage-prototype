@@ -1,9 +1,12 @@
 <div class="row" id="map">
 </div>
 <script>
+
+  console.log(gon.coordinates);
+
   var map = L.map('map', {
     scrollWheelZoom: false
-  }).setView([39.8282, -98.5795], 4);
+  }).setView(gon.coordinates, 5);
 
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

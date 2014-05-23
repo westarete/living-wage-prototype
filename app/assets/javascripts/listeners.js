@@ -32,3 +32,57 @@ $(document).ready(function () {
     });
   });
 });
+
+$(document).ready(function () {
+  $("#sticky-menu").stick_in_parent({offset_top: 40});
+
+  $( "#state_state_name" ).on( "autocompleteselect", function( event, ui ) {
+    if (ui.item.geography_type == "state") {
+      window.location.href = "../states/" + ui.item.census_id;
+    }
+    
+    if (ui.item.geography_type == "county") {
+      console.log(ui);
+      window.location.href = "../counties/" + ui.item.census_id;
+    }
+
+    if (ui.item.geography_type == "metro") {
+      window.location.href = "../metros/" + ui.item.census_id;
+    }
+
+  });
+
+  $( "#county_countyname" ).on( "autocompleteselect", function( event, ui ) {
+    if (ui.item.geography_type == "state") {
+      window.location.href = "../states/" + ui.item.census_id;
+    }
+    
+    if (ui.item.geography_type == "county") {
+      console.log(ui);
+      window.location.href = "../counties/" + ui.item.census_id;
+    }
+
+    if (ui.item.geography_type == "metro") {
+      window.location.href = "../metros/" + ui.item.census_id;
+    }
+
+  });
+
+  $( "#metro_cbsa_name" ).on( "autocompleteselect", function( event, ui ) {
+    if (ui.item.geography_type == "state") {
+      window.location.href = "../states/" + ui.item.census_id;
+    }
+    
+    if (ui.item.geography_type == "county") {
+      console.log(ui);
+      window.location.href = "../counties/" + ui.item.census_id;
+    }
+
+    if (ui.item.geography_type == "metro") {
+      window.location.href = "../metros/" + ui.item.census_id;
+    }
+
+  });
+
+
+});

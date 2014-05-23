@@ -16,4 +16,8 @@ class Metro < ActiveRecord::Base
    alias_attribute :name, :cbsa_name
    alias_attribute :census_id, :cbsa
 
+  def coordinates
+    Geocoder.search(cbsa_name).first.coordinates
+  end
+
 end
