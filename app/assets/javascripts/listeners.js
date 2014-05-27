@@ -34,7 +34,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  $("#sticky-menu").stick_in_parent({offset_top: 40});
+  $("#sticky-menu").stick_in_parent({offset_top: 50});
+
+
+
 
   $( "#state_state_name" ).on( "autocompleteselect", function( event, ui ) {
     if (ui.item.geography_type == "state") {

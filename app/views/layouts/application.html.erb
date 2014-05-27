@@ -15,13 +15,10 @@
       <%= render 'layouts/select' %>
       <%= render 'profile/leaflet' %>
       <%= render 'profile/datapanels' %>
-
-
-      <div class="row sectional"><h1>Recalculate</h1></div>
       <%= render 'profile/recalculate' %>
-      <div class="row sectional"><h1>Occupations that pay</h1></div>
+      <div class="row sectional" id="occupations"><h1>Occupations that pay</h1></div>
       <%= render 'profile/occupations' %>
-      <div class="row sectional"><h1>Contribute your story</h1></div>
+      <div class="row sectional" id="contribute"><h1>Contribute your story</h1></div>
 
       <footer class="footer">
         <%= debug(params) if Rails.env.development? %>

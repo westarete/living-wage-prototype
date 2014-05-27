@@ -1,50 +1,9 @@
 <div class="row margins">
-  <div class="col-md-4">
-    <div class="center">
-      <div class="data-panel" title="Calculations" data-content="Description of how this value is calculated">
-        <div>
-          <div>
-            <h4>$12 <sub>per hr</sub></h4> <h4>Living Wage</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="row" id="contributions">
-<!--       <div class="col-xs-4 center">
-        <div class="panel panel-default">
-          <div class="panel-body">42</div>
-        </div>
-      </div>
-      <div class="col-xs-4 center">
-        <div class="panel panel-default">
-          <div class="panel-body">42</div>
-        </div>
-      </div>
-      <div class="col-xs-4 center">
-        <div class="panel panel-default">
-          <div class="panel-body">42</div>
-        </div>
-      </div>
-      <div class="col-xs-4 center">
-        <div class="panel panel-default">
-          <div class="panel-body">42</div>
-        </div>
-      </div>
-      <div class="col-xs-4 center">
-        <div class="panel panel-default">
-          <div class="panel-body">42</div>
-        </div>
-      </div>
-      <div class="col-xs-4 center">
-        <div class="panel panel-default">
-          <div class="panel-body">42</div>
-        </div>
-      </div> -->
-    </div>
-  </div>
   <div class="col-md-4" id="donutchart">
+  </div>
+  <div class="col-md-8">
+    <div class="row" id="contributions">
+    </div>
   </div>
   <script>
 
@@ -58,7 +17,6 @@ var groups = [
   "trans_cost",
   "other_cost"
 ];
-
 
 var color = d3.scale.ordinal()
     .domain(groups)
@@ -80,39 +38,76 @@ dispatch.on("load.menu", function(stateById) {
 
   dispatch.on("statechange.menu", function(state) {
      $("#contributions").empty(); 
+     $("#wages").empty();
     select.property("value", state.familycomposition);
   });
 });
 
 dispatch.on("load.bar", function(stateById) {
 
-  console.log(stateById.values())
-
   var div = d3.select("#contributions")
     var contributions = div.selectAll("div")
 
   dispatch.on("statechange.bar", function(d) {
-contributions
-      .data(d.values)
+    console.log(d);
+      contributions
+        .data(d.contributions)
+        .enter()
+          .append("div")
+          .attr("class", "col-xs-4 center")
+            .append("div")
+            .attr("class", "panel panel-default")
+              .append("div")
+              .attr("class", "panel-body")
+              .style("border-style", "solid")
+              .style("border-width", "thin")
+              .style("border-color", function (d,i) {
+                return color(i);
+              })
+              .text(function(d) { return d.value })
+
+  });
+});
+
+dispatch.on("load.wages", function(stateById) {
+
+  var div = d3.select("#wages")
+    var wages = div.selectAll("div")
+
+  dispatch.on("statechange.wages", function(d) {
+    wages
+      .data(d.wages)
       .enter()
         .append("div")
-        .attr("class", "col-xs-4 center")
-          .append("div")
-          .attr("class", "panel panel-default")
-            .append("div")
-            .attr("class", "panel-body")
-            .style("border-style", "solid")
-            .style("border-width", "thin")
-            .style("border-color", function (d,i) {
-              return color(i);
-            })
-            .text(function(d) { return d.value})
+        .attr("id", function(d) {
+          if (d.name == "income_hrly") {
+            return "living-wage"
+          } else {
+            return "other-wages"
+          }
+        })
+        .text(function(d) { 
+          if (d.name == "income_hrly") {
+            return "Living Wage: $" + d.value;
+          }
+          if (d.name == "minwage_hrly") {
+            return "Minimum Wage: $" + d.value;
+          }
+          if (d.name == "poverty_hrly") {
+            return "Poverty Wage: $" + d.value;
+          }
+        })
+        .append("sup")
+        .text(" per hour")
 
   });
 });
 
 // A pie chart to show population by age group; uses the "pie" namespace.
 dispatch.on("load.pie", function(stateById) {
+
+
+  d3.select(window).on('resize', resize); 
 
   var width = 350,
       height = 350,
@@ -137,6 +132,16 @@ dispatch.on("load.pie", function(stateById) {
       .style("fill", color)
       .each(function() { this._current = {startAngle: 0, endAngle: 0}; });
 
+  function resize() { 
+    width = parseInt(d3.select('#donutchart').style('width'), 10);
+    height = parseInt(d3.select('#donutchart').style('height'), 10);
+    console.log(width);
+    var radius = Math.min(width, height) / 2;
+    arc.outerRadius(radius - 20);
+    arc.innerRadius(radius - 70);
+
+  }
+
   dispatch.on("statechange.pie", function(d) {
     path.data(pie.value(function(g) { return d[g]; })(groups)).transition()
         .attrTween("d", function(d) {
@@ -153,19 +158,20 @@ dispatch.on("load.pie", function(stateById) {
 var stateById = d3.map();
 
 gon.contributions.forEach(function(d) { 
-  var values = [];
-
-
+  var pluck = [];
+  var contributions = [];
+  var wages = [];
 
   for(var prop in d){
-    values.push({ name: prop, value: d[prop] })
+    pluck.push({ name: prop, value: d[prop] })
   }; 
 
-  values = values.filter(function(d) { console.log(d.name == "familycomposition"); return d.name !== "familycomposition" });
+  contributions = pluck.filter(function(d) { return d.name !== "familycomposition" && d.name !== "minwage_hrly" && d.name !== "income_hrly" && d.name !== "poverty_hrly" });
 
-  d.values = values;
+  wages = pluck.filter(function(d) { return d.name == "minwage_hrly" || d.name == "income_hrly" || d.name == "poverty_hrly"  });
 
-
+  d.contributions = contributions;
+  d.wages = wages;
 
 
   stateById.set(d.familycomposition, d); 
@@ -173,6 +179,7 @@ gon.contributions.forEach(function(d) {
 
 dispatch.load(stateById);
 dispatch.statechange(stateById.get("2A1C"));
+
 
   </script>
 </div>

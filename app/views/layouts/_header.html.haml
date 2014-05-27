@@ -3,15 +3,8 @@
     %div.navbar-header
       %div.navbar-left
         %a.navbar-brand
+          =image_tag 'MIT_logo.gif', height: '22px'
           Living Wage Calculator / 
           %span#breadcrumb= @geography.name
-      %div.navbar-right.search
-        = if @geography.class.name == "State"
-          - form_for @geography do |f|
-            - f.autocomplete_field :state_name, autocomplete_geography_name_states_path
-        = if @geography.class.name == "County"
-          - form_for @geography do |f|
-            - f.autocomplete_field :countyname, autocomplete_geography_name_counties_path
-        = if @geography.class.name == "Metro"
-          - form_for @geography do |f|
-            - f.autocomplete_field :cbsa_name, autocomplete_geography_name_metros_path
+      %div.navbar-right
+        Menu Items

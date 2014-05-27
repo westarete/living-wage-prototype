@@ -93,6 +93,7 @@ h5 {
   margin: 5px; 
 }
 
+
 p {
   font-size: 1.1em;
   line-height: 1.7em;
@@ -242,7 +243,8 @@ input {
 .navbar {
   background-color: #FFF;
   margin-bottom: 0px;
-  border-bottom: $light-border;
+  // border-bottom: $light-border;
+  border: 0px;
   opacity:    0.9;
 }
 
@@ -293,7 +295,39 @@ input {
   }
 }
 
-#sticky-menu {
-  z-index: 2000;
+#living-wage {
+  line-height: 1.2em;
+  font-size: 2em;
+  text-align: center;
+  color: black;
+  margin: 5px; 
+  font-weight: bold;
 }
 
+#other-wages {
+  line-height: 1.2em;
+  font-size: 1.3em;
+  text-align: left;
+  color: black;
+  margin: 5px; 
+}
+
+#sticky-menu {
+  background-color: #ffffff;
+  z-index: 2000;
+  opacity: 0.9;
+  padding-top: 5px;
+}
+
+#recalculate {
+  z-index: 1000;
+}
+
+#contributions {
+  margin-top: 10%;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
