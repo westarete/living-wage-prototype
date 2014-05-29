@@ -1,10 +1,26 @@
-%nav{class: 'navbar navbar-default navbar-fixed-top', role: 'navigation' }
-  %div.container-fluid
+%nav{class: 'navbar navbar-fixed-top', id: 'mit-nav', role: 'navigation' }
+  %nav.container-fluid
     %div.navbar-header
-      %div.navbar-left
-        %a.navbar-brand
-          =image_tag 'MIT_logo.gif', height: '22px'
-          Living Wage Calculator / 
-          %span#breadcrumb= @geography.name
+      %button{type: "button", class: "navbar-toggle", "data-toggle" => "collapse", "data-target" => "#mit-nav-data"}
+        %span.sr-only
+          Toggle navigation
+        %span.icon-bar#bar-invert
+        %span.icon-bar#bar-invert
+        %span.icon-bar#bar-invert
+      %div.navbar-brand
+        =image_tag 'MIT_logo.gif', height: '22px'
+        %a{href: "/"}
+          Living Wage Calculator /
+        %span#breadcrumb.hidden-xs.hidden-sm= @geography.name
+    %div.collapse.navbar-collapse#mit-nav-data
       %div.navbar-right
-        Menu Items
+        %ul.nav.navbar-nav
+          %li
+            %a{href: "#occupations"}
+              Occupations
+          %li
+            %a{href: "#contribute"}
+              Contribute
+          %li
+            %a{href: "#about"}
+              About

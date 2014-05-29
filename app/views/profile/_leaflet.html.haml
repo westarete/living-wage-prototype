@@ -1,6 +1,20 @@
 %div.row#map
-%div{style: "position:absolute;  top:60px; left:2%; padding: 4px; background-color:rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px;", id: "wages"}
-  Test
+%div.col-md-6#summary-panel
+  %div.red-strip
+  %div.row
+    %div.col-md-12
+      %h5{style: "text-align:left;"}=@geography.name
+  %div.row
+    %div.col-md-8#living-wage-append
+      / %div#living-wage
+      /   $25 Living Wage
+    %div.col-md-4#other-wages-append
+      / %div.row.other-wages
+      /   $16 Minimum Wage
+      / %div.row.other-wages
+      /   $8 Poverty Wage
+
+
 
 :javascript
   console.log(gon.coordinates);

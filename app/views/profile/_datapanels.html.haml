@@ -1,20 +1,17 @@
-%div.row#sticky-menu
-  %div.col-md-3
-    %h5
-      Family Composition:
-  %div.col-md-3#donut-chart-menu
-  %div.col-md-2
-    %h5
-      Geography: 
-  %div.col-md-4
-    = if @geography.class.name == "State"
-      - form_for @geography do |f|
-        - f.autocomplete_field :state_name, autocomplete_geography_name_states_path
-    = if @geography.class.name == "County"
-      - form_for @geography do |f|
-        - f.autocomplete_field :countyname, autocomplete_geography_name_counties_path
-    = if @geography.class.name == "Metro"
-      - form_for @geography do |f|
-        - f.autocomplete_field :cbsa_name, autocomplete_geography_name_metros_path
-%div.row
-  %div.container-flexible
+%nav#sticky-menu
+  %div.row
+    %div.col-md-6#donut-chart-menu
+      %span{style: "font-size: 1em"}
+        Family Composition:
+    %div.col-md-6
+      %span{style: "font-size: 1em"}
+        Geography: 
+      = if @geography.class.name == "State"
+        - form_for @geography do |f|
+          - f.autocomplete_field :state_name, autocomplete_geography_name_states_path, :class => "form-control"
+      = if @geography.class.name == "County"
+        - form_for @geography do |f|
+          - f.autocomplete_field :countyname, autocomplete_geography_name_counties_path, :class => "form-control"
+      = if @geography.class.name == "Metro"
+        - form_for @geography do |f|
+          - f.autocomplete_field :cbsa_name, autocomplete_geography_name_metros_path, :class => "form-control"

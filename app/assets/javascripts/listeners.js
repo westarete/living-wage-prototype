@@ -34,7 +34,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  $("#sticky-menu").stick_in_parent({offset_top: 50});
+  $("#sticky-menu").stick_in_parent({offset_top: 51});
 
 
 
