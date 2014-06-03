@@ -1,9 +1,45 @@
 %div.row.margins
-  %div.col-sm-4
-    %div#donutchart
-  %div.col-sm-3#contributions
   %div.col-sm-5
-    Description
+    %div#donutchart
+  %div.col-sm-2#contributions
+  %div.col-sm-5
+    %div.tab-content
+      %div.tab-pane.fade#house_cost 
+        %h1
+          Housing costs 
+        measure the fair-market rent of rental housing, including utility costs, using HUD Fair Market Rents estimates for 2014.  
+
+        For further detail, please reference the technical documentation here.
+      %div.tab-pane.fade#childcare_cost 
+        %h1
+          Child care cost 
+        represent the lowest cost option, either family child care or child care center, by state as reported by the National Association of Child Care Resource and Referral Agencies in 2013 and are adjusted for inflation.
+
+        For further detail, please reference the technical documentation here.
+      %div.tab-pane.fade.in.active#health_cost 
+        %h1
+          Medical costs 
+        are the sum of expenses for insurance premiums and (1) health insurance costs for employer sponsored plans, (3) medical services, (3) drugs, and (4) medical supplies.  Health insurance costs were calculated using the Health Insurance Component Analytical Tool (MEPSnet/IC) provided online by the Agency for Healthcare Research and Quality.  All other costs were estimated using 2012 data from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey, adjusted by region and for inflation.
+
+        For further detail, please reference the technical documentation here.
+      %div.tab-pane.fade#food_cost 
+        %h1 
+          Food cost 
+        is estimated using the US Department of Agriculture’s low-cost food plan as of 2013, adjusted for inflation.  The low-cost plan assumes that all meals (including snacks) are prepared in the home.  
+
+        For further detail, please reference the technical documentation here.
+      %div.tab-pane.fade#trans_cost
+        %h1
+          Transportation costs 
+        are a measure of the expenses for (1) Used cars and trucks, (2) gasoline and motor oil, (3) other vehicle expenses, and (4) public transportation.  Expenditures for transportation are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation.
+
+        For further detail, please reference the technical documentation here.
+      %div.tab-pane.fade#other_cost
+        %h1
+          Other necessities 
+        include expenses for (1) apparel and services, (2) housekeeping supplies, (3) personal care products and services, (4) reading, and (5) miscellaneous.  Expenditures for other necessities are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation. 
+
+        For further detail, please reference the technical documentation here.
 
 :javascript
 
@@ -20,7 +56,8 @@
 
   var color = d3.scale.ordinal()
       .domain(groups)
-      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+      .range(["#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#ffff33"]);
+
 
   // A drop-down menu for selecting a state; uses the "menu" namespace.
   dispatch.on("load.menu", function(stateById) {
@@ -47,7 +84,7 @@
   dispatch.on("load.bar", function(stateById) {
 
     var div = d3.select("#contributions")
-      
+    
 
     dispatch.on("statechange.bar", function(d) {
 
@@ -55,9 +92,16 @@
         contributions
           .data(d.contributions)
           .enter()
+            .append("div")
+            .attr("class","row")
             .append("button")
+            .style("color", function(d) { return color(d.name); })
             .attr("type", "button")
             .attr("class", "btn")
+            .attr("href", function(d) {
+              return "#" + d.name
+            })
+            .attr("data-toggle", "tab")
             .text(function(d) { return d.value })
               .append("span")
               .attr("class", function(d) {
@@ -75,8 +119,9 @@
 
   dispatch.on("load.wages", function(stateById) {
 
-    var livingWageElement = d3.select("#living-wage-append")
-    var otherWagesElement = d3.select("#other-wages-append")
+    var livingWageElement = d3.select("#living-wage-append");
+    var otherWagesElement = d3.select("#other-wages-append");
+
 
     dispatch.on("statechange.wages", function(d) {
 
@@ -87,8 +132,6 @@
       var otherWageData = d.wages.filter(function(d,i) {
         return d.name !== "income_hrly";
       })
-
-      console.log(livingWageData, otherWageData);
 
       var livingWage = livingWageElement.selectAll("div")
           .data(livingWageData).enter();
@@ -122,22 +165,20 @@
   // A pie chart to show population by age group; uses the "pie" namespace.
   dispatch.on("load.pie", function(stateById) {
 
-    d3.select(window).on('resize', resize); 
-
     var width = 350,
         height = 350,
         radius = Math.min(width, height) / 2;
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 20)
-        .innerRadius(radius - 70);
+        .innerRadius(radius - 100);
 
     var pie = d3.layout.pie()
         .sort(null);
 
     var svg = d3.select("#donutchart").append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", width + 20)
+        .attr("height", height + 20)
       .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -145,20 +186,11 @@
         .data(groups)
       .enter().append("path")
         .style("fill", color)
-        .each(function() { this._current = {startAngle: 0, endAngle: 0}; });
-
-    function resize() { 
-      width = parseInt(d3.select('#donutchart').style('width'), 10);
-      height = parseInt(d3.select('#donutchart').style('height'), 10);
-
-      var radius = Math.min(width, height) / 2;
-      arc.outerRadius(radius - 20);
-      arc.innerRadius(radius - 70);
-
-    }
+        .each(function() { this._current = {startAngle: 0, endAngle: 0}; })
 
     dispatch.on("statechange.pie", function(d) {
-      path.data(pie.value(function(g) { return d[g]; })(groups)).transition()
+      path.data(pie.value(function(g) { return d[g]; })(groups))
+          .transition()
           .attrTween("d", function(d) {
             var interpolate = d3.interpolate(this._current, d);
             this._current = interpolate(0);
@@ -166,6 +198,10 @@
               return arc(interpolate(t));
             };
           });
+
+      path.attr("data-title", function(d) { return d.data; });
+
+
     });
   });
 

@@ -5,7 +5,13 @@ $(document).ready(function () {
       'trigger': 'hover',
       'html': true
   });
-
+  $("path").popover({
+      'container': 'body',
+      'placement': 'right',
+      'trigger': 'hover',
+      'html': true
+  });
+  
   $("[type=radio]").on("click", function(information) { 
 
     function createFriendNode(name){
