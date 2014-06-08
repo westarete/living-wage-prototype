@@ -17,17 +17,16 @@
 
 
 :javascript
-  console.log(gon.coordinates);
 
-  var map = L.map('map', {
-    scrollWheelZoom: false,
-    zoomControl: false
-  }).setView(gon.coordinates, 5);
+  // var map = L.map('map', {
+  //   scrollWheelZoom: false,
+  //   zoomControl: false
+  // }).setView(gon.coordinates, 5);
 
-  var zoom = L.control.zoom({position: 'topright' })
-  zoom.addTo(map);
+  // var zoom = L.control.zoom({position: 'topright' })
+  // zoom.addTo(map);
 
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
+  // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  // }).addTo(map);
 
