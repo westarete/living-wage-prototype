@@ -56,7 +56,7 @@ end
 
 def aggregations
 
-  model_names = %w( State )
+  model_names = %w( State County Metro )
 
   CSV.foreach('db/fixtures/aggregations.csv', headers: true) do |row|
     census_id = row['census_id']
@@ -114,7 +114,7 @@ end
 # Occupation_Metro_2013-csv.csv
 
 def occupations
-  model_names = %w( State )
+  model_names = %w( State Metro )
 
   CSV.foreach('db/fixtures/occupations.csv', headers: true) do |row|
 
