@@ -16,7 +16,7 @@ gem 'haml', '~> 4.0.5'
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete'
 gem 'geocoder'
-
+gem 'sass-rails',   '~> 3.2.3'
 # gem 'bluecloth'
 # gem 'validates_timeliness', '~> 3.0'
 # gem 'paperclip', '~> 3.0'
@@ -40,7 +40,7 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
+
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
