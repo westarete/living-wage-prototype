@@ -1,6 +1,4 @@
 ---
-lib/handlebars/source.rb: lib/handlebars/source-307932840680e6c3107df35a079d73d3.rb
-lib/handlebars/source/index.rb: lib/handlebars/source-307932840680e6c3107df35a079d73d3.rb
 MIT_logo.gif: MIT_logo-cf889829c6a5e83fe0d9757f3643a414.gif
 MIT_logo/index.gif: MIT_logo-cf889829c6a5e83fe0d9757f3643a414.gif
 animated-overlay.gif: animated-overlay-602eee4c79a4796b02bb6442948c9e28.gif
@@ -35,8 +33,8 @@ ui-icons_ffd27a_256x240.png: ui-icons_ffd27a_256x240-200f2f4d0a318cd59e8923ffbce
 ui-icons_ffd27a_256x240/index.png: ui-icons_ffd27a_256x240-200f2f4d0a318cd59e8923ffbce54fe5.png
 ui-icons_ffffff_256x240.png: ui-icons_ffffff_256x240-a4ba4821c4d4a15fc977431670953726.png
 ui-icons_ffffff_256x240/index.png: ui-icons_ffffff_256x240-a4ba4821c4d4a15fc977431670953726.png
-application.js: application-a9a7ab217f3429c48c41c631470768a5.js
-application/index.js: application-a9a7ab217f3429c48c41c631470768a5.js
+application.js: application-f00666db52c94b064786653cf0091c36.js
+application/index.js: application-f00666db52c94b064786653cf0091c36.js
 application.css: application-89fc7513e27467e35cdbee47645ca436.css
 application/index.css: application-89fc7513e27467e35cdbee47645ca436.css
 bootstrap/glyphicons-halflings-regular.eot: bootstrap/glyphicons-halflings-regular-34c3e2fce2eed3de1bb998bae0e4e0de.eot
@@ -47,8 +45,6 @@ bootstrap/glyphicons-halflings-regular.ttf: bootstrap/glyphicons-halflings-regul
 bootstrap/glyphicons-halflings-regular/index.ttf: bootstrap/glyphicons-halflings-regular-89ac66980d09bf7e4619976d2fa08de1.ttf
 bootstrap/glyphicons-halflings-regular.woff: bootstrap/glyphicons-halflings-regular-26a4cf908d46a31304c50b30b5696da5.woff
 bootstrap/glyphicons-halflings-regular/index.woff: bootstrap/glyphicons-halflings-regular-26a4cf908d46a31304c50b30b5696da5.woff
-jquery.min.map: jquery.min-388372ef65cc311f6a3df4a6ceac8d22.map
-jquery/index.min.map: jquery.min-388372ef65cc311f6a3df4a6ceac8d22.map
 jquery-ui/animated-overlay.gif: jquery-ui/animated-overlay-602eee4c79a4796b02bb6442948c9e28.gif
 jquery-ui/animated-overlay/index.gif: jquery-ui/animated-overlay-602eee4c79a4796b02bb6442948c9e28.gif
 jquery-ui/ui-bg_flat_0_aaaaaa_40x100.png: jquery-ui/ui-bg_flat_0_aaaaaa_40x100-7d1197a52442bc56fcad60d0390f4b32.png
@@ -91,3 +87,5 @@ glyphicons-halflings-white.png: glyphicons-halflings-white-6cccd17a7aed91dbc0157
 glyphicons-halflings-white/index.png: glyphicons-halflings-white-6cccd17a7aed91dbc0157d343c68c0d9.png
 glyphicons-halflings.png: glyphicons-halflings-2851b489e8c39f8fad44fc10efb99c3e.png
 glyphicons-halflings/index.png: glyphicons-halflings-2851b489e8c39f8fad44fc10efb99c3e.png
+jquery.min.map: jquery.min-388372ef65cc311f6a3df4a6ceac8d22.map
+jquery/index.min.map: jquery.min-388372ef65cc311f6a3df4a6ceac8d22.map
