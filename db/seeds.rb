@@ -114,7 +114,7 @@ end
 # Occupation_Metro_2013-csv.csv
 
 def occupations
-  model_names = %w( State Metro )
+  model_names = %w( State )
 
   CSV.foreach('db/fixtures/occupations.csv', headers: true) do |row|
 
