@@ -11,6 +11,6 @@
 //= require autocomplete-rails
 //= require bootstrap
 //= require lib/sticky-kit.min.js
-//= require_tree .
 //= require lib/leaflet-src.js
 //= require d3
+//= require listeners.js
