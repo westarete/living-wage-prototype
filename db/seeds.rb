@@ -147,7 +147,7 @@ def geographies
     record = Geography.where(name: name, census_id: census_id)
 
     if record.empty?
-      record = Geography.create(name: name, census_id: census_id, type: geography)
+      record = Geography.create(name: name, census_id: census_id, geography_type: geography)
       puts record.name
     end
   end
