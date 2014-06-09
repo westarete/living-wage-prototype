@@ -26,6 +26,7 @@ gem 'geocoder'
 
 group :production do
   gem 'pg', '0.12.2'
+  gem 'rails_serve_static_assets'
 end
 
 group :development, :test do
