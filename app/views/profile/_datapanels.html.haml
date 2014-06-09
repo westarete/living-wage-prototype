@@ -8,10 +8,10 @@
         Geography: 
       = if @geography.class.name == "State"
         - form_for @geography do |f|
-          - f.autocomplete_field :state_name, autocomplete_geography_name_states_path, :class => "form-control"
+          - f.autocomplete_field :name, autocomplete_geography_name_states_path, :class => "form-control"
       = if @geography.class.name == "County"
         - form_for @geography do |f|
-          - f.autocomplete_field :countyname, autocomplete_geography_name_counties_path, :class => "form-control"
+          - f.autocomplete_field :name, autocomplete_geography_name_counties_path, :class => "form-control"
       = if @geography.class.name == "Metro"
         - form_for @geography do |f|
-          - f.autocomplete_field :cbsa_name, autocomplete_geography_name_metros_path, :class => "form-control"
+          - f.autocomplete_field :name, autocomplete_geography_name_metros_path, :class => "form-control"

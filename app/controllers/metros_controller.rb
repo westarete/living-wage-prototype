@@ -7,7 +7,7 @@ class MetrosController < ApplicationController
   end
 
   def show
-    @geography = Metro.find_by_cbsa(params[:id])
+    @geography = Metro.find(params[:id])
     gon.contributions = @geography.aggregations.select("familycomposition, house_cost, childcare_cost, health_cost, food_cost, trans_cost, other_cost, minwage_hrly, income_hrly, poverty_hrly, income")
     gon.occupations = @geography.occupations.order("OCC_SALARY DESC");
 

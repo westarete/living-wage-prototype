@@ -430,7 +430,7 @@ $(document).ready(function () {
 
   $("#sticky-menu").stick_in_parent({offset_top: 51});
 
-  $( "#state_state_name" ).on( "autocompleteselect", function( event, ui ) {
+  $( "#state_name" ).on( "autocompleteselect", function( event, ui ) {
     if (ui.item.geography_type == "state") {
       window.location.href = "../states/" + ui.item.census_id;
     }
@@ -445,7 +445,7 @@ $(document).ready(function () {
 
   });
 
-  $( "#county_countyname" ).on( "autocompleteselect", function( event, ui ) {
+  $( "#county_name" ).on( "autocompleteselect", function( event, ui ) {
     if (ui.item.geography_type == "state") {
       window.location.href = "../states/" + ui.item.census_id;
     }
@@ -460,7 +460,7 @@ $(document).ready(function () {
 
   });
 
-  $( "#metro_cbsa_name" ).on( "autocompleteselect", function( event, ui ) {
+  $( "#metro_name" ).on( "autocompleteselect", function( event, ui ) {
     if (ui.item.geography_type == "state") {
       window.location.href = "../states/" + ui.item.census_id;
     }

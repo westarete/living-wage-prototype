@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
-  database: lwc
+  database: lwc_develop
   pool: 5
   timeout: 5000
 

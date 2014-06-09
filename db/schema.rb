@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140523144547) do
+ActiveRecord::Schema.define(:version => 20140609024602) do
 
   create_table "aggregations", :force => true do |t|
     t.string   "familycomposition"
@@ -31,79 +31,45 @@ ActiveRecord::Schema.define(:version => 20140523144547) do
     t.integer  "income_hrly"
     t.integer  "income_pretax_hrly"
     t.integer  "poverty_hrly"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
     t.integer  "explainable_id"
     t.string   "explainable_type"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
-  create_table "counties", :force => true do |t|
+  create_table "counties", :primary_key => "census_id", :force => true do |t|
     t.integer  "state_id"
-    t.integer  "countyfips"
-    t.string   "countyname"
-    t.string   "geography"
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  add_index "counties", ["state_id"], :name => "index_counties_on_state_id"
-
-  create_table "counties_metros", :force => true do |t|
-    t.integer "county_id"
-    t.integer "metro_id"
-  end
-
-  add_index "counties_metros", ["county_id", "metro_id"], :name => "index_counties_metros_on_county_id_and_metro_id"
 
   create_table "geographies", :force => true do |t|
-    t.string  "name"
-    t.string  "type"
-    t.integer "census_id"
+    t.string   "name"
+    t.string   "geography_type"
+    t.integer  "census_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
-  create_table "metros", :force => true do |t|
+  create_table "metros", :primary_key => "census_id", :force => true do |t|
     t.integer  "state_id"
-    t.integer  "cbsa"
-    t.string   "cbsa_name"
-    t.string   "geography"
-    t.string   "state2"
-    t.string   "state3"
-    t.string   "state4"
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  add_index "metros", ["state_id"], :name => "index_metros_on_state_id"
-
-  create_table "metros_counties", :force => true do |t|
-    t.integer "metro_id"
-    t.integer "county_id"
-  end
-
-  add_index "metros_counties", ["metro_id", "county_id"], :name => "index_metros_counties_on_metro_id_and_county_id"
 
   create_table "occupations", :force => true do |t|
-    t.string  "occ_type"
-    t.integer "occ_salary"
-    t.string  "geography"
-    t.integer "explainable_id"
-    t.string  "explainable_type"
+    t.string   "occ_type"
+    t.integer  "occ_salary"
+    t.integer  "explainable_id"
+    t.string   "explainable_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
-  create_table "states", :force => true do |t|
-    t.string   "region_id"
-    t.integer  "statefips"
-    t.string   "state_name"
-    t.string   "geography"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "states", ["region_id"], :name => "index_states_on_region_id"
-
-  create_table "users", :force => true do |t|
+  create_table "states", :primary_key => "census_id", :force => true do |t|
     t.string   "name"
-    t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

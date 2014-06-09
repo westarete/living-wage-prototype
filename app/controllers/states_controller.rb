@@ -7,7 +7,7 @@ class StatesController < ApplicationController
   end
 
   def show
-    @geography = State.find_by_statefips(params[:id])
+    @geography = State.find(params[:id])
     gon.contributions = @geography.aggregations.select("familycomposition, house_cost, childcare_cost, health_cost, food_cost, trans_cost, other_cost, minwage_hrly, income_hrly, poverty_hrly, income")
     gon.occupations = @geography.occupations.order("OCC_SALARY DESC");
 

@@ -2,201 +2,161 @@
 
 require 'csv'
 
-# def states
-#   CSV.foreach('db/fixtures/LW_Alldata_2814.csv', headers: true) do |row|
+def states
+  CSV.foreach('db/fixtures/states.csv', headers: true) do |row|
 
-#     region_id = row['censusregion']
-#     statefips = row['statefips']
-#     state_name = row['state']
+    census_id = row['census_id']
+    name = row['name']
 
-#     record = State.find_by_statefips(statefips)
+    record = State.where(census_id: census_id)
 
-#     if record.nil?
-#       record = State.create( region_id: region_id,
-#                              statefips: statefips,
-#                              state_name: state_name)
-#       puts record.inspect
-#     end
-#   end
-# end
+    if record.empty?
+      record = State.create( census_id: census_id,
+                             name: name)
+      puts record.inspect
+    end
+  end
+end
 
-# def counties
-#   CSV.foreach('db/fixtures/CountyLW_3_14_14.csv', headers: true) do |row|
+def counties
+  CSV.foreach('db/fixtures/counties.csv', headers: true) do |row|
 
-#     statefips = row['statefips']
-#     countyfips = row['countyfips']
-#     countyname = row['countyname']
+    state_id = row['state_id']
+    census_id = row['census_id']
+    name = row['name']
 
-#     record = County.find_by_countyfips(countyfips)
+    record = County.where(census_id: census_id)
 
-#     if record.nil? && countyfips.present?
-#       state = State.find_by_statefips(statefips)
-#       record = state.counties.create( countyfips: countyfips,
-#                                       countyname: countyname)
-#     # ensure
-#       puts record.inspect
-#     end
-#   end
-# end
+    if record.empty?
+      state = State.find(state_id)
+      record = state.counties.create( census_id: census_id,
+                                      name: name)
+      puts record.inspect
+    end
+  end
+end
 
-# def metros
-#   CSV.foreach('db/fixtures/LW_Alldata_2814.csv', headers: true) do |row|
+def metros
+  CSV.foreach('db/fixtures/metros.csv', headers: true) do |row|
 
-#     statefips = row['statefips']
-#     cbsa = row['cbsa']
-#     cbsa_name = row['cbsa_name']
+    census_id = row['census_id']
+    name = row['name']
+    state_id = row['state_id']
 
-#     record = Metro.find_by_cbsa(cbsa)
+    record = Metro.where(census_id: census_id)
 
-#     if record.nil? && cbsa.present?
-#       state = State.find_by_statefips(statefips)
-#       record = state.metros.create( cbsa: cbsa,
-#                                     cbsa_name: cbsa_name)
-#     # ensure
-#       puts record.inspect
-#     end
-#   end
-# end
+    if record.empty?
+      state = State.find(state_id)
+      record = state.metros.create( name: name,
+                                    census_id: census_id)
+      puts record.inspect
+    end
+  end
+end
 
-# def aggregations
-#   CSV.foreach('db/fixtures/CountyLW_3_14_14.csv', headers: true) do |row|
+def aggregations
 
-#     familycomposition = row['familycomposition']
-#     familysize = row['familysize']
-#     house_cost = row['house_cost']
-#     childcare_cost = row['childcare_cost']
-#     health_cost = row['health_cost']
-#     food_cost = row['food_cost']
-#     trans_cost = row['trans_cost']
-#     other_cost = row['other_cost']
-#     income = row['income']
-#     income_pretax = row['income_pretax']
-#     tax = row['tax']
-#     poverty = row['poverty']
-#     minwage_hrly = row['minwage_hrly']
-#     minwage = row['minwage']
-#     income_hrly = row['income_hrly']
-#     income_pretax_hrly = row['income_pretax_hrly']
-#     poverty_hrly = row['poverty_hrly']
-#     aggregation_id = row['aggregation_id']
+  model_names = %w( State County Metro )
 
-#     geography = row['geography']
-#     statefips = row['statefips']
-#     cbsa = row['cbsa']
-#     countyfips = row['countyfips']
+  CSV.foreach('db/fixtures/aggregations.csv', headers: true) do |row|
+    census_id = row['census_id']
+    familycomposition = row['familycomposition']
+    familysize = row['familysize']
+    geography = row['geography']
+    house_cost = row['house_cost']
+    childcare_cost = row['childcare_cost']
+    health_cost = row['health_cost']
+    food_cost = row['food_cost']
+    trans_cost = row['trans_cost']
+    other_cost = row['other_cost']
+    income = row['income']
+    income_pretax = row['income_pretax']
+    tax = row['tax']
+    poverty = row['poverty']
+    minwage_hrly = row['minwage_hrly']
+    minwage = row['minwage']
+    income_hrly = row['income_hrly']
+    income_pretax_hrly = row['income_pretax_hrly']
+    poverty_hrly = row['poverty_hrly']
 
-#     begin
-#       record = Aggregation.find(aggregation_id)
-#     rescue ActiveRecord::RecordNotFound
-#       if record.nil?
-#         if (geography == "State" && familycomposition == "1A0C")
-#           state = State.find_by_statefips(statefips)
-#           record = state.aggregations.create( familycomposition: familycomposition,
-#                                         familysize: familysize,
-#                                         house_cost: house_cost,
-#                                         childcare_cost: childcare_cost,
-#                                         health_cost: health_cost,
-#                                         food_cost: food_cost,
-#                                         trans_cost: trans_cost,
-#                                         other_cost: other_cost,
-#                                         income: income,
-#                                         income_pretax: income_pretax,
-#                                         tax: tax,
-#                                         poverty: poverty,
-#                                         minwage_hrly: minwage_hrly,
-#                                         minwage: minwage,
-#                                         income_hrly: income_hrly,
-#                                         income_pretax_hrly: income_pretax_hrly,
-#                                         poverty_hrly: poverty_hrly)
-#         end
-        
-#         if (geography == "Metro" && familycomposition == "1A0C")
-#           metro = Metro.find_by_cbsa(cbsa)
-#           record = metro.aggregations.create( familycomposition: familycomposition,
-#                                         familysize: familysize,
-#                                         house_cost: house_cost,
-#                                         childcare_cost: childcare_cost,
-#                                         health_cost: health_cost,
-#                                         food_cost: food_cost,
-#                                         trans_cost: trans_cost,
-#                                         other_cost: other_cost,
-#                                         income: income,
-#                                         income_pretax: income_pretax,
-#                                         tax: tax,
-#                                         poverty: poverty,
-#                                         minwage_hrly: minwage_hrly,
-#                                         minwage: minwage,
-#                                         income_hrly: income_hrly,
-#                                         income_pretax_hrly: income_pretax_hrly,
-#                                         poverty_hrly: poverty_hrly)
-#         end
-
-#         if (geography == "County" && familycomposition == "1A0C")
-#           county = County.find_by_countyfips(countyfips)
-#           record = county.aggregations.create( familycomposition: familycomposition,
-#                                         familysize: familysize,
-#                                         house_cost: house_cost,
-#                                         childcare_cost: childcare_cost,
-#                                         health_cost: health_cost,
-#                                         food_cost: food_cost,
-#                                         trans_cost: trans_cost,
-#                                         other_cost: other_cost,
-#                                         income: income,
-#                                         income_pretax: income_pretax,
-#                                         tax: tax,
-#                                         poverty: poverty,
-#                                         minwage_hrly: minwage_hrly,
-#                                         minwage: minwage,
-#                                         income_hrly: income_hrly,
-#                                         income_pretax_hrly: income_pretax_hrly,
-#                                         poverty_hrly: poverty_hrly)
-#         end
-
-
-#       end
-#     ensure
-#         puts record.inspect
-#     end    
-#   end
-# end
+    record = Aggregation.where(explainable_id: census_id, familycomposition: familycomposition, explainable_type: geography)
+    
+    if record.empty?
+      model_names.each do |model_name|
+        model = Module.const_get model_name
+        if model.name == geography
+          geography = model.find(census_id)
+          geography.aggregations.create(  familycomposition: familycomposition,
+                                          familysize: familysize,
+                                          house_cost: house_cost,
+                                          childcare_cost: childcare_cost,
+                                          health_cost: health_cost,
+                                          food_cost: food_cost,
+                                          trans_cost: trans_cost,
+                                          other_cost: other_cost,
+                                          income: income,
+                                          income_pretax: income_pretax,
+                                          tax: tax,
+                                          poverty: poverty,
+                                          minwage_hrly: minwage_hrly,
+                                          minwage: minwage,
+                                          income_hrly: income_hrly,
+                                          income_pretax_hrly: income_pretax_hrly,
+                                          poverty_hrly: poverty_hrly)
+        end
+      end
+    end
+  end
+end
 
 # CSV filenames
 # Occupation_2013-csv.csv
 # Occupation_Metro_2013-csv.csv
 
-def occupation_states
-  CSV.foreach('db/fixtures/Occupation_2013-csv.csv', headers: true) do |row|
+def occupations
+  model_names = %w( State Metro )
+
+  CSV.foreach('db/fixtures/occupations.csv', headers: true) do |row|
+
+    census_id = row['census_id']
     geography = row['geography']
-    state = row['state']
     occ_type = row['occ_type']
     occ_salary = row['occ_salary']
 
-    state = State.find_by_state_name(state)
-    record = state.occupations.create(
-      geography: geography,
-      occ_type: occ_type,
-      occ_salary: occ_salary)
+
+    record = Occupation.where(explainable_id: census_id, occ_type: occ_type, explainable_type: geography)
+
+    if record.empty?
+      model_names.each do |model_name|
+        model = Module.const_get model_name
+        if model.name == geography
+          geography = model.find(census_id)
+          geography.occupations.create(occ_type: occ_type, occ_salary: occ_salary)
+        end
+      end
+    end
   end
 end
 
-def occupation_metros
-  CSV.foreach('db/fixtures/Occupation_Metro_2013-csv.csv', headers: true) do |row|
+def geographies
+  CSV.foreach("db/fixtures/geographies.csv", headers: true) do |row|
+    name = row['name']
     geography = row['geography']
-    cbsa = row['cbsa']
-    occ_type = row['occ_type']
-    occ_salary = row['occ_salary']
+    census_id = row['census_id']
 
-    metro = Metro.find_by_cbsa(cbsa)
-    record = metro.occupations.create(
-      geography: geography,
-      occ_type: occ_type,
-      occ_salary: occ_salary)
+    record = Geography.where(name: name, census_id: census_id)
+
+    if record.empty?
+      record = Geography.create(name: name, census_id: census_id, type: geography)
+      puts record.name
+    end
   end
 end
 
-occupation_metros
-# occupation_states
-# states
-# counties
-# metros
-# aggregations
+
+states
+counties
+metros
+aggregations
+occupations
+geographies
