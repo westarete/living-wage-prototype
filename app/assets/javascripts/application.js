@@ -12,6 +12,4 @@
 //= require bootstrap
 //= require lib/sticky-kit.min.js
 //= require lib/leaflet-src.js
-//= require lib/d3.v3.js
-//= require listeners.js
-
+//= require d3
