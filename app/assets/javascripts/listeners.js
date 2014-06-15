@@ -180,7 +180,7 @@ $(document).ready(function () {
         .attr("value", function(d) { return d.familycomposition; })
         .text(function(d) {
           var alias = fam_composition_aliases.filter(function(m) {
-            console.log(m.type,d.familycomposition);
+            
             return m.type == d.familycomposition;
           });
 
@@ -296,7 +296,7 @@ $(document).ready(function () {
             var alias = occupation_aliases.filter(function(m) {
               return "occ_" + m.code == d.occ_type;
             });
-            console.log(alias);
+
             return alias[0].alias; 
           });
 
@@ -371,7 +371,7 @@ $(document).ready(function () {
       pluck.push({ name: prop, value: d[prop] })
     }; 
 
-    contributions = pluck.filter(function(d) { return d.name !== "familycomposition" && d.name !== "minwage_hrly" && d.name !== "income_hrly" && d.name !== "poverty_hrly" });
+    contributions = pluck.filter(function(d) { return d.name !== "familycomposition" && d.name !== "minwage_hrly" && d.name !== "income_hrly" && d.name !== "poverty_hrly" && d.name !== "income" });
 
     wages = pluck.filter(function(d) { return d.name == "minwage_hrly" || d.name == "income_hrly" || d.name == "poverty_hrly"  });
 
@@ -389,7 +389,7 @@ $(document).ready(function () {
   dispatch.statechange(stateById.get("2A1C"));
 
 
-  // Bootstrap & other UI motifs
+  // Bootstrap & other UI 
 
   $(".data-panel").popover({
       'container': 'body',
@@ -397,6 +397,7 @@ $(document).ready(function () {
       'trigger': 'hover',
       'html': true
   });
+
   $("path").popover({
       'container': 'body',
       'placement': 'right',
@@ -404,75 +405,31 @@ $(document).ready(function () {
       'html': true
   });
   
-  $("[type=radio]").on("click", function(information) { 
+  // $("[type=radio]").on("click", function(information) { 
 
-    function createFriendNode(name){
-      return(
-          $( "<li>" + name + "</li>" )
-      );
-    }
+  //   function createFriendNode(name){
+  //     return(
+  //         $( "<li>" + name + "</li>" )
+  //     );
+  //   }
 
-    var buffer = [];
+  //   var buffer = [];
 
-    var id = $(this).attr('value');
+  //   var id = $(this).attr('value');
 
-    $.getJSON("http://localhost:3000/states/" + id, function (result) {
-      var buffer = result.counties.map(function(d) {  return "<input type=\"radio\" name=\"geography\" value=\"" + d.countyfips + "\">" + "<a href=\"../counties/" + d.countyfips + "\">" + d.countyname + "</a><br />" });
-      $("#counties").empty().append(function () {
-        return buffer.join('');
-      });
+  //   $.getJSON("http://localhost:3000/states/" + id, function (result) {
+  //     var buffer = result.counties.map(function(d) {  return "<input type=\"radio\" name=\"geography\" value=\"" + d.countyfips + "\">" + "<a href=\"../counties/" + d.countyfips + "\">" + d.countyname + "</a><br />" });
+  //     $("#counties").empty().append(function () {
+  //       return buffer.join('');
+  //     });
 
-      var buffer = result.metros.map(function(d) {  return "<input type=\"radio\" name=\"geography\" value=\"" + d.cbsa + "\">" + "<a href=\"../metros/" + d.cbsa + "\">" + d.cbsa_name + "</a><br />" });
-      $("#metros").empty().append(function () {
-        return buffer.join('');
-      });
-    });
-  });
+  //     var buffer = result.metros.map(function(d) {  return "<input type=\"radio\" name=\"geography\" value=\"" + d.cbsa + "\">" + "<a href=\"../metros/" + d.cbsa + "\">" + d.cbsa_name + "</a><br />" });
+  //     $("#metros").empty().append(function () {
+  //       return buffer.join('');
+  //     });
+  //   });
+  // });
 
   $("#sticky-menu").stick_in_parent({offset_top: 51});
 
-  $( "#state_name" ).on( "autocompleteselect", function( event, ui ) {
-    if (ui.item.geography_type == "state") {
-      window.location.href = "../states/" + ui.item.census_id;
-    }
-    
-    if (ui.item.geography_type == "county") {
-      window.location.href = "../counties/" + ui.item.census_id;
-    }
-
-    if (ui.item.geography_type == "metro") {
-      window.location.href = "../metros/" + ui.item.census_id;
-    }
-
-  });
-
-  $( "#county_name" ).on( "autocompleteselect", function( event, ui ) {
-    if (ui.item.geography_type == "state") {
-      window.location.href = "../states/" + ui.item.census_id;
-    }
-    
-    if (ui.item.geography_type == "county") {
-      window.location.href = "../counties/" + ui.item.census_id;
-    }
-
-    if (ui.item.geography_type == "metro") {
-      window.location.href = "../metros/" + ui.item.census_id;
-    }
-
-  });
-
-  $( "#metro_name" ).on( "autocompleteselect", function( event, ui ) {
-    if (ui.item.geography_type == "state") {
-      window.location.href = "../states/" + ui.item.census_id;
-    }
-    
-    if (ui.item.geography_type == "county") {
-      window.location.href = "../counties/" + ui.item.census_id;
-    }
-
-    if (ui.item.geography_type == "metro") {
-      window.location.href = "../metros/" + ui.item.census_id;
-    }
-
-  });
 });
