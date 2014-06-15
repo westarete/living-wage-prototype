@@ -14,5 +14,4 @@ class State < ActiveRecord::Base
   def coordinates
     Geocoder.search(state_name).first.coordinates
   end
-  
 end
