@@ -18,15 +18,50 @@
 
 :javascript
 
-  // var map = L.map('map', {
-  //   scrollWheelZoom: false,
-  //   zoomControl: false
-  // }).setView(gon.coordinates, 5);
+  var map = L.map('map', {
+    scrollWheelZoom: false,
+    zoomControl: false
+  })
 
-  // var zoom = L.control.zoom({position: 'topright' })
-  // zoom.addTo(map);
+  var zoom = L.control.zoom({position: 'topright' })
+  zoom.addTo(map);
 
-  // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  //     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  // }).addTo(map);
+  var censusStates = new L.TileLayer.WMS("http://tigerweb.geo.census.gov/ArcGIS/services/tigerWMS/MapServer/WMSServer",
+        {
+            layers: 'States',
+            format: 'image/png',
+            transparent: true,
+            attribution: "U.S. Census TIGERweb"
+        });
 
+  var censusCounties = new L.TileLayer.WMS("http://tigerweb.geo.census.gov/ArcGIS/services/tigerWMS/MapServer/WMSServer",
+          {
+              layers: 'Counties',
+              format: 'image/png',
+              transparent: true,
+              attribution: "U.S. Census TIGERweb"
+          });
+
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var url_string = "";
+
+  if (gon.census_type == "state") {
+    url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/0/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
+
+    map.addLayer(censusStates);
+  }
+
+
+  if (gon.census_type == "county") {
+      url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
+
+    map.addLayer(censusCounties);
+  }
+
+
+  $.getJSON(url_string, function(d){
+    map.setView([d.features[0].attributes.CENTLAT, d.features[0].attributes.CENTLON - 6], 6);
+  });

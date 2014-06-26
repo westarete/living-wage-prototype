@@ -11,6 +11,5 @@ class StatesController < ApplicationController
     gon.contributions = @geography.aggregations.select("familycomposition, house_cost, childcare_cost, health_cost, food_cost, trans_cost, other_cost, minwage_hrly, income_hrly, poverty_hrly, income")
     gon.occupations = @geography.occupations.order("OCC_SALARY DESC");
 
-    # gon.wages = @geography.aggregations.select("familycomposition, minwage_hrly, income_hrly, poverty_hrly")
   end
 end
