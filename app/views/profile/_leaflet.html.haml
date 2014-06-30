@@ -5,14 +5,14 @@
     %div.col-md-12
       %h5{style: "text-align:left;"}=@geography.name
   %div.row
-    %div.col-md-8#living-wage-append
+    %div.col-md-12#living-wage-append
       / %div#living-wage
       /   $25 Living Wage
-    %div.col-md-4#other-wages-append
-      / %div.row.other-wages
-      /   $16 Minimum Wage
-      / %div.row.other-wages
-      /   $8 Poverty Wage
+    / %div.col-md-4#other-wages-append
+    /   / %div.row.other-wages
+    /   /   $16 Minimum Wage
+    /   / %div.row.other-wages
+    /   /   $8 Poverty Wage
 
 
 
@@ -47,11 +47,14 @@
   }).addTo(map);
 
   var url_string = "";
+  var zoom_level = 6;
 
   if (gon.census_type == "state") {
     url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/0/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
 
     map.addLayer(censusStates);
+
+    zoom_level = 6;
   }
 
 
@@ -59,9 +62,20 @@
       url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
 
     map.addLayer(censusCounties);
+
+    zoom_level = 9;
   }
 
+  if (gon.census_type == "metro") {
+    url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/CBSA/MapServer/8/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON&returnGeometry=false&maxAllowableOffset=&geometryPrecision=3&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson"
+
+    zoom_level = 10;
+  }
 
   $.getJSON(url_string, function(d){
-    map.setView([d.features[0].attributes.CENTLAT, d.features[0].attributes.CENTLON - 6], 6);
+    console.log(d);
+    var lat = d.features[0].attributes.CENTLAT;
+    var lon = d.features[0].attributes.CENTLON;
+    
+    map.setView([lat, lon], zoom_level);
   });

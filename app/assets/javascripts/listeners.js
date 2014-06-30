@@ -201,7 +201,6 @@ $(document).ready(function () {
 
     var div = d3.select("#contributions")
     
-
     dispatch.on("statechange.bar", function(d) {
 
     var contributions = div.selectAll("div")
@@ -218,7 +217,7 @@ $(document).ready(function () {
               return "#" + d.name
             })
             .attr("data-toggle", "tab")
-            .text(function(d) { return d.value })
+            .text(function(d) { return d.name + " " })
               .append("span")
               .attr("class", function(d) {
                 if (d.name == "house_cost") {return "glyphicon glyphicon-home"}
@@ -235,45 +234,76 @@ $(document).ready(function () {
 
   dispatch.on("load.wages", function(stateById) {
 
-    var livingWageElement = d3.select("#living-wage-append");
-    var otherWagesElement = d3.select("#other-wages-append");
+      var margin = {top: 20, right: 30, bottom: 30, left: 50},
+          width = 550 - margin.left - margin.right,
+          height = 150 - margin.top - margin.bottom;
 
+      var x = d3.scale.ordinal()
+          .rangeRoundBands([0, width], .1);
+
+      var y = d3.scale.linear()
+          .range([height, 0]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x)
+          .orient("bottom");
+
+      var formatCurrency = d3.format(".1f");
+
+      var yAxis = d3.svg.axis()
+          .scale(y)
+          .orient("left")
+          .ticks(5)
+          .tickFormat(function(d) { return "$" + formatCurrency(d); });
 
     dispatch.on("statechange.wages", function(d) {
 
-      var livingWageData = d.wages.filter(function(d,i) {
-        return d.name == "income_hrly";
-      });
+      var chart = d3.select("#living-wage-append")
+        .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      var otherWageData = d.wages.filter(function(d,i) {
-        return d.name !== "income_hrly";
-      })
+        var data = d.wages;
 
-      var livingWage = livingWageElement.selectAll("div")
-          .data(livingWageData).enter();
+        console.log(data);
 
-      livingWage
-        .append("div")
-        .attr("id", "living-wage")
-        .text(function(d) {
-          return "$" + d.value + " Living Wage";
-        })
+        x.domain(data.map(function(d) { return d.name; }));
+        y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
-      var otherWages = otherWagesElement.selectAll("div")
-          .data(otherWageData).enter();
+        chart.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
 
-      otherWages
-        .append("div")
-        .attr("class", "other-wages")
-        .text(function(d) {
-          if (d.name == "poverty_hrly") {
-            return "$" + d.value + " Poverty Wage";
-          }
+        chart.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
 
-          if (d.name == "minwage_hrly") {
-            return "$" + d.value + " Minimum Wage";
-          }
-        })
+        chart.selectAll(".bar")
+            .data(data)
+          .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.name); })
+            .attr("y", function(d) { return y(d.value); })
+            .attr("height", function(d) { return height - y(d.value); })
+            .attr("width", x.rangeBand())
+
+        chart.selectAll(".text")
+            .data(data)
+          .enter().append("text")
+            .attr("class", "bartext")
+            .attr("text-anchor", "middle")
+            .attr("x", function(d, i) { return x(i)+x.rangeBand(d.name)/2; })
+            .attr("y", function(d) { return height*0.9; })
+            .text(function (d) { return "$" + d.value });
+
+
+        function type(d) {
+          d.value = +d.value; // coerce to number
+          return d;
+        }
 
     });
   });
@@ -321,7 +351,8 @@ $(document).ready(function () {
 
     var width = 350,
         height = 350,
-        radius = Math.min(width, height) / 2;
+        radius = Math.min(width, height) / 2,
+        labelr = radius + 15;
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 20)
@@ -352,6 +383,25 @@ $(document).ready(function () {
               return arc(interpolate(t));
             };
           });
+
+
+      path.append("svg:text")
+          .attr("transform", function(d) {
+              var c = arc.centroid(d),
+                  x = c[0],
+                  y = c[1],
+                  // pythagorean theorem for hypotenuse
+                  h = Math.sqrt(x*x + y*y);
+              return "translate(" + (x/h * labelr) +  ',' +
+                 (y/h * labelr) +  ")"; 
+          })
+          .attr("dy", ".35em")
+          .attr("text-anchor", function(d) {
+              // are we past the center?
+              return (d.endAngle + d.startAngle)/2 > Math.PI ?
+                  "end" : "start";
+          })
+          .text(function(d, i) { return d.value.toFixed(2); });
 
       path.attr("data-title", function(d) { return d.data; })
         .attr("data-content", function(d) { return d.value; })
