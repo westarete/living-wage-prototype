@@ -47,14 +47,26 @@ textarea {
 
 /* typography */
 
+#dictionary {
+  min-height: 450px;
+}
+
 #map {
   height: 220px;
   margin: 0px;
 }
 
+#contribute-your-story {
+ background-color: rgba(254,217,166,0.4); 
+}
+
 #donutchart {
   display: block;
   margin: 0 auto;
+}
+
+#occupations {
+  background-color: rgba(204,235,197,0.5);
 }
 
 #breadcrumb {
@@ -132,6 +144,9 @@ a {
   margin: 0;
   padding: 0;
   border-radius: 5px;
+  -webkit-box-shadow: -2px 5px 18px 1px rgba(158,158,158,1);
+  -moz-box-shadow: -2px 5px 18px 1px rgba(158,158,158,1);
+  box-shadow: -2px 5px 18px 1px rgba(158,158,158,1);
 }
 
 .red-strip {
