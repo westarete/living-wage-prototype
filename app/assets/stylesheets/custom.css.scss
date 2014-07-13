@@ -48,7 +48,7 @@ textarea {
 /* typography */
 
 #map {
-  min-height: 220px;
+  height: 220px;
   margin: 0px;
 }
 
@@ -60,6 +60,15 @@ textarea {
 #breadcrumb {
   font-size: .6em;
   color: darkgray;
+}
+
+#wage-bar-chart {
+  height: 600px;
+}
+
+#donut-chart-menu {
+  background-color: rgba(173,216,230,0.9);
+  padding: 4px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -118,7 +127,7 @@ a {
   position:absolute;
   top:58px;
   left: 1%;
-  background-color:rgba(255,255,255,0.9);
+  background-color:rgba(248,248,255,0.9);
   border-round: 5px;
   margin: 0;
   padding: 0;
@@ -224,17 +233,6 @@ aside {
 
 /* forms */
 
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  @include box_sizing;
-}
-
-input {
-  height: auto !important;
-}
 
 #error_explanation {
   color: #f00;
@@ -305,13 +303,7 @@ input {
   z-index: 2000;
 }
 
-.search {
-  form {
-    input {
-      padding: 0px;
-    }
-  }
-}
+
 
 #living-wage {
   line-height: 1.2em;

@@ -234,9 +234,9 @@ $(document).ready(function () {
 
   dispatch.on("load.wages", function(stateById) {
 
-      var margin = {top: 20, right: 30, bottom: 30, left: 50},
+      var margin = {top: 20, right: 30, bottom: 30, left: 10},
           width = 550 - margin.left - margin.right,
-          height = 150 - margin.top - margin.bottom;
+          height = 175 - margin.top - margin.bottom;
 
       var x = d3.scale.ordinal()
           .rangeRoundBands([0, width], .1);
@@ -276,10 +276,6 @@ $(document).ready(function () {
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
-
-        chart.append("g")
-            .attr("class", "y axis")
-            .call(yAxis);
 
         chart.selectAll(".bar")
             .data(data)

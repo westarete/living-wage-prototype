@@ -1,18 +1,16 @@
 %div.row#map
 %div.col-md-6#summary-panel
   %div.red-strip
-  %div.row
+  %div.row#wage-bar-chart
     %div.col-md-12
       %h5{style: "text-align:left;"}=@geography.name
+    %div#living-wage-append
+    %div#donut-chart-menu
+      %span{style: "font-size: 1em"}
+        For a family of:
+    %div#donutchart
   %div.row
-    %div.col-md-12#living-wage-append
-      / %div#living-wage
-      /   $25 Living Wage
-    / %div.col-md-4#other-wages-append
-    /   / %div.row.other-wages
-    /   /   $16 Minimum Wage
-    /   / %div.row.other-wages
-    /   /   $8 Poverty Wage
+    %div.col-md-12
 
 
 
