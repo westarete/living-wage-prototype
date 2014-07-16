@@ -69,6 +69,34 @@ $(document).ready(function () {
     }
   ];
 
+  var contribution_aliases = [
+    {
+      "type": "childcare_cost",
+      "alias": "Childcare"
+    },
+    {
+      "type": "health_cost",
+      "alias": "Healthcare"
+    },
+    {
+      "type": "food_cost",
+      "alias": "Food"
+    },
+    {
+      "type": "trans_cost",
+      "alias": "Transportation"
+    },
+    {
+      "type": "other_cost",
+      "alias": "Other"
+    },
+    {
+      "type": "house_cost",
+      "alias": "Housing"
+    },
+
+  ]
+
   var occupation_aliases = [
     {
       "code": "110000",
@@ -169,9 +197,8 @@ $(document).ready(function () {
   // A drop-down menu for selecting a state; uses the "menu" namespace.
   dispatch.on("load.menu", function(stateById) {
     var select = d3.select("#donut-chart-menu")
-      .append("div")
       .append("select")
-        .attr("class", "form-control")
+        .attr("class", "form-control input-sm")
         .on("change", function() { dispatch.statechange(stateById.get(this.value)); })
 
     select.selectAll("option")
@@ -197,46 +224,11 @@ $(document).ready(function () {
     });
   });
 
-  dispatch.on("load.bar", function(stateById) {
-
-    var div = d3.select("#contributions")
-    
-    dispatch.on("statechange.bar", function(d) {
-
-    var contributions = div.selectAll("div")
-        contributions
-          .data(d.contributions)
-          .enter()
-            .append("div")
-            .attr("class","row")
-            .append("button")
-            .style("color", function(d) { return color(d.name); })
-            .attr("type", "button")
-            .attr("class", "btn")
-            .attr("href", function(d) {
-              return "#" + d.name
-            })
-            .attr("data-toggle", "tab")
-            .text(function(d) { return d.name + " " })
-              .append("span")
-              .attr("class", function(d) {
-                if (d.name == "house_cost") {return "glyphicon glyphicon-home"}
-                if (d.name == "childcare_cost") { return "glyphicon glyphicon-heart"}
-                if (d.name == "health_cost") { return "glyphicon glyphicon-plus-sign"}
-                if (d.name == "food_cost") { return "glyphicon glyphicon-leaf"}
-                if (d.name == "trans_cost") { return "glyphicon glyphicon-road"}
-                if (d.name == "other_cost") { return "glyphicon glyphicon-asterisk"}
-              })
-                    
-
-    });
-  });
-
   dispatch.on("load.wages", function(stateById) {
 
-      var margin = {top: 20, right: 30, bottom: 30, left: 10},
-          width = 550 - margin.left - margin.right,
-          height = 175 - margin.top - margin.bottom;
+      var margin = {top: 20, right: 10, bottom: 30, left: 10},
+          width = parseInt(d3.select("#living-wage-append").style('width'), 10) - margin.left - margin.right,
+          height = 200 - margin.top - margin.bottom;
 
       var x = d3.scale.ordinal()
           .rangeRoundBands([0, width], .1);
@@ -246,7 +238,8 @@ $(document).ready(function () {
 
       var xAxis = d3.svg.axis()
           .scale(x)
-          .orient("bottom");
+          .orient("bottom")
+          .tickValues(["Living Wage", "Minimum Wage", "Poverty Wage"]);
 
       var formatCurrency = d3.format(".1f");
 
@@ -256,9 +249,13 @@ $(document).ready(function () {
           .ticks(5)
           .tickFormat(function(d) { return "$" + formatCurrency(d); });
 
+      var barHeights = 0
+
+
+
     dispatch.on("statechange.wages", function(d) {
 
-      var chart = d3.select("#living-wage-append")
+      var svg = d3.select("#living-wage-append")
         .append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
@@ -272,27 +269,37 @@ $(document).ready(function () {
         x.domain(data.map(function(d) { return d.name; }));
         y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
-        chart.append("g")
+        svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
-        chart.selectAll(".bar")
+        svg.selectAll(".bar")
             .data(data)
           .enter().append("rect")
             .attr("class", "bar")
+            .attr("id", function(d) {
+              return "bar-" + d.name;
+            })
             .attr("x", function(d) { return x(d.name); })
-            .attr("y", function(d) { return y(d.value); })
-            .attr("height", function(d) { return height - y(d.value); })
+            .attr("y", function() { return y(0); })
             .attr("width", x.rangeBand())
+            .attr("height", 0)
+          .transition()
+            .attr("y", function(d) { return y(d.value); })
+            .attr("height", function(d) { return height - y(d.value); });
 
-        chart.selectAll(".text")
+        svg.selectAll(".text")
             .data(data)
           .enter().append("text")
             .attr("class", "bartext")
+            .attr("id", function(d) {
+              return "text-" + d.name;
+            })
             .attr("text-anchor", "middle")
             .attr("x", function(d, i) { return x(i)+x.rangeBand(d.name)/2; })
-            .attr("y", function(d) { return height*0.9; })
+            .attr("y", function(d) { return y(d.value/2); })
+            .attr("dy", ".35em")
             .text(function (d) { return "$" + d.value });
 
 
@@ -345,14 +352,14 @@ $(document).ready(function () {
   // A pie chart to show population by age group; uses the "pie" namespace.
   dispatch.on("load.pie", function(stateById) {
 
-    var width = 350,
-        height = 350,
+    var width = parseInt(d3.select("#donutchart").style('width'), 10)*0.6,
+        height = width,
         radius = Math.min(width, height) / 2,
         labelr = radius + 15;
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 20)
-        .innerRadius(radius - 100);
+        .innerRadius(radius - 125);
 
     var pie = d3.layout.pie()
         .sort(null);
@@ -369,7 +376,21 @@ $(document).ready(function () {
         .style("fill", color)
         .each(function() { this._current = {startAngle: 0, endAngle: 0}; })
 
+    var text = svg.selectAll("text")
+        .data(groups)
+      .enter().append("svg:text")
+        .attr("transform", "translate(0,0)")
+
     dispatch.on("statechange.pie", function(d) {
+
+      var sum = 0;
+
+      d.contributions.forEach(function(d) {
+        sum = sum + d.value;
+      });
+
+      console.log(sum);
+
       path.data(pie.value(function(g) { return d[g]; })(groups))
           .transition()
           .attrTween("d", function(d) {
@@ -380,27 +401,38 @@ $(document).ready(function () {
             };
           });
 
+      path.attr("data-title", function(d) { return d.data; })
+        .attr("data-content", function(d) { return d.value; })
 
-      path.append("svg:text")
+      text.data(pie.value(function(g) { return d[g]; })(groups))
+          .transition()
           .attr("transform", function(d) {
               var c = arc.centroid(d),
                   x = c[0],
                   y = c[1],
                   // pythagorean theorem for hypotenuse
                   h = Math.sqrt(x*x + y*y);
-              return "translate(" + (x/h * labelr) +  ',' +
-                 (y/h * labelr) +  ")"; 
+              return "translate(" + x +  ',' +
+                 y +  ")"; 
           })
-          .attr("dy", ".35em")
-          .attr("text-anchor", function(d) {
+          .attr("x", 0)
+          .attr("y", 0)
+          .attr("dy", ".71em")
+          .style("text-anchor", function(d) {
               // are we past the center?
-              return (d.endAngle + d.startAngle)/2 > Math.PI ?
-                  "end" : "start";
+              return "middle";
           })
-          .text(function(d, i) { return d.value.toFixed(2); });
+          .attr("class", "pie-text")
+          .text(function(d, i) { 
+            var alias = contribution_aliases.filter(function(m) {
+              return m.type == d.data;
+            });
 
-      path.attr("data-title", function(d) { return d.data; })
-        .attr("data-content", function(d) { return d.value; })
+            if (d.value !== 0) 
+              { 
+                return alias[0].alias + ": " + (d.value/sum * 100).toFixed(2) + "%"; 
+              } 
+          })
 
     });
   });
@@ -450,31 +482,6 @@ $(document).ready(function () {
       'trigger': 'hover',
       'html': true
   });
-  
-  // $("[type=radio]").on("click", function(information) { 
-
-  //   function createFriendNode(name){
-  //     return(
-  //         $( "<li>" + name + "</li>" )
-  //     );
-  //   }
-
-  //   var buffer = [];
-
-  //   var id = $(this).attr('value');
-
-  //   $.getJSON("http://localhost:3000/states/" + id, function (result) {
-  //     var buffer = result.counties.map(function(d) {  return "<input type=\"radio\" name=\"geography\" value=\"" + d.countyfips + "\">" + "<a href=\"../counties/" + d.countyfips + "\">" + d.countyname + "</a><br />" });
-  //     $("#counties").empty().append(function () {
-  //       return buffer.join('');
-  //     });
-
-  //     var buffer = result.metros.map(function(d) {  return "<input type=\"radio\" name=\"geography\" value=\"" + d.cbsa + "\">" + "<a href=\"../metros/" + d.cbsa + "\">" + d.cbsa_name + "</a><br />" });
-  //     $("#metros").empty().append(function () {
-  //       return buffer.join('');
-  //     });
-  //   });
-  // });
 
   $("#sticky-menu").stick_in_parent({offset_top: 51});
 

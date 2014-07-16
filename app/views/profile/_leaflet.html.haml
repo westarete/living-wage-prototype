@@ -4,11 +4,24 @@
   %div.row#wage-bar-chart
     %div.col-md-12
       %h5{style: "text-align:left;"}=@geography.name
+      %div#donut-chart-menu.form-group.form-inline
+        %label.control-label
+          For a family of:
     %div#living-wage-append
-    %div#donut-chart-menu
-      %span{style: "font-size: 1em"}
-        For a family of:
     %div#donutchart
+    %div.row#occupations
+      %h1
+        Occupations that Pay
+      %div.col-md-1
+      %div.col-md-10
+        %table.table.table-hover#occupations-data
+          %tr
+            %td
+              %strong
+                Occupation Type
+            %td
+              %strong
+                Salary
   %div.row
     %div.col-md-12
 
@@ -40,7 +53,7 @@
               attribution: "U.S. Census TIGERweb"
           });
 
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
@@ -48,9 +61,9 @@
   var zoom_level = 6;
 
   if (gon.census_type == "state") {
-    url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/0/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
+    url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/0/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON%2C+BASENAME&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
 
-    map.addLayer(censusStates);
+    // map.addLayer(censusStates);
 
     zoom_level = 6;
   }
@@ -65,7 +78,7 @@
   }
 
   if (gon.census_type == "metro") {
-    url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/CBSA/MapServer/8/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON&returnGeometry=false&maxAllowableOffset=&geometryPrecision=3&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson"
+    url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/CBSA/MapServer/41/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON%2C+BASENAME&returnGeometry=false&maxAllowableOffset=&geometryPrecision=3&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson"
 
     zoom_level = 10;
   }

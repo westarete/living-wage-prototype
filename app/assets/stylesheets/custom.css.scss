@@ -52,7 +52,7 @@ textarea {
 }
 
 #map {
-  height: 220px;
+  height: 125px;
   margin: 0px;
 }
 
@@ -63,6 +63,11 @@ textarea {
 #donutchart {
   display: block;
   margin: 0 auto;
+  .pie-text {
+    font: 300 1.5em Helvetica Neue;
+    // fill: white;
+    text-anchor: middle;
+  }
 }
 
 #occupations {
@@ -76,11 +81,9 @@ textarea {
 
 #wage-bar-chart {
   height: 600px;
-}
-
-#donut-chart-menu {
-  background-color: rgba(173,216,230,0.9);
-  padding: 4px;
+  .col-md-12 {
+    background-color:rgba(251,180,174,0.6);
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -110,10 +113,9 @@ h4 {
 }
 
 h5 {
-  font-size: 1.4em;
-  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
   color: black;
-  margin: 5px; 
 }
 
 
@@ -137,9 +139,9 @@ a {
 
 #summary-panel {
   position:absolute;
-  top:58px;
-  left: 1%;
-  background-color:rgba(248,248,255,0.9);
+  top:150px;
+  left: 1.5%;
+  background-color:rgba(255,255,255,0.9);
   border-round: 5px;
   margin: 0;
   padding: 0;
@@ -319,7 +321,6 @@ aside {
 }
 
 
-
 #living-wage {
   line-height: 1.2em;
   font-size: 2.45em;
@@ -330,7 +331,6 @@ aside {
   font-weight: bold;
 }
 svg {
-  display: block;
   margin:auto;
 }
 .other-wages {
@@ -371,6 +371,7 @@ svg {
   .bartext {
     font: 300 25px Helvetica Neue;
     fill: white;
+    text-anchor: middle;
   }
 
   .y.axis line {
@@ -399,17 +400,20 @@ svg {
   }
 
   rect {
-    fill-opacity: .6;
+    fill-opacity: .7;
     fill: #e377c2;
+    fill: steelblue;
+    opacity: .6;
   }
-
-  rect:first-child {
-    fill: #1f77b4;
+  #bar-income_hrly {
+    fill: red;
+    opacity: 1;
+  }
+  #text-income_hrly {
+    font-size: 3em;
   }
 
 }
 
-#living-wage-append rect {
-  fill: steelblue;
-}
+
 
