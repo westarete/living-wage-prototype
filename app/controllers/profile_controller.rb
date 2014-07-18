@@ -9,7 +9,7 @@ class ProfileController < ApplicationController
   end
 
   def show
-    gon.contributions = @geography.aggregations.select("familycomposition, house_cost, childcare_cost, health_cost, food_cost, trans_cost, other_cost, minwage_hrly, income_hrly, poverty_hrly, income")
+    gon.contributions = @geography.aggregations.select("familycomposition, house_cost, childcare_cost, health_cost, food_cost, trans_cost, other_cost, minwage_hrly, income_hrly, poverty_hrly, income, tax")
     gon.occupations = @geography.occupations.order("OCC_SALARY ASC");
     gon.census_id = @geography.id
     gon.census_type = @geography.class.name.downcase

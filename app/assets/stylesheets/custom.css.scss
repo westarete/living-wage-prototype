@@ -11,12 +11,14 @@ $grid-paper: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNM
 html {
   overflow-y: scroll;
   overflow-x: hidden;
+  height: 100%;
 }
 
 body {
   padding-top: 50px;
-  background: $grid-paper
-  
+  background: $grid-paper;
+  font-family: 'Merriweather', serif;
+  height:100%;
 }
 
 section {
@@ -25,6 +27,8 @@ section {
 
 textarea {
   resize: vertical;
+  width: 100%;
+  height: 150px;
 }
 
 .scrollable-modal {
@@ -52,12 +56,29 @@ textarea {
 }
 
 #map {
-  height: 125px;
+  height: 151px;
   margin: 0px;
 }
 
 #contribute-your-story {
- background-color: rgba(254,217,166,0.4); 
+  background-color: rgba(254,217,166,0.4); 
+}
+
+#living-wage-section {
+  background-color: rgba(204,235,197,0.4); 
+}
+
+#occupations-section {
+  background-color: rgba(179,205,227,0.4); 
+}
+
+#national-landscape {
+  background-color: rgba(255,255,204,0.4); 
+}
+
+.fixed-table-row {
+  position: absolute;
+  width: 100%;
 }
 
 #donutchart {
@@ -65,13 +86,21 @@ textarea {
   margin: 0 auto;
   .pie-text {
     font: 300 1.5em Helvetica Neue;
-    // fill: white;
+    fill: white;
     text-anchor: middle;
+    pointer-events:none;
+  }
+  .categories {
+    font: 300 .25em;
+    fill: white;
+    text-anchor: middle;
+    pointer-events:none;
   }
 }
 
-#occupations {
-  background-color: rgba(204,235,197,0.5);
+#occupations-that-pay {
+  max-height:320px;
+  overflow-y: scroll;
 }
 
 #breadcrumb {
@@ -80,10 +109,10 @@ textarea {
 }
 
 #wage-bar-chart {
-  height: 600px;
   .col-md-12 {
     background-color:rgba(251,180,174,0.6);
   }
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -139,16 +168,13 @@ a {
 
 #summary-panel {
   position:absolute;
-  top:150px;
-  left: 1.5%;
+  top:100px;
   background-color:rgba(255,255,255,0.9);
   border-round: 5px;
   margin: 0;
   padding: 0;
-  border-radius: 5px;
-  -webkit-box-shadow: -2px 5px 18px 1px rgba(158,158,158,1);
-  -moz-box-shadow: -2px 5px 18px 1px rgba(158,158,158,1);
-  box-shadow: -2px 5px 18px 1px rgba(158,158,158,1);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .red-strip {
@@ -262,24 +288,10 @@ aside {
 /* users index */
 
 #mit-nav {
-  // height: 50px;
   background-color: #FFF;
-  // margin-bottom: 0px;
-  // border: 0px;
   opacity:    0.9;
 }
 
-
-// .navbar-header {
-//   float:      left;
-//   // padding:    15px;
-//   text-align: center;
-//   width:      100%;
-// }
-
-// .navbar-brand { 
-//   float: none;  
-// }
 
 .data-panel {
   width: 80%;
@@ -355,8 +367,8 @@ svg {
 
 
 .row {
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0 auto;
+  max-width: 850px;
 }
 
 #living-wage-append {
@@ -368,10 +380,15 @@ svg {
     display: none;
   }
 
+  .x.axis path {
+    display: none;
+  }
+
   .bartext {
     font: 300 25px Helvetica Neue;
     fill: white;
     text-anchor: middle;
+    pointer-events:none;
   }
 
   .y.axis line {
@@ -410,9 +427,52 @@ svg {
     opacity: 1;
   }
   #text-income_hrly {
-    font-size: 3em;
+    font-size: 3.5em;
   }
 
+}
+
+#living-wage-pie {
+  svg {
+    margin: 0 auto;
+    display: block;
+  }
+
+
+  .pie-text {
+    font: 300 1.5em Helvetica Neue;
+    fill: white;
+    text-anchor: middle;
+    pointer-events:none;
+  }
+  .categories {
+    font: 300 .25em;
+    fill: white;
+    text-anchor: middle;
+    pointer-events:none;
+  }
+}
+
+#one-column-emphasis
+{
+  font-size: 1em;
+  text-align: left;
+  border-collapse: collapse;
+  margin: 0px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+#one-column-emphasis td
+{
+  color: black;
+  border-bottom: 1px solid #e8edff;
+  padding-right: 10px;
+}
+
+.oce-first
+{
+  background: white;
 }
 
 

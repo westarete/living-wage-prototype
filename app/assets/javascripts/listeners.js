@@ -15,8 +15,77 @@ $(document).ready(function () {
     "health_cost",
     "food_cost",
     "trans_cost",
-    "other_cost"
+    "other_cost",
+    "tax"
   ];
+
+  var descriptions = [
+    {
+      "topic": "income_hrly",
+      "alias": "Living Wage",
+      "description":"The living wage is an estimate of a family’s basic needs budget.  This wage includes the cost of food, childcare, healthcare costs, housing, transportation and other necessities, each adjusted for inflation when necessary into 2013 dollars. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "house_cost",
+      "alias": "Housing Cost",
+      "description":"Housing costs measure the fair-market rent of rental housing, including utility costs, using HUD Fair Market Rents estimates for 2014. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "childcare_cost",
+      "alias": "Childcare Cost",
+      "description":"Child care cost represents the lowest cost option, either family child care or child care center, by state as reported by the National Association of Child Care Resource and Referral Agencies in 2013 and are adjusted for inflation.For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "health_cost",
+      "alias": "Healthcare Cost",
+      "description":"Medical costs are the sum of expenses for insurance premiums and (1) health insurance costs for employer sponsored plans, (3) medical services, (3) drugs, and (4) medical supplies.  Health insurance costs were calculated using the Health Insurance Component Analytical Tool (MEPSnet/IC) provided online by the Agency for Healthcare Research and Quality.  All other costs were estimated using 2012 data from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey, adjusted by region and for inflation.For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "food_cost",
+      "alias": "Food Cost",
+      "description":"Food cost is estimated using the US Department of Agriculture’s low-cost food plan as of 2013, adjusted for inflation.  The low-cost plan assumes that all meals (including snacks) are prepared in the home. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "trans_cost",
+      "alias": "Transportation Cost",
+      "description": "Transportation costs are a measure of the expenses for (1) Used cars and trucks, (2) gasoline and motor oil, (3) other vehicle expenses, and (4) public transportation.  Expenditures for transportation are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "other_cost",
+      "alias": "Other Costs",
+      "description":"Other necessities include expenses for (1) apparel and services, (2) housekeeping supplies, (3) personal care products and services, (4) reading, and (5) miscellaneous.  Expenditures for other necessities are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "poverty_hrly",
+      "alias": "Poverty Wage",
+      "description": "The poverty wage is the maximum wage a family may earn and still be considered in poverty and qualify for specific forms of government aid.  The poverty wage should be understood as a yardstick of whether a family is under economic stress, not a measure of basic needs for living expenses. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "minwage_hrly",
+      "alias": "Minimum Wage",      
+      "description": "The minimum wage is the lowest wage that is legally allowed in the United States, for most types of work.  Reported here is the national prevailing minimum wage or state minimum wage, whichever is higher, as of 2012. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "tax",
+      "alias": "Taxes",
+      "description": "Taxes include estimates for payroll taxes, state income tax, and federal income taxes. Payroll taxes (Social Security and Medicare taxes) were 6.2% of total wages in 2013, as specified in the Federal Insurance Contributions Act. The state tax rate is taken from the second lowest income tax rate for 2011 as reported in the CCH State Tax Handbook. The federal income tax is calculated by the Tax Policy Center of the Urban Institute and Brookings Institution as of 2013. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "adults",
+      "alias": "Adults",
+      "description": "Adults are members of a household above 18 years of age working full time, year-round 40 hour work weeks. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "children",
+      "alias": "Children",
+      "description": "Children are those members of the household under 18 years of age. For further detail, please reference the technical documentation here."
+    },
+    {
+      "topic": "occupation",
+      "alias": "Occupation Data",
+      "description": "The Bureau of Labor Statistics Occupation Employment Statistics Survey reports median wages for 22 major Standard Occupational Coded occupations in all 50 states, as of 2013. For further detail, please reference the technical documentation here."
+    }
+  ]
 
   var fam_composition_aliases = [
     {
@@ -93,8 +162,12 @@ $(document).ready(function () {
     {
       "type": "house_cost",
       "alias": "Housing"
-    },
-
+    }
+,
+    {
+      "type": "tax",
+      "alias": "Taxes"
+    }
   ]
 
   var occupation_aliases = [
@@ -190,10 +263,6 @@ $(document).ready(function () {
 
   var dollars = d3.format(",.2f");
 
-  var color = d3.scale.ordinal()
-      .domain(groups)
-      .range(["#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#ffff33"]);
-
   // A drop-down menu for selecting a state; uses the "menu" namespace.
   dispatch.on("load.menu", function(stateById) {
     var select = d3.select("#donut-chart-menu")
@@ -216,8 +285,6 @@ $(document).ready(function () {
 
     dispatch.on("statechange.menu", function(state) {
        $("#contributions").empty(); 
-       $("#living-wage-append").empty();
-       $("#other-wages-append").empty();
       select.property("value", state.familycomposition);
 
 
@@ -228,7 +295,12 @@ $(document).ready(function () {
 
       var margin = {top: 20, right: 10, bottom: 30, left: 10},
           width = parseInt(d3.select("#living-wage-append").style('width'), 10) - margin.left - margin.right,
-          height = 200 - margin.top - margin.bottom;
+          height = 200;
+
+      var container = d3.select("#living-wage-append")
+            .append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom);
 
       var x = d3.scale.ordinal()
           .rangeRoundBands([0, width], .1);
@@ -251,55 +323,74 @@ $(document).ready(function () {
 
       var barHeights = 0
 
+      x.domain(["income_hrly","minwage_hrly","poverty_hrly"])
 
+      var barChartArea = container.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      barChartArea.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis);
+
+      var bars = barChartArea.selectAll(".bar")
+          .data(x.domain())
+        .enter().append("rect")
+          .attr("class", "bar")
+          .attr("id", function(d) {
+            return "bar-" + d;
+          })
+          .attr("x", function(d) { return x(d); })
+          .attr("y", function() { return y(0); })
+          .attr("width", x.rangeBand())
+          .attr("height", 0)
+
+      var text = barChartArea.selectAll(".text")  
+          .data(x.domain())
+        .enter().append("text")
+          .attr("class", "bartext")
+          .attr("id", function(d) {
+            return "text-" + d;
+          })
+          .attr("text-anchor", "middle")
+          .attr("dy", ".35em")
 
     dispatch.on("statechange.wages", function(d) {
 
-      var svg = d3.select("#living-wage-append")
-        .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
         var data = d.wages;
 
-        console.log(data);
-
-        x.domain(data.map(function(d) { return d.name; }));
+        // x.domain(data.map(function(d) { return d.name; }));
         y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+        bars.data(data)
+            .attr("data-title", function(d) {
+              var alias = descriptions.filter(function(m) {
+                return m.topic == d.name;
+              });
+              return alias[0].alias; 
 
-        svg.selectAll(".bar")
-            .data(data)
-          .enter().append("rect")
-            .attr("class", "bar")
-            .attr("id", function(d) {
-              return "bar-" + d.name;
             })
-            .attr("x", function(d) { return x(d.name); })
-            .attr("y", function() { return y(0); })
-            .attr("width", x.rangeBand())
-            .attr("height", 0)
+            .attr("data-content", function(d) { 
+              var alias = descriptions.filter(function(m) {
+                return m.topic == d.name;
+              });
+
+              var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
+                     '<tr><td>Hourly:</td><td>$' + (d.value).toString() + '</td></tr>' +
+                     '<tr><td>Weekly:</td><td>$' + (d.value * 40).toString() + '</td></tr>' +
+                     '<tr><td>Annual:</td><td>$' + (d.value * 2085).toString() + '</td></tr></tbody><table>' +
+                     alias[0].description;
+              
+              return body;
+            })
           .transition()
             .attr("y", function(d) { return y(d.value); })
             .attr("height", function(d) { return height - y(d.value); });
 
-        svg.selectAll(".text")
-            .data(data)
-          .enter().append("text")
-            .attr("class", "bartext")
-            .attr("id", function(d) {
-              return "text-" + d.name;
-            })
-            .attr("text-anchor", "middle")
+        text.data(data)
+          .transition()
             .attr("x", function(d, i) { return x(i)+x.rangeBand(d.name)/2; })
             .attr("y", function(d) { return y(d.value/2); })
-            .attr("dy", ".35em")
             .text(function (d) { return "$" + d.value });
 
 
@@ -315,16 +406,20 @@ $(document).ready(function () {
 
     var div = d3.select('#occupations-data tbody');
 
-    dispatch.on("statechange.occupations", function(d) {
-      var living_salary = d.income[0].value;
+      var highest_salary = d3.max(gon.occupations, function(d) { return d.occ_salary; });
+      var y = d3.scale.linear()
+        .range([0, 150])
+        .domain([0, highest_salary]);
+
+      console.log(y(highest_salary));
+
       var types = div.selectAll("td")
           .data(gon.occupations)
           .enter()
             .append("tr")
             .attr("class", "body");
 
-        types
-          .append("td")
+        types.append("td")
           .text(function(d) { 
             var alias = occupation_aliases.filter(function(m) {
               return "occ_" + m.code == d.occ_type;
@@ -333,15 +428,26 @@ $(document).ready(function () {
             return alias[0].alias; 
           });
 
-        types
-          .append("td")
+        types.append("td")
+          .append("span")
+          .style("display", "block")
+          .style("background-color", "#ffffff")
+          .style("width", function(d) {
+            return y(d.occ_salary) + "px"
+          })
           .text(function(d) { return "$" + dollars(d.occ_salary); });
 
-      d3.selectAll("#occupations-data tbody tr.body").style("background-color", function(d) {
+    dispatch.on("statechange.occupations", function(d) {
+
+      var living_salary = d.income[0].value;
+
+      d3.selectAll("#occupations-data tbody tr.body span")
+        .transition(600)
+          .style("background-color", function(d) {
           if (living_salary < d.occ_salary) {
-            return "#dff0d8";
+            return "rgb(77,175,74)";
           } else {
-            return "#f2dede";
+            return "rgb(228,26,28)";
           }
       });
 
@@ -352,10 +458,14 @@ $(document).ready(function () {
   // A pie chart to show population by age group; uses the "pie" namespace.
   dispatch.on("load.pie", function(stateById) {
 
-    var width = parseInt(d3.select("#donutchart").style('width'), 10)*0.6,
-        height = width,
+    var width = 355,
+        height = 355,
         radius = Math.min(width, height) / 2,
         labelr = radius + 15;
+
+    var color = d3.scale.ordinal()
+        .domain(groups)
+        .range(["#a65628","#377eb8","#e41a1c","#4daf4a","#ff7f00","#984ea3", "#666666"]);
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 20)
@@ -364,22 +474,29 @@ $(document).ready(function () {
     var pie = d3.layout.pie()
         .sort(null);
 
-    var svg = d3.select("#donutchart").append("svg")
-        .attr("width", width + 20)
-        .attr("height", height + 20)
+    var pieChartArea = d3.select("#living-wage-pie").append("svg")
+        .attr("width", width)
+        .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        .attr("transform", "translate(" + (width / 2) + "," + height / 2 + ")");
 
-    var path = svg.selectAll("path")
+    var path = pieChartArea.selectAll("path")
         .data(groups)
       .enter().append("path")
         .style("fill", color)
         .each(function() { this._current = {startAngle: 0, endAngle: 0}; })
 
-    var text = svg.selectAll("text")
+    var labels = pieChartArea.selectAll(".pie-text text")
         .data(groups)
       .enter().append("svg:text")
         .attr("transform", "translate(0,0)")
+        .attr("class", "pie-text")
+
+    var categories = pieChartArea.selectAll(".categories text")
+        .data(groups)
+      .enter().append("svg:text")
+        .attr("transform", "translate(0,0)")
+        .attr("class", "categories")
 
     dispatch.on("statechange.pie", function(d) {
 
@@ -388,8 +505,6 @@ $(document).ready(function () {
       d.contributions.forEach(function(d) {
         sum = sum + d.value;
       });
-
-      console.log(sum);
 
       path.data(pie.value(function(g) { return d[g]; })(groups))
           .transition()
@@ -401,10 +516,15 @@ $(document).ready(function () {
             };
           });
 
-      path.attr("data-title", function(d) { return d.data; })
-        .attr("data-content", function(d) { return d.value; })
+      path.attr("data-content", function(d) { 
+          var alias = descriptions.filter(function(m) {
+            return m.topic == d.data;
+          });
 
-      text.data(pie.value(function(g) { return d[g]; })(groups))
+          return alias[0].description;
+        })
+
+      labels.data(pie.value(function(g) { return d[g]; })(groups))
           .transition()
           .attr("transform", function(d) {
               var c = arc.centroid(d),
@@ -422,7 +542,6 @@ $(document).ready(function () {
               // are we past the center?
               return "middle";
           })
-          .attr("class", "pie-text")
           .text(function(d, i) { 
             var alias = contribution_aliases.filter(function(m) {
               return m.type == d.data;
@@ -430,7 +549,34 @@ $(document).ready(function () {
 
             if (d.value !== 0) 
               { 
-                return alias[0].alias + ": " + (d.value/sum * 100).toFixed(2) + "%"; 
+                return (d.value/sum * 100).toFixed(0) + "%"; 
+              } 
+          })
+
+      categories.data(pie.value(function(g) { return d[g]; })(groups))
+          .transition()
+          .attr("transform", function(d) {
+              var c = arc.centroid(d),
+                  x = c[0],
+                  y = c[1],
+                  // pythagorean theorem for hypotenuse
+                  h = Math.sqrt(x*x + y*y);
+              return "translate(" + x +  ',' +
+                 (y - 15) +  ")"; 
+          })
+          .attr("dy", ".71em")
+          .style("text-anchor", function(d) {
+              // are we past the center?
+              return "middle";
+          })
+          .text(function(d, i) { 
+            var alias = contribution_aliases.filter(function(m) {
+              return m.type == d.data;
+            });
+
+            if (d.value !== 0) 
+              { 
+                return alias[0].alias + ": "; 
               } 
           })
 
@@ -477,6 +623,13 @@ $(document).ready(function () {
   });
 
   $("path").popover({
+      'container': 'body',
+      'placement': 'right',
+      'trigger': 'hover',
+      'html': true
+  });
+
+  $("rect").popover({
       'container': 'body',
       'placement': 'right',
       'trigger': 'hover',

@@ -1,29 +1,14 @@
-%div.row#map
-%div.col-md-6#summary-panel
-  %div.red-strip
-  %div.row#wage-bar-chart
-    %div.col-md-12
-      %h5{style: "text-align:left;"}=@geography.name
-      %div#donut-chart-menu.form-group.form-inline
-        %label.control-label
-          For a family of:
-    %div#living-wage-append
-    %div#donutchart
-    %div.row#occupations
-      %h1
-        Occupations that Pay
-      %div.col-md-1
-      %div.col-md-10
-        %table.table.table-hover#occupations-data
-          %tr
-            %td
-              %strong
-                Occupation Type
-            %td
-              %strong
-                Salary
-  %div.row
-    %div.col-md-12
+%div#map
+%div.row
+  %div.col-md-6#summary-panel
+    %div.red-strip
+    %div.row#wage-bar-chart.center-content
+      %div.col-md-12
+        %h5{style: "text-align:left;"}=@geography.name
+        %div#donut-chart-menu.form-group.form-inline
+          %label.control-label
+            For a family of:
+
 
 
 
@@ -65,7 +50,7 @@
 
     // map.addLayer(censusStates);
 
-    zoom_level = 6;
+    zoom_level = 8;
   }
 
 
