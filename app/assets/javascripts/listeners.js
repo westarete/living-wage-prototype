@@ -613,6 +613,88 @@ $(document).ready(function () {
   dispatch.statechange(stateById.get("2A1C"));
 
 
+  var format = d3.format(",.2f");
+  var pct = d3.format("4%");
+
+  var margin = {top: 1, left: 1, bottom: 20, right: 1}, 
+    width = parseInt(d3.select('#national-landscape').style('width')), 
+    width = width - margin.left - margin.right, 
+    mapRatio = .5, 
+    height = width * mapRatio,
+    active = false;
+
+  var projection = d3.geo.albersUsa()
+      .scale(width)
+      .translate([width / 2, height / 2]);
+
+  var path = d3.geo.path()
+      .projection(projection);
+
+  var svg = d3.select("#national-landscape").append("svg")
+      .attr("width", "100%")
+      .attr("height", "100%");
+
+  svg.append("rect")
+      .attr("width", width)
+      .attr("height", height);
+
+  var g = svg.append("g");
+
+  d3.json("../assets/us.json", function(error, us) {
+
+    g.selectAll("path")
+        .data(topojson.feature(us, us.objects.states).features)
+      .enter().append("path")
+        .attr("d", path)
+        .attr("class", "feature")
+        .on("mouseover", function(d) {
+          d3.select(this)
+            .style("opacity", "0.5")
+        })
+        .on("mouseout", function(d) {
+          d3.select(this)
+            .transition()
+            .duration(350)
+            .style("opacity", "1")
+        });
+
+    g.append("path")
+        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+        .attr("class", "mesh")
+        .attr("d", path);
+
+    });   
+
+  function click(d) {
+    if (active != false) return reset();
+    var b = path.bounds(d);
+    var a = path.area(d); 
+    g.selectAll(".active").classed("active", false);
+    d3.selectAll(".region-label").style("display", "none");
+    d3.select(this).style("display", "none");  
+    d3.select(this).classed("active", active = d);
+    g.transition().duration(750).attr("transform",
+        "translate(" + projection.translate() + ")"
+        + "scale(" + .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height) + ")"
+        + "translate(" + -(b[1][0] + b[0][0]) / 2 + "," + -(b[1][1] + b[0][1]) / 2 + ")")
+    .each('end', function() {
+      g.selectAll("circle").style("display", "block");
+      g.selectAll(".place-label").style("display", "block");
+      d3.selectAll(".state-label").style("display", "block");
+    });
+
+  }
+
+  function reset() {
+    g.selectAll(".active").classed("active", active = false);
+    g.selectAll("circle").style("display", "none");
+    d3.selectAll(".region-feature").style("display", "block");  
+    d3.selectAll(".region-label").style("display", "block");    
+    d3.selectAll(".state-label").style("display", "none");
+    g.transition().duration(750).attr("transform", "");
+    g.selectAll(".place-label").style("display", "none");
+  }
+
   // Bootstrap & other UI 
 
   $(".data-panel").popover({
