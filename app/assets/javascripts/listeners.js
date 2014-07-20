@@ -456,8 +456,8 @@ $(document).ready(function () {
   // A pie chart to show population by age group; uses the "pie" namespace.
   dispatch.on("load.pie", function(stateById) {
 
-    var width = 355,
-        height = 355,
+    var width = parseInt(d3.select("#living-wage-append").style('width'), 10),
+        height = 350,
         radius = Math.min(width, height) / 2,
         labelr = radius + 15;
 
@@ -696,25 +696,19 @@ $(document).ready(function () {
 
   // Bootstrap & other UI 
 
-  $(".data-panel").popover({
-      'container': 'body',
-      'placement': 'bottom',
-      'trigger': 'hover',
-      'html': true
-  });
-
   $("path").popover({
       'container': 'body',
-      'placement': 'right',
+      'placement': 'auto left',
       'trigger': 'hover',
       'html': true
   });
 
   $("rect").popover({
       'container': 'body',
-      'placement': 'right',
+      'placement': 'auto right',
       'trigger': 'hover',
-      'html': true
+      'html': true,
+      'delay': { show: 0, hide: 300 }
   });
 
   $("#sticky-menu").stick_in_parent({offset_top: 51});

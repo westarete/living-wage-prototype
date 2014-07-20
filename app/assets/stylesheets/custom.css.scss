@@ -49,6 +49,10 @@ textarea {
   margin: 15px;
 }
 
+#mit-nav {
+  background-color: rgba(255,255,255,0.9);
+}
+
 /* typography */
 
 #dictionary {
@@ -126,6 +130,10 @@ textarea {
 
 #contribute-your-story {
   background-color: rgba(241,238,246,0.5); 
+}
+
+.in {
+  opacity: 1;
 }
 
 .fixed-table-row {
@@ -226,7 +234,7 @@ a {
   border-top-left-radius: 5px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 915px) {
   #summary-panel {
     position: inherit;
     top: 0px;
@@ -234,6 +242,15 @@ a {
   .red-strip {
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
+  }
+  #mit-nav {
+    background-color: rgba(255,255,255,1);
+    .navbar-brand {
+      font-size: 14px;
+    }
+  }
+  #map {
+    height: 85px;
   }
 }
 
@@ -329,10 +346,7 @@ aside {
 
 /* users index */
 
-#mit-nav {
-  background-color: #FFF;
-  opacity:    0.9;
-}
+
 
 
 .data-panel {
