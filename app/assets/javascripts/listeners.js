@@ -295,7 +295,7 @@ $(document).ready(function () {
 
       var margin = {top: 20, right: 10, bottom: 30, left: 10},
           width = parseInt(d3.select("#living-wage-append").style('width'), 10) - margin.left - margin.right,
-          height = 200;
+          height = 300;
 
       var container = d3.select("#living-wage-append")
             .append("svg")
@@ -410,8 +410,6 @@ $(document).ready(function () {
       var y = d3.scale.linear()
         .range([0, 150])
         .domain([0, highest_salary]);
-
-      console.log(y(highest_salary));
 
       var types = div.selectAll("td")
           .data(gon.occupations)
@@ -591,6 +589,8 @@ $(document).ready(function () {
     var contributions = [];
     var wages = [];
 
+    console.log(d);
+
     for(var prop in d){
       pluck.push({ name: prop, value: d[prop] })
     }; 
@@ -604,7 +604,6 @@ $(document).ready(function () {
     d.contributions = contributions;
     d.wages = wages;
     d.income = income;
-
 
     stateById.set(d.familycomposition, d); 
   });

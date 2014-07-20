@@ -1,6 +1,6 @@
 %div#map
 %div.row
-  %div.col-md-6#summary-panel
+  %div#summary-panel
     %div.red-strip
     %div.row#wage-bar-chart.center-content
       %div.col-md-12
@@ -16,11 +16,14 @@
 
   var map = L.map('map', {
     scrollWheelZoom: false,
-    zoomControl: false
-  })
+    zoomControl: false,
+    attributionControl: false
+  });
 
-  var zoom = L.control.zoom({position: 'topright' })
-  zoom.addTo(map);
+  map.dragging.disable();
+  map.touchZoom.disable();
+  map.doubleClickZoom.disable();
+  map.scrollWheelZoom.disable();
 
   var censusStates = new L.TileLayer.WMS("http://tigerweb.geo.census.gov/ArcGIS/services/tigerWMS/MapServer/WMSServer",
         {
