@@ -154,9 +154,9 @@ def geographies
 end
 
 
-states
-counties
-metros
-aggregations
-occupations
+# states
+# counties
+# metros
+# aggregations
+# occupations
 geographies
