@@ -47,18 +47,21 @@
 
   var url_string = "";
   var zoom_level = 6;
-  var zero = d3.format("02d"); //format digits for the API
+  var twoZero = d3.format("02d"); //format digits for the API
+  var fiveZero = d3.format("05d");
+  var fiveZero = d3.format("05d");
+
   if (gon.census_type == "state") {
-    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/04000US" + zero(gon.census_id) + "?geom=true";
+    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/04000US" + twoZero(gon.census_id) + "?geom=true";
   }
 
 
   if (gon.census_type == "county") {
-    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/05000US" + zero(gon.census_id) + "?geom=true";
+    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/05000US" + fiveZero(gon.census_id) + "?geom=true";
   }
 
   if (gon.census_type == "metro") {
-    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/31000US" + zero(gon.census_id) + "?geom=true";
+    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/31000US" + fiveZero(gon.census_id) + "?geom=true";
   }
 
   $.getJSON(url_string, function(d){
