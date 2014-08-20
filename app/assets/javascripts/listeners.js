@@ -318,7 +318,7 @@ $(document).ready(function () {
       var yAxis = d3.svg.axis()
           .scale(y)
           .orient("left")
-          .ticks(5)
+          .ticks(10)
           .tickFormat(function(d) { return "$" + formatCurrency(d); });
 
       var barHeights = 0

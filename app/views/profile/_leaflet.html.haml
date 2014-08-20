@@ -49,32 +49,20 @@
   var zoom_level = 6;
 
   if (gon.census_type == "state") {
-    url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/0/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON%2C+BASENAME&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
-
-    // map.addLayer(censusStates);
-
-    zoom_level = 8;
+    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/04000US" + gon.census_id + "?geom=true";
   }
 
 
   if (gon.census_type == "county") {
-      url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/1/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
-
-    map.addLayer(censusCounties);
-
-    zoom_level = 9;
+    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/05000US" + gon.census_id + "?geom=true";
   }
 
   if (gon.census_type == "metro") {
-    url_string = "http://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/CBSA/MapServer/41/query?where=GEOID%3D" + gon.census_id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=CENTLAT%2C+CENTLON%2C+BASENAME&returnGeometry=false&maxAllowableOffset=&geometryPrecision=3&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson"
-
-    zoom_level = 10;
+    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/31000US" + gon.census_id + "?geom=true";
   }
 
   $.getJSON(url_string, function(d){
-    console.log(d);
-    var lat = d.features[0].attributes.CENTLAT;
-    var lon = d.features[0].attributes.CENTLON;
-    
-    map.setView([lat, lon], zoom_level);
+    var data = L.geoJson(d);
+    data.addTo(map);
+    map.fitBounds(data.getBounds());
   });
