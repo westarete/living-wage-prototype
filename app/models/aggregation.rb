@@ -40,4 +40,5 @@ class Aggregation < ActiveRecord::Base
             :poverty_hrly, 
             	presence: true
 
+
 end

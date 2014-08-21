@@ -14,6 +14,10 @@ class ProfileController < ApplicationController
     gon.census_id = @geography.id
     gon.census_type = @geography.class.name.downcase
     
+    respond_to do |format|
+      format.html
+      format.csv { render text: @geography.to_csv }
+    end
   end
 
   def update

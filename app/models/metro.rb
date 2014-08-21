@@ -13,8 +13,14 @@ class Metro < ActiveRecord::Base
             :census_id,
              presence: true
 
-  def coordinates
-    Geocoder.search(cbsa_name).first.coordinates
+  def to_csv
+    aggregations
+    CSV.generate do |csv|
+      column_names = Aggregation.column_names
+      csv << column_names
+      aggregations.each do |aggregation|
+        csv << aggregation.attributes.values_at(*column_names)
+      end
+    end
   end
-
 end

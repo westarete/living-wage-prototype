@@ -12,8 +12,16 @@ class County < ActiveRecord::Base
   validates  :census_id,
              :name, presence: true
 
-  def coordinates
-    Geocoder.search(countyname).first.coordinates
+
+  def to_csv
+    aggregations
+    CSV.generate do |csv|
+      column_names = Aggregation.column_names
+      csv << column_names
+      aggregations.each do |aggregation|
+        csv << aggregation.attributes.values_at(*column_names)
+      end
+    end
   end
 
 end

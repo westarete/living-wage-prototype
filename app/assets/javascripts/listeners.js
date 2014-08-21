@@ -400,7 +400,7 @@ $(document).ready(function () {
 
     var margin = {top: 20, right: 10, bottom: 30, left: 10},
         width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10) - margin.left - margin.right,
-        height = 600;
+        height = 400;
 
     var highest_salary = d3.max(gon.occupations, function(d) { return d.occ_salary; });
     var occupations = gon.occupations.map(function(d) { return d.occ_type; });

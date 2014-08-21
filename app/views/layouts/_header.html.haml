@@ -34,10 +34,8 @@
                   Contribute Your Story 
               %li.divider
               %li
-                %a{href: "#"}
-                  %span
-                    Download Dataset
-                  %span.glyphicon.glyphicon-download
+                / =link_to(raw("Download Dataset"))
+                =link_to raw("Download Dataset <span class='glyphicon glyphicon-download'></span>"), :action => 'show', :format => :csv
           %li
             %a{href: "#about"}
               About
