@@ -1,12 +1,6 @@
 
 $(document).ready(function () {
 
-  // map!
-  // split out searchable names & include geos
-  // download CSV feature
-  // imiplement rest of documentation
-  // front page
-
   var dispatch = d3.dispatch("load", "statechange");
 
   var groups = [
@@ -173,91 +167,91 @@ $(document).ready(function () {
   var occupation_aliases = [
     {
       "code": "110000",
-      "alias": "Management Occupations"
+      "alias": "Management"
     },
     {
       "code": "130000",
-      "alias": "Business and Financial Operations Occupations"
+      "alias": "Business & Financial Operations"
     },
     {
       "code": "150000",
-      "alias": "Computer and Mathematical Occupations"
+      "alias": "Computer & Mathematical"
     },
     {
       "code": "170000",
-      "alias": "Architecture and Engineering Occupations"
+      "alias": "Architecture & Engineering"
     },
     {
       "code": "190000",
-      "alias": "Life, Physical, and Social Science Occupations"
+      "alias": "Life, Physical, & Social Science"
     },
     {
       "code": "210000",
-      "alias": "Community and Social Service Occupations"
+      "alias": "Community & Social Service"
     },
     {
       "code": "230000",
-      "alias": "Legal Occupations"
+      "alias": "Legal"
     },
     {
       "code": "250000",
-      "alias": "Education, Training, and Library Occupations"
+      "alias": "Education, Training, & Library"
     },
     {
       "code": "270000",
-      "alias": "Arts, Design, Entertainment, Sports, and Media Occupations"
+      "alias": "Arts, Design, Entertainment, Sports, & Media"
     },
     {
       "code": "290000",
-      "alias": "Healthcare Practitioners and Technical Occupations"
+      "alias": "Healthcare Practitioners & Technical"
     },
     {
       "code": "310000",
-      "alias": "Healthcare Support Occupations"
+      "alias": "Healthcare Support"
     },
     {
       "code": "330000",
-      "alias": "Protective Service Occupations"
+      "alias": "Protective Service"
     },
     {
       "code": "350000",
-      "alias": "Food Preparation and Serving Related Occupations"
+      "alias": "Food Preparation & Serving Related"
     },
     {
       "code": "370000",
-      "alias": "Building and Grounds Cleaning and Maintenance Occupations"
+      "alias": "Building & Grounds Cleaning & Maintenance"
     },
     {
       "code": "390000",
-      "alias": "Personal Care and Service Occupations"
+      "alias": "Personal Care & Service"
     },
     {
       "code": "410000",
-      "alias": "Sales and Related Occupations"
+      "alias": "Sales & Related"
     },
     {
       "code": "430000",
-      "alias": "Office and Administrative Support Occupations"
+      "alias": "Office & Administrative Support"
     },
     {
       "code": "450000",
-      "alias": "Farming, Fishing, and Forestry Occupations"
+      "alias": "Farming, Fishing, & Forestry"
     },
     {
       "code": "470000",
-      "alias": "Construction and Extraction Occupations"
+      "alias": "Construction & Extraction"
     },
     {
       "code": "490000",
-      "alias": "Installation, Maintenance, and Repair Occupations"
+      "alias": "Installation, Maintenance, & Repair"
     },
     {
       "code": "510000",
-      "alias": "Production Occupations"
+      "alias": "Production"
     },
     {
       "code": "530000",
-      "alias": "Transportation and Material Moving Occupations"
+      "alias": "Transportation & Material Moving"
     }
   ];
 
@@ -284,7 +278,7 @@ $(document).ready(function () {
         });
 
     dispatch.on("statechange.menu", function(state) {
-       $("#contributions").empty(); 
+       // $("#contributions").empty(); 
       select.property("value", state.familycomposition);
 
 
@@ -444,32 +438,9 @@ $(document).ready(function () {
       .attr("y1", 0)
       .attr("x2", 0)
       .attr("y2", height)
-      .style("stroke", "red")
-      .style("stroke-width", 3)
-
-    // var types = div.selectAll("td")
-    //     .data(gon.occupations)
-    //     .enter()
-    //       .append("tr")
-    //       .attr("class", "body");
-
-    // types.append("td")
-    //   .text(function(d) { 
-    //     var alias = occupation_aliases.filter(function(m) {
-    //       return "occ_" + m.code == d.occ_type;
-    //     });
-
-    //     return alias[0].alias; 
-    //   });
-
-    // types.append("td")
-    //   .append("span")
-    //   .style("display", "block")
-    //   .style("background-color", "#ffffff")
-    //   .style("width", function(d) {
-    //     return y(d.occ_salary) + "px"
-    //   })
-    //   .text(function(d) { return "$" + dollars(d.occ_salary); });
+      .style("stroke", "black")
+      .style("stroke-width", 4)
+      .style("stroke-opacity", 0.5)
 
     dispatch.on("statechange.occupations", function(d) {
 
@@ -488,18 +459,6 @@ $(document).ready(function () {
               return "rgb(228,26,28)";
             }
           });
-
-      // d3.selectAll("#occupations-data tbody tr.body span")
-      //   .transition(600)
-      //     .style("background-color", function(d) {
-      //     if (living_salary < d.occ_salary) {
-      //       return "rgb(77,175,74)";
-      //     } else {
-      //       return "rgb(228,26,28)";
-      //     }
-      // });
-
-
     });
   });
 
@@ -719,39 +678,7 @@ $(document).ready(function () {
         .attr("class", "mesh")
         .attr("d", path);
 
-    });   
-
-  function click(d) {
-    if (active != false) return reset();
-    var b = path.bounds(d);
-    var a = path.area(d); 
-    g.selectAll(".active").classed("active", false);
-    d3.selectAll(".region-label").style("display", "none");
-    d3.select(this).style("display", "none");  
-    d3.select(this).classed("active", active = d);
-    g.transition().duration(750).attr("transform",
-        "translate(" + projection.translate() + ")"
-        + "scale(" + .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height) + ")"
-        + "translate(" + -(b[1][0] + b[0][0]) / 2 + "," + -(b[1][1] + b[0][1]) / 2 + ")")
-    .each('end', function() {
-      g.selectAll("circle").style("display", "block");
-      g.selectAll(".place-label").style("display", "block");
-      d3.selectAll(".state-label").style("display", "block");
     });
-
-  }
-
-  function reset() {
-    g.selectAll(".active").classed("active", active = false);
-    g.selectAll("circle").style("display", "none");
-    d3.selectAll(".region-feature").style("display", "block");  
-    d3.selectAll(".region-label").style("display", "block");    
-    d3.selectAll(".state-label").style("display", "none");
-    g.transition().duration(750).attr("transform", "");
-    g.selectAll(".place-label").style("display", "none");
-  }
-
-  // Bootstrap & other UI 
 
   $("path").popover({
       'container': 'body',
@@ -767,7 +694,4 @@ $(document).ready(function () {
       'html': true,
       'delay': { show: 0, hide: 300 }
   });
-
-  $("#sticky-menu").stick_in_parent({offset_top: 51});
-
 });

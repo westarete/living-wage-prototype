@@ -8,19 +8,36 @@
         %span.icon-bar#bar-invert
         %span.icon-bar#bar-invert
       %div.navbar-brand
-        =image_tag 'new_logo.png', height: '35px'
+        =image_tag 'new_logo.png', height: '25px', style: 'margin-right: 5px;'
         %a{href: "/"}
-          Living Wage Calculator /
-        %span#breadcrumb.hidden-xs.hidden-sm= @geography.name
+          %span{style: "background-image: url('../assets/new_logo.png');"}
+          Living Wage Calculator
     %div.collapse.navbar-collapse#mit-nav-data
       %div.navbar-right
         %ul.nav.navbar-nav
-          %li
-            %a{href: "#occupations"}
-              Occupations
-          %li
-            %a{href: "#contribute"}
-              Contribute
+          %li.dropdown
+            %a{href: "#", class: "dropdown-toggle", "data-toggle" => "dropdown"}
+              Menu
+              %span.caret
+            %ul.dropdown-menu{"role" => "menu"}
+              %li
+                %a{href: "#living-wage-section"}
+                  Living Wage
+              %li
+                %a{href: "#occupations-section"}
+                  Occupations That Pay
+              %li
+                %a{href: "#national-landscape"}
+                  National Landscape
+              %li
+                %a{href: "#contribute-your-story"}
+                  Contribute Your Story 
+              %li.divider
+              %li
+                %a{href: "#"}
+                  %span
+                    Download Dataset
+                  %span.glyphicon.glyphicon-download
           %li
             %a{href: "#about"}
               About
