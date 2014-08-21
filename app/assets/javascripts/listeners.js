@@ -293,67 +293,67 @@ $(document).ready(function () {
 
   dispatch.on("load.wages", function(stateById) {
 
-      var margin = {top: 20, right: 10, bottom: 30, left: 10},
-          width = parseInt(d3.select("#living-wage-append").style('width'), 10) - margin.left - margin.right,
-          height = 300;
+    var margin = {top: 20, right: 10, bottom: 30, left: 10},
+        width = parseInt(d3.select("#living-wage-append").style('width'), 10) - margin.left - margin.right,
+        height = 300;
 
-      var container = d3.select("#living-wage-append")
-            .append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom);
+    var container = d3.select("#living-wage-append")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom);
 
-      var x = d3.scale.ordinal()
-          .rangeRoundBands([0, width], .1);
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
 
-      var y = d3.scale.linear()
-          .range([height, 0]);
+    var y = d3.scale.linear()
+        .range([height, 0]);
 
-      var xAxis = d3.svg.axis()
-          .scale(x)
-          .orient("bottom")
-          .tickValues(["Living Wage", "Minimum Wage", "Poverty Wage"]);
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .tickValues(["Living Wage", "Minimum Wage", "Poverty Wage"]);
 
-      var formatCurrency = d3.format(".1f");
+    var formatCurrency = d3.format(".1f");
 
-      var yAxis = d3.svg.axis()
-          .scale(y)
-          .orient("left")
-          .ticks(10)
-          .tickFormat(function(d) { return "$" + formatCurrency(d); });
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(10)
+        .tickFormat(function(d) { return "$" + formatCurrency(d); });
 
-      var barHeights = 0
+    var barHeights = 0
 
-      x.domain(["income_hrly","minwage_hrly","poverty_hrly"])
+    x.domain(["income_hrly","minwage_hrly","poverty_hrly"])
 
-      var barChartArea = container.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var barChartArea = container.append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-      barChartArea.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(xAxis);
+    barChartArea.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
 
-      var bars = barChartArea.selectAll(".bar")
-          .data(x.domain())
-        .enter().append("rect")
-          .attr("class", "bar")
-          .attr("id", function(d) {
-            return "bar-" + d;
-          })
-          .attr("x", function(d) { return x(d); })
-          .attr("y", function() { return y(0); })
-          .attr("width", x.rangeBand())
-          .attr("height", 0)
+    var bars = barChartArea.selectAll(".bar")
+        .data(x.domain())
+      .enter().append("rect")
+        .attr("class", "bar")
+        .attr("id", function(d) {
+          return "bar-" + d;
+        })
+        .attr("x", function(d) { return x(d); })
+        .attr("y", function() { return y(0); })
+        .attr("width", x.rangeBand())
+        .attr("height", 0)
 
-      var text = barChartArea.selectAll(".text")  
-          .data(x.domain())
-        .enter().append("text")
-          .attr("class", "bartext")
-          .attr("id", function(d) {
-            return "text-" + d;
-          })
-          .attr("text-anchor", "middle")
-          .attr("dy", ".35em")
+    var text = barChartArea.selectAll(".text")  
+        .data(x.domain())
+      .enter().append("text")
+        .attr("class", "bartext")
+        .attr("id", function(d) {
+          return "text-" + d;
+        })
+        .attr("text-anchor", "middle")
+        .attr("dy", ".35em")
 
     dispatch.on("statechange.wages", function(d) {
 
@@ -404,50 +404,100 @@ $(document).ready(function () {
 
   dispatch.on("load.occupations", function(stateById) {
 
-    var div = d3.select('#occupations-data tbody');
+    var margin = {top: 20, right: 10, bottom: 30, left: 10},
+        width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10) - margin.left - margin.right,
+        height = 600;
 
-      var highest_salary = d3.max(gon.occupations, function(d) { return d.occ_salary; });
-      var y = d3.scale.linear()
-        .range([0, 150])
-        .domain([0, highest_salary]);
+    var highest_salary = d3.max(gon.occupations, function(d) { return d.occ_salary; });
+    var occupations = gon.occupations.map(function(d) { return d.occ_type; });
 
-      var types = div.selectAll("td")
-          .data(gon.occupations)
-          .enter()
-            .append("tr")
-            .attr("class", "body");
+    var chart = d3.select("#occupations-bar-graph")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-        types.append("td")
-          .text(function(d) { 
-            var alias = occupation_aliases.filter(function(m) {
-              return "occ_" + m.code == d.occ_type;
-            });
+    var x = d3.scale.linear()
+      .range([0, width])
+      .domain([0, highest_salary]);
 
-            return alias[0].alias; 
-          });
+    var y = d3.scale.ordinal()
+      .domain(occupations)
+      .rangeBands([0, height]);
 
-        types.append("td")
-          .append("span")
-          .style("display", "block")
-          .style("background-color", "#ffffff")
-          .style("width", function(d) {
-            return y(d.occ_salary) + "px"
-          })
-          .text(function(d) { return "$" + dollars(d.occ_salary); });
+    var bar = chart.selectAll("rect")
+      .data(gon.occupations).enter().append("rect")
+        .style("fill", "lightblue")
+        .style("stroke", "white")
+        .attr("x", 0)
+        .attr("y", function(d) {
+          return y(d.occ_type);
+        })
+        .attr("height", y.rangeBand())
+        .attr("width", 0)
+        // .transition(600)
+        .attr("width", function(d) {
+          return x(d.occ_salary)
+        });
+
+    var line = chart.append("svg:line")
+      .attr("x1", 0)
+      .attr("y1", 0)
+      .attr("x2", 0)
+      .attr("y2", height)
+      .style("stroke", "red")
+      .style("stroke-width", 3)
+
+    // var types = div.selectAll("td")
+    //     .data(gon.occupations)
+    //     .enter()
+    //       .append("tr")
+    //       .attr("class", "body");
+
+    // types.append("td")
+    //   .text(function(d) { 
+    //     var alias = occupation_aliases.filter(function(m) {
+    //       return "occ_" + m.code == d.occ_type;
+    //     });
+
+    //     return alias[0].alias; 
+    //   });
+
+    // types.append("td")
+    //   .append("span")
+    //   .style("display", "block")
+    //   .style("background-color", "#ffffff")
+    //   .style("width", function(d) {
+    //     return y(d.occ_salary) + "px"
+    //   })
+    //   .text(function(d) { return "$" + dollars(d.occ_salary); });
 
     dispatch.on("statechange.occupations", function(d) {
 
       var living_salary = d.income[0].value;
 
-      d3.selectAll("#occupations-data tbody tr.body span")
-        .transition(600)
-          .style("background-color", function(d) {
-          if (living_salary < d.occ_salary) {
-            return "rgb(77,175,74)";
-          } else {
-            return "rgb(228,26,28)";
-          }
-      });
+      line.transition()
+          .attr("x1", function(d) { return x(living_salary); })
+          .attr("x2", function(d) { return x(living_salary); })
+          .attr("y1", 0)
+          .attr("y2", height);
+
+      bar.transition(600).style("fill", function(d) {
+            if (living_salary < d.occ_salary) {
+              return "rgb(77,175,74)";
+            } else {
+              return "rgb(228,26,28)";
+            }
+          });
+
+      // d3.selectAll("#occupations-data tbody tr.body span")
+      //   .transition(600)
+      //     .style("background-color", function(d) {
+      //     if (living_salary < d.occ_salary) {
+      //       return "rgb(77,175,74)";
+      //     } else {
+      //       return "rgb(228,26,28)";
+      //     }
+      // });
 
 
     });
@@ -589,8 +639,6 @@ $(document).ready(function () {
     var contributions = [];
     var wages = [];
 
-    console.log(d);
-
     for(var prop in d){
       pluck.push({ name: prop, value: d[prop] })
     }; 
@@ -609,7 +657,7 @@ $(document).ready(function () {
   });
 
   dispatch.load(stateById);
-  dispatch.statechange(stateById.get("2A1C"));
+  dispatch.statechange(stateById.get("2A2C"));
 
 
   var format = d3.format(",.2f");
@@ -639,13 +687,22 @@ $(document).ready(function () {
 
   var g = svg.append("g");
 
+  var quartileScale = d3.scale.ordinal()
+        .domain([1,2,3,4])
+        .range(["#edf8e9","#bae4b3","#74c476","#238b45"]);
+
   d3.json("../assets/us.json", function(error, us) {
 
     g.selectAll("path")
         .data(topojson.feature(us, us.objects.states).features)
-      .enter().append("path")
+      .enter().append("svg:a")
+        .attr("xlink:href", function(d) { return "../states/" + d.properties.id; })
+      .append("path")
         .attr("d", path)
         .attr("class", "feature")
+        .style("fill", function(d) {
+          return quartileScale(d.properties.StateShareHH_SubLW_Quartile);
+        })
         .on("mouseover", function(d) {
           d3.select(this)
             .style("opacity", "0.5")
