@@ -36,7 +36,7 @@ textarea {
 }
 
 .popover-content {
-  max-height: 200px;
+  max-height: 175px;
   overflow: scroll;
 }
 
@@ -123,6 +123,7 @@ textarea {
   }
 
   svg {
+  min-height: 425px;
     margin: 0 auto;
   }
 
@@ -138,7 +139,6 @@ textarea {
     cursor: pointer;
   }
   
-  height: 500px;
   background-color: rgba(179,205,227,0.5);
 }
 

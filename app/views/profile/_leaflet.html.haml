@@ -68,4 +68,7 @@
     var data = L.geoJson(d, {style: style});
     data.addTo(map);
     map.fitBounds(data.getBounds());
+    var offset = map.getSize().x*0.25;
+    // Then move the map
+    map.panBy(new L.Point(-offset, 0), {animate: false});
   });

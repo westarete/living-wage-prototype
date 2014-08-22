@@ -378,9 +378,9 @@ $(document).ready(function () {
               });
 
               var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
-                     '<tr><td>Hourly (per person):</td><td>$' + (d.value).toString() + '</td></tr>' +
-                     '<tr><td>Weekly (per person):</td><td>$' + (d.value * 40).toString() + '</td></tr>' +
-                     '<tr><td>Annual (per person):</td><td>$' + (d.value * 2085).toString() + '</td></tr></tbody><table>' +
+                     '<tr><td>Hourly (per person):</td><td>$' + (dollars(d.value)).toString() + '</td></tr>' +
+                     '<tr><td>Weekly (per person):</td><td>$' + (dollars(d.value * 40)).toString() + '</td></tr>' +
+                     '<tr><td>Annual (per person):</td><td>$' + (dollars(d.value * 2085)).toString() + '</td></tr></tbody><table>' +
                      alias[0].description;
               
               return body;
@@ -441,12 +441,46 @@ $(document).ready(function () {
       .attr("x2", 0)
       .attr("y2", height)
       .style("stroke", "black")
-      .style("stroke-width", 4)
+      .style("stroke-width", 3)
       .style("stroke-opacity", 0.5)
+
+    var labelOffset = 10
+
+    var labelBox = chart.append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width",20)
+        .style("fill", "gray")
+        // .style("fill-opacity", 0.5)
+
+    var label = chart.append("text")
+          .text("Living Wage")
+          .style("text-anchor", "beginning")
+          .style("fill", "white")
+          .attr("id", "occupations-living-wage-label")
+          .attr("transform", function() {
+            return "translate(" + x(0) + "," + 5 + ") rotate(90)"
+          });
 
     dispatch.on("statechange.occupations", function(d) {
 
       var living_salary = d.income[0].value;
+
+      labelBox.transition()
+          .attr("height", function() {
+            var textNode = document.getElementById("occupations-living-wage-label").getBBox();
+            return textNode.width+labelOffset;
+          })
+          .attr("x", x(living_salary)-10)
+          .attr("y", 0)
+
+      label.transition().attr("transform", function() {
+        return "translate(" + ((x(living_salary))-4) + "," + 5 + ") rotate(90)";
+      });
+
+          // .attr("x", function(d) { return x(living_salary); })
+          // .attr("y", function(d) { return height/2 })
+
 
       line.transition()
           .attr("x1", function(d) { return x(living_salary); })
@@ -698,10 +732,10 @@ $(document).ready(function () {
     console.log($("svg text"))
     $("svg text").each( function() {
       $(this).popover({
-          'container': 'body', 
+          'container': '#living-wage-section', 
           'trigger': 'manual',
           'html': true,
-          'placement': 'auto right'
+          'placement': 'auto bottom'
       })
       .on("mouseenter", function() {
         var _this = this;
