@@ -31,6 +31,19 @@ textarea {
   height: 150px;
 }
 
+#map:active {
+    cursor: default;
+}
+
+.popover-content {
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.leaflet-container {
+  cursor: default;
+}
+
 .scrollable-modal {
     overflow-y:scroll;
     overflow-x:hidden;
@@ -149,13 +162,12 @@ textarea {
     font: 300 1.5em Helvetica Neue;
     fill: white;
     text-anchor: middle;
-    pointer-events:none;
+    cursor: pointer;
   }
   .categories {
     font: 300 .25em;
     fill: white;
     text-anchor: middle;
-    pointer-events:none;
   }
 }
 
@@ -445,7 +457,7 @@ svg {
     font: 300 25px Helvetica Neue;
     fill: white;
     text-anchor: middle;
-    pointer-events:none;
+    cursor: pointer;
   }
 
   .y.axis line {
@@ -500,13 +512,12 @@ svg {
     font: 300 1.5em Helvetica Neue;
     fill: white;
     text-anchor: middle;
-    pointer-events:none;
+    cursor: pointer;
   }
   .categories {
     font: 300 .25em;
     fill: white;
     text-anchor: middle;
-    pointer-events:none;
   }
 }
 

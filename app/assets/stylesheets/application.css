@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require bootstrap
- *= require_tree .
+ *= require leaflet.css
  *= require custom.css.scss
+ *= require_tree .
  */

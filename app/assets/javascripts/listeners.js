@@ -278,10 +278,7 @@ $(document).ready(function () {
         });
 
     dispatch.on("statechange.menu", function(state) {
-       // $("#contributions").empty(); 
       select.property("value", state.familycomposition);
-
-
     });
   });
 
@@ -293,8 +290,8 @@ $(document).ready(function () {
 
     var container = d3.select("#living-wage-append")
           .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom);
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom);
 
     var x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1);
@@ -348,6 +345,12 @@ $(document).ready(function () {
         })
         .attr("text-anchor", "middle")
         .attr("dy", ".35em")
+        .on("mouseover", function(d) {
+          d3.select(this).transition().style("text-decoration", "underline")
+        })
+        .on("mouseleave", function(d) {
+          d3.select(this).transition().style("text-decoration", "inherit")
+        })
 
     dispatch.on("statechange.wages", function(d) {
 
@@ -357,6 +360,11 @@ $(document).ready(function () {
         y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
         bars.data(data)
+          .transition()
+            .attr("y", function(d) { return y(d.value); })
+            .attr("height", function(d) { return height - y(d.value); });
+
+        text.data(data)
             .attr("data-title", function(d) {
               var alias = descriptions.filter(function(m) {
                 return m.topic == d.name;
@@ -370,18 +378,13 @@ $(document).ready(function () {
               });
 
               var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
-                     '<tr><td>Hourly:</td><td>$' + (d.value).toString() + '</td></tr>' +
-                     '<tr><td>Weekly:</td><td>$' + (d.value * 40).toString() + '</td></tr>' +
-                     '<tr><td>Annual:</td><td>$' + (d.value * 2085).toString() + '</td></tr></tbody><table>' +
+                     '<tr><td>Hourly (per person):</td><td>$' + (d.value).toString() + '</td></tr>' +
+                     '<tr><td>Weekly (per person):</td><td>$' + (d.value * 40).toString() + '</td></tr>' +
+                     '<tr><td>Annual (per person):</td><td>$' + (d.value * 2085).toString() + '</td></tr></tbody><table>' +
                      alias[0].description;
               
               return body;
             })
-          .transition()
-            .attr("y", function(d) { return y(d.value); })
-            .attr("height", function(d) { return height - y(d.value); });
-
-        text.data(data)
           .transition()
             .attr("x", function(d, i) { return x(i)+x.rangeBand(d.name)/2; })
             .attr("y", function(d) { return y(d.value/2); })
@@ -428,7 +431,6 @@ $(document).ready(function () {
         })
         .attr("height", y.rangeBand())
         .attr("width", 0)
-        // .transition(600)
         .attr("width", function(d) {
           return x(d.occ_salary)
         });
@@ -493,11 +495,17 @@ $(document).ready(function () {
         .style("fill", color)
         .each(function() { this._current = {startAngle: 0, endAngle: 0}; })
 
-    var labels = pieChartArea.selectAll(".pie-text text")
+    var labels = pieChartArea.selectAll("text")
         .data(groups)
-      .enter().append("svg:text")
+      .enter().append("text")
         .attr("transform", "translate(0,0)")
         .attr("class", "pie-text")
+        .on("mouseover", function(d) {
+          d3.select(this).transition().style("text-decoration", "underline")
+        })
+        .on("mouseleave", function(d) {
+          d3.select(this).transition().style("text-decoration", "inherit")
+        })
 
     var categories = pieChartArea.selectAll(".categories text")
         .data(groups)
@@ -508,7 +516,6 @@ $(document).ready(function () {
     dispatch.on("statechange.pie", function(d) {
 
       var sum = 0;
-
       d.contributions.forEach(function(d) {
         sum = sum + d.value;
       });
@@ -523,15 +530,25 @@ $(document).ready(function () {
             };
           });
 
-      path.attr("data-content", function(d) { 
-          var alias = descriptions.filter(function(m) {
-            return m.topic == d.data;
-          });
-
-          return alias[0].description;
-        })
+      // path
 
       labels.data(pie.value(function(g) { return d[g]; })(groups))
+          .attr("data-title", function(d) {
+              var alias = descriptions.filter(function(m) {
+                return m.topic == d.data;
+              });
+              return alias[0].alias; 
+            })
+          .attr("data-content", function(d) { 
+            var alias = descriptions.filter(function(m) {
+              return m.topic == d.data;
+            });
+            var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
+                       '<tr><td>Hourly (per person):</td><td>$' + (dollars(d.value / 2080)).toString() + '</td></tr>' +
+                       '<tr><td>Annual (per family):</td><td>$' + (dollars(d.value)).toString() + '</td></tr></tbody><table>' +
+                       alias[0].description;
+            return body;
+          })
           .transition()
           .attr("transform", function(d) {
               var c = arc.centroid(d),
@@ -618,7 +635,6 @@ $(document).ready(function () {
   dispatch.load(stateById);
   dispatch.statechange(stateById.get("2A2C"));
 
-
   var format = d3.format(",.2f");
   var pct = d3.format("4%");
 
@@ -679,19 +695,30 @@ $(document).ready(function () {
         .attr("d", path);
 
     });
+    console.log($("svg text"))
+    $("svg text").each( function() {
+      $(this).popover({
+          'container': 'body', 
+          'trigger': 'manual',
+          'html': true,
+          'placement': 'auto right'
+      })
+      .on("mouseenter", function() {
+        var _this = this;
+        $(this).popover("show");
+        $(".popover").on("mouseleave", function () {
+            $(_this).popover('hide');
+        });
+      })
+      .on("mouseleave", function () {
+        var _this = this;
+        setTimeout(function () {
+            if (!$(".popover:hover").length) {
+                $(_this).popover("hide")
+            }
+      }, 100);
+      });
+    })
 
-  $("path").popover({
-      'container': 'body',
-      'placement': 'auto left',
-      'trigger': 'hover',
-      'html': true
-  });
 
-  $("rect").popover({
-      'container': 'body',
-      'placement': 'auto right',
-      'trigger': 'hover',
-      'html': true,
-      'delay': { show: 0, hide: 300 }
-  });
 });
