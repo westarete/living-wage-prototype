@@ -284,9 +284,9 @@ $(document).ready(function () {
 
   dispatch.on("load.wages", function(stateById) {
 
-    var margin = {top: 20, right: 10, bottom: 30, left: 10},
+    var margin = {top: 20, right: 0, bottom: 30, left: 0},
         width = parseInt(d3.select("#living-wage-append").style('width'), 10) - margin.left - margin.right,
-        height = 300;
+        height = 250;
 
     var container = d3.select("#living-wage-append")
           .append("svg")
@@ -294,7 +294,7 @@ $(document).ready(function () {
           .attr("height", height + margin.top + margin.bottom);
 
     var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);
+        .rangeRoundBands([0, width], .25);
 
     var y = d3.scale.linear()
         .range([height, 0]);
@@ -402,11 +402,16 @@ $(document).ready(function () {
   dispatch.on("load.occupations", function(stateById) {
 
     var margin = {top: 20, right: 10, bottom: 30, left: 10},
-        width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10) - margin.left - margin.right,
+        width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10),
         height = 400;
 
+    var data = gon.occupations;
     var highest_salary = d3.max(gon.occupations, function(d) { return d.occ_salary; });
-    var occupations = gon.occupations.map(function(d) { return d.occ_type; });
+    var occupations = data.map(function(d) { return d.occ_type; });
+
+    console.log(occupations.length)
+    console.log(data.length)
+
 
     var chart = d3.select("#occupations-bar-graph")
         .append("svg")
@@ -422,12 +427,15 @@ $(document).ready(function () {
       .rangeBands([0, height]);
 
     var bar = chart.selectAll("rect")
-      .data(gon.occupations).enter().append("rect")
+      .data(data).enter().append("rect")
         .style("fill", "lightblue")
         .style("stroke", "white")
         .attr("x", 0)
         .attr("y", function(d) {
           return y(d.occ_type);
+        })
+        .attr("class", function(d) {
+          return d.occ_type;
         })
         .attr("height", y.rangeBand())
         .attr("width", 0)
@@ -451,9 +459,8 @@ $(document).ready(function () {
         .attr("y", 0)
         .attr("width",20)
         .style("fill", "gray")
-        // .style("fill-opacity", 0.5)
 
-    var label = chart.append("text")
+    var livingWageLabel = chart.append("text")
           .text("Living Wage")
           .style("text-anchor", "beginning")
           .style("fill", "white")
@@ -461,6 +468,16 @@ $(document).ready(function () {
           .attr("transform", function() {
             return "translate(" + x(0) + "," + 5 + ") rotate(90)"
           });
+
+    var labels = bar.append("text")
+        .attr("y", function(d) {
+          return y(d.occ_type)
+        })
+        .attr("x", 0)
+        .text(function(d) {
+          return d.occ_type;
+        })
+
 
     dispatch.on("statechange.occupations", function(d) {
 
@@ -474,13 +491,9 @@ $(document).ready(function () {
           .attr("x", x(living_salary)-10)
           .attr("y", 0)
 
-      label.transition().attr("transform", function() {
+      livingWageLabel.transition().attr("transform", function() {
         return "translate(" + ((x(living_salary))-4) + "," + 5 + ") rotate(90)";
       });
-
-          // .attr("x", function(d) { return x(living_salary); })
-          // .attr("y", function(d) { return height/2 })
-
 
       line.transition()
           .attr("x1", function(d) { return x(living_salary); })
@@ -498,12 +511,11 @@ $(document).ready(function () {
     });
   });
 
-  // A pie chart to show population by age group; uses the "pie" namespace.
   dispatch.on("load.pie", function(stateById) {
 
     var width = parseInt(d3.select("#living-wage-append").style('width'), 10),
-        height = 350,
-        radius = Math.min(width, height) / 2,
+        height = 300,
+        radius = height / 2,
         labelr = radius + 15;
 
     var color = d3.scale.ordinal()
@@ -511,8 +523,8 @@ $(document).ready(function () {
         .range(["#a65628","#377eb8","#e41a1c","#4daf4a","#ff7f00","#984ea3", "#666666"]);
 
     var arc = d3.svg.arc()
-        .outerRadius(radius - 20)
-        .innerRadius(radius - 125);
+        .outerRadius(radius - 10)
+        .innerRadius(radius - 80);
 
     var pie = d3.layout.pie()
         .sort(null);
@@ -729,7 +741,7 @@ $(document).ready(function () {
         .attr("d", path);
 
     });
-    console.log($("svg text"))
+
     $("svg text").each( function() {
       $(this).popover({
           'container': '#living-wage-section', 
