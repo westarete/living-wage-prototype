@@ -401,9 +401,9 @@ $(document).ready(function () {
 
   dispatch.on("load.occupations", function(stateById) {
 
-    var margin = {top: 20, right: 10, bottom: 30, left: 10},
-        width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10),
-        height = 400;
+    var margin = {top: 20, right: 20, bottom: 20, left: 20},
+        width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10) - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
     var data = gon.occupations;
     var highest_salary = d3.max(gon.occupations, function(d) { return d.occ_salary; });
@@ -415,8 +415,11 @@ $(document).ready(function () {
 
     var chart = d3.select("#occupations-bar-graph")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
+    var chartArea = chart.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     var x = d3.scale.linear()
       .range([0, width])
@@ -424,16 +427,18 @@ $(document).ready(function () {
 
     var y = d3.scale.ordinal()
       .domain(occupations)
-      .rangeBands([0, height]);
+      .rangeRoundBands([0, height]);
 
-    var bar = chart.selectAll("rect")
-      .data(data).enter().append("rect")
-        .style("fill", "lightblue")
+    var bar = chartArea.selectAll("g")
+      .data(data).enter()
+      .append("g")
+      .attr("transform", function(d) {
+        return "translate(" + 0 + "," +  y(d.occ_type) + ")"
+      })
+
+    bar.append("rect")
+        .style("fill", "steelblue")
         .style("stroke", "white")
-        .attr("x", 0)
-        .attr("y", function(d) {
-          return y(d.occ_type);
-        })
         .attr("class", function(d) {
           return d.occ_type;
         })
@@ -443,56 +448,51 @@ $(document).ready(function () {
           return x(d.occ_salary)
         });
 
-    var line = chart.append("svg:line")
+    bar.append("text")
+        .attr("y", y.rangeBand()-5)
+        .attr("x", function(d) {
+          return x(d.occ_salary);
+        })
+        .attr("text-anchor", function(d) {
+          var threshhold = width/2;
+          var thisBar = x(d.occ_salary);
+          if (thisBar<threshhold) {
+            return "beginning"
+          } else {
+            return "end"
+          }
+        })
+        .text(function(d) {
+          var alias = occupation_aliases.filter(function(m) {
+            return ("occ_" + m.code) == d.occ_type;
+          });
+          return alias[0].alias;
+        });
+
+    var line = chartArea.append("svg:line")
       .attr("x1", 0)
       .attr("y1", 0)
       .attr("x2", 0)
       .attr("y2", height)
       .style("stroke", "black")
-      .style("stroke-width", 3)
-      .style("stroke-opacity", 0.5)
+      .style("stroke-width", 2)
+      .style("stroke-opacity", 0.15)
 
-    var labelOffset = 10
-
-    var labelBox = chart.append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width",20)
-        .style("fill", "gray")
-
-    var livingWageLabel = chart.append("text")
+    var livingWageLabel = chartArea.append("text")
           .text("Living Wage")
-          .style("text-anchor", "beginning")
-          .style("fill", "white")
+          .style("text-anchor", "middle")
+          .style("fill", "black")
           .attr("id", "occupations-living-wage-label")
-          .attr("transform", function() {
-            return "translate(" + x(0) + "," + 5 + ") rotate(90)"
+          .attr("transform", function(d) {
+            return "translate(" + (x(0)) + ",0)"
           });
-
-    var labels = bar.append("text")
-        .attr("y", function(d) {
-          return y(d.occ_type)
-        })
-        .attr("x", 0)
-        .text(function(d) {
-          return d.occ_type;
-        })
-
 
     dispatch.on("statechange.occupations", function(d) {
 
       var living_salary = d.income[0].value;
 
-      labelBox.transition()
-          .attr("height", function() {
-            var textNode = document.getElementById("occupations-living-wage-label").getBBox();
-            return textNode.width+labelOffset;
-          })
-          .attr("x", x(living_salary)-10)
-          .attr("y", 0)
-
       livingWageLabel.transition().attr("transform", function() {
-        return "translate(" + ((x(living_salary))-4) + "," + 5 + ") rotate(90)";
+        return "translate(" + (x(living_salary) + 5) + "," + 0 + ")";
       });
 
       line.transition()
@@ -501,11 +501,11 @@ $(document).ready(function () {
           .attr("y1", 0)
           .attr("y2", height);
 
-      bar.transition(600).style("fill", function(d) {
+      bar.selectAll("rect").transition(600).style("opacity", function(d) {
             if (living_salary < d.occ_salary) {
-              return "rgb(77,175,74)";
+              return 1;
             } else {
-              return "rgb(228,26,28)";
+              return 0.75;
             }
           });
     });
@@ -523,8 +523,8 @@ $(document).ready(function () {
         .range(["#a65628","#377eb8","#e41a1c","#4daf4a","#ff7f00","#984ea3", "#666666"]);
 
     var arc = d3.svg.arc()
-        .outerRadius(radius - 10)
-        .innerRadius(radius - 80);
+        .outerRadius(radius - 20)
+        .innerRadius(radius - 120);
 
     var pie = d3.layout.pie()
         .sort(null);
