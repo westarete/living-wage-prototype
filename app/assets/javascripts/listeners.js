@@ -419,7 +419,7 @@ $(document).ready(function () {
 
   dispatch.on("load.occupations", function(stateById) {
     console.log(d3.select("#occupations-bar-graph").style('width'), 10);
-    var margin = {top: 0, right: 15, bottom: 0, left: 15},
+    var margin = {top: 15, right: 15, bottom: 15, left: 15},
         width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10) - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -488,9 +488,9 @@ $(document).ready(function () {
 
       bar.selectAll("rect").transition().style("opacity", function(d) {
             if (living_salary < d.occ_salary) {
-              return 0.6;
-            } else {
               return 0.9;
+            } else {
+              return 0.6;
             }
           })
           .attr("width", function(d) {
