@@ -355,9 +355,9 @@ $(document).ready(function () {
     dispatch.on("statechange.wages", function(d) {
 
         var data = d.wages;
-
-        // x.domain(data.map(function(d) { return d.name; }));
-        y.domain([0, d3.max(data, function(d) { return d.value; })]);
+        var max = d3.max(data, function(d) { return parseFloat(d.value); });
+        
+        y.domain([0, max]);
 
         bars.data(data)
           .transition()
@@ -401,17 +401,13 @@ $(document).ready(function () {
 
   dispatch.on("load.occupations", function(stateById) {
 
-    var margin = {top: 20, right: 20, bottom: 20, left: 20},
+    var margin = {top: 30, right: 20, bottom: 20, left: 20},
         width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10) - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
     var data = gon.occupations;
     var highest_salary = d3.max(gon.occupations, function(d) { return d.occ_salary; });
     var occupations = data.map(function(d) { return d.occ_type; });
-
-    console.log(occupations.length)
-    console.log(data.length)
-
 
     var chart = d3.select("#occupations-bar-graph")
         .append("svg")
@@ -439,6 +435,7 @@ $(document).ready(function () {
     bar.append("rect")
         .style("fill", "steelblue")
         .style("stroke", "white")
+        .style("opacity", 0.25)
         .attr("class", function(d) {
           return d.occ_type;
         })
@@ -449,7 +446,7 @@ $(document).ready(function () {
         });
 
     bar.append("text")
-        .attr("y", y.rangeBand()-5)
+        .attr("y", y.rangeBand()-3)
         .attr("x", function(d) {
           return x(d.occ_salary);
         })
@@ -478,22 +475,22 @@ $(document).ready(function () {
       .style("stroke-width", 2)
       .style("stroke-opacity", 0.15)
 
-    var livingWageLabel = chartArea.append("text")
-          .text("Living Wage")
-          .style("text-anchor", "middle")
-          .style("fill", "black")
-          .attr("id", "occupations-living-wage-label")
-          .attr("transform", function(d) {
-            return "translate(" + (x(0)) + ",0)"
-          });
+    // var livingWageLabel = chartArea.append("text")
+    //       .text("Living Wage")
+    //       .style("text-anchor", "middle")
+    //       .style("fill", "black")
+    //       .attr("id", "occupations-living-wage-label")
+    //       .attr("transform", function(d) {
+    //         return "translate(" + (x(0)) + ",0)"
+    //       });
 
     dispatch.on("statechange.occupations", function(d) {
 
       var living_salary = d.income[0].value;
 
-      livingWageLabel.transition().attr("transform", function() {
-        return "translate(" + (x(living_salary) + 5) + "," + 0 + ")";
-      });
+      // livingWageLabel.transition().attr("transform", function() {
+      //   return "translate(" + (x(living_salary) + 5) + "," + 0 + ")";
+      // });
 
       line.transition()
           .attr("x1", function(d) { return x(living_salary); })
@@ -503,9 +500,9 @@ $(document).ready(function () {
 
       bar.selectAll("rect").transition(600).style("opacity", function(d) {
             if (living_salary < d.occ_salary) {
-              return 1;
+              return 0.25;
             } else {
-              return 0.75;
+              return 0.6;
             }
           });
     });
@@ -514,7 +511,7 @@ $(document).ready(function () {
   dispatch.on("load.pie", function(stateById) {
 
     var width = parseInt(d3.select("#living-wage-append").style('width'), 10),
-        height = 300,
+        height = width,
         radius = height / 2,
         labelr = radius + 15;
 
@@ -523,8 +520,8 @@ $(document).ready(function () {
         .range(["#a65628","#377eb8","#e41a1c","#4daf4a","#ff7f00","#984ea3", "#666666"]);
 
     var arc = d3.svg.arc()
-        .outerRadius(radius - 20)
-        .innerRadius(radius - 120);
+        .outerRadius(radius - 10)
+        .innerRadius(radius - 100);
 
     var pie = d3.layout.pie()
         .sort(null);
@@ -563,7 +560,7 @@ $(document).ready(function () {
 
       var sum = 0;
       d.contributions.forEach(function(d) {
-        sum = sum + d.value;
+        sum = sum + parseInt(d.value);
       });
 
       path.data(pie.value(function(g) { return d[g]; })(groups))

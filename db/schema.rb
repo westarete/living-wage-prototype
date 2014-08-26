@@ -11,30 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140609024602) do
+ActiveRecord::Schema.define(:version => 20140825185020) do
 
   create_table "aggregations", :force => true do |t|
     t.string   "familycomposition"
     t.integer  "familysize"
-    t.integer  "house_cost"
-    t.integer  "childcare_cost"
-    t.integer  "health_cost"
-    t.integer  "food_cost"
-    t.integer  "trans_cost"
-    t.integer  "other_cost"
-    t.integer  "income"
-    t.integer  "income_pretax"
-    t.integer  "tax"
-    t.integer  "poverty"
-    t.integer  "minwage_hrly"
-    t.integer  "minwage"
-    t.integer  "income_hrly"
-    t.integer  "income_pretax_hrly"
+    t.decimal  "house_cost",         :precision => 8, :scale => 2
+    t.decimal  "childcare_cost",     :precision => 8, :scale => 2
+    t.decimal  "health_cost",        :precision => 8, :scale => 2
+    t.decimal  "food_cost",          :precision => 8, :scale => 2
+    t.decimal  "trans_cost",         :precision => 8, :scale => 2
+    t.decimal  "other_cost",         :precision => 8, :scale => 2
+    t.decimal  "income",             :precision => 8, :scale => 2
+    t.decimal  "income_pretax",      :precision => 8, :scale => 2
+    t.decimal  "tax",                :precision => 8, :scale => 2
+    t.decimal  "poverty",            :precision => 8, :scale => 2
+    t.decimal  "minwage_hrly",       :precision => 8, :scale => 2
+    t.decimal  "minwage",            :precision => 8, :scale => 2
+    t.decimal  "income_hrly",        :precision => 8, :scale => 2
+    t.decimal  "income_pretax_hrly", :precision => 8, :scale => 2
     t.integer  "poverty_hrly"
     t.integer  "explainable_id"
     t.string   "explainable_type"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
   end
 
   create_table "counties", :primary_key => "census_id", :force => true do |t|
