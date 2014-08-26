@@ -455,16 +455,24 @@ $(document).ready(function () {
         .style("stroke", "white")
         .style("stroke-width", 2)
         .style("opacity", 0.9)
-        .attr("class", function(d) {
-          return d.occ_type;
-        })
+        .attr("class", "occupation")
         .attr("height", y.rangeBand())
-        .attr("width", 0);
+        .attr("width", 0)
+        .attr("data-toggle", "tooltip")
+        .attr("title", function(d) {
+          return "Median Wage: $" + dollars(d.occ_salary.toFixed(0));
+        });
 
     bar.append("text")
         .attr("y", y.rangeBand()-5)
         .attr("x", function(d) {
-          return x(d.occ_salary);
+          var threshhold = width/2;
+          var thisBar = x(d.occ_salary);
+          if (thisBar<threshhold) {
+            return thisBar + 5;
+          } else {
+            return thisBar - 5;
+          }
         })
         .attr("text-anchor", function(d) {
           var threshhold = width/2;
@@ -481,6 +489,8 @@ $(document).ready(function () {
           });
           return alias[0].alias;
         });
+
+
 
     dispatch.on("statechange.occupations", function(d) {
 
@@ -789,6 +799,10 @@ $(document).ready(function () {
       });
     })
 
-
+    $(".occupation").tooltip({
+        'container':'#occupations-section',
+        'trigger': 'hover',
+        'placement':'auto top'
+      });
 
 });
