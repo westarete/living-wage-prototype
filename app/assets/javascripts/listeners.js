@@ -284,9 +284,16 @@ $(document).ready(function () {
 
   dispatch.on("load.wages", function(stateById) {
 
-    var margin = {top: 20, right: 0, bottom: 30, left: 0},
+    dispatch.on("statechange.wages", function(d) {
+
+    });
+  });
+
+  dispatch.on("load.wages", function(stateById) {
+
+    var margin = {top: 20, right: 0, bottom: 50, left: 0},
         width = parseInt(d3.select("#living-wage-append").style('width'), 10) - margin.left - margin.right,
-        height = 250;
+        height = 300;
 
     var container = d3.select("#living-wage-append")
           .append("svg")
@@ -322,7 +329,9 @@ $(document).ready(function () {
     barChartArea.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+        .call(xAxis)
+      .selectAll(".x.axis text")
+        .call(wrap, x.rangeBand());
 
     var bars = barChartArea.selectAll(".bar")
         .data(x.domain())
@@ -356,7 +365,8 @@ $(document).ready(function () {
 
         var data = d.wages;
         var max = d3.max(data, function(d) { return parseFloat(d.value); });
-        
+        var additionalData = d;
+
         y.domain([0, max]);
 
         bars.data(data)
@@ -376,19 +386,23 @@ $(document).ready(function () {
               var alias = descriptions.filter(function(m) {
                 return m.topic == d.name;
               });
-
+              var variableText = '</tbody></table>';
+              if (d.name == "income_hrly") {
+                variableText = '<tr><td>Pre-tax income (hourly):</td><td>$' + dollars(additionalData.income_pretax_hrly).toString() + '</td></tr></tbody></table>';
+              }
               var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
                      '<tr><td>Hourly (per person):</td><td>$' + (dollars(d.value)).toString() + '</td></tr>' +
                      '<tr><td>Weekly (per person):</td><td>$' + (dollars(d.value * 40)).toString() + '</td></tr>' +
-                     '<tr><td>Annual (per person):</td><td>$' + (dollars(d.value * 2085)).toString() + '</td></tr></tbody><table>' +
-                     alias[0].description;
+                     '<tr><td>Annual (per person):</td><td>$' + (dollars(d.value * 2085)).toString() + '</td></tr>' +
+                        variableText
+                      + alias[0].description;
               
               return body;
             })
           .transition()
             .attr("x", function(d, i) { return x(i)+x.rangeBand(d.name)/2; })
             .attr("y", function(d) { return y(d.value/2); })
-            .text(function (d) { return "$" + d.value });
+            .text(function (d) { return "$" + dollars(d.value) });
 
 
         function type(d) {
@@ -510,7 +524,7 @@ $(document).ready(function () {
 
   dispatch.on("load.pie", function(stateById) {
 
-    var width = parseInt(d3.select("#living-wage-append").style('width'), 10),
+    var width = parseInt(d3.select("#living-wage-pie").style('width'), 10),
         height = width,
         radius = height / 2,
         labelr = radius + 15;
@@ -521,7 +535,7 @@ $(document).ready(function () {
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 10)
-        .innerRadius(radius - 100);
+        .innerRadius(radius - 115);
 
     var pie = d3.layout.pie()
         .sort(null);
@@ -739,6 +753,30 @@ $(document).ready(function () {
 
     });
 
+    function wrap(text, width) {
+      text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
+        }
+      });
+    }
+
     $("svg text").each( function() {
       $(this).popover({
           'container': '#living-wage-section', 
@@ -762,6 +800,7 @@ $(document).ready(function () {
       }, 100);
       });
     })
+
 
 
 });

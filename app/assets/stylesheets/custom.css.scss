@@ -247,10 +247,22 @@ a {
   border-top-left-radius: 5px;
 }
 
-@media (max-width: 915px) {
+@media (max-width: 400px) {
+  #summary-panel {
+    border-bottom: solid gray 1px
+  }
+  #living-wage-section {
+    .col-sm-6 {
+      border-bottom: solid gray 1px
+    }
+  }
+}
+
+@media (max-width: 850px) {
   #summary-panel {
     position: inherit;
     top: 0px;
+    border-bottom: solid gray 1px
   }
   .red-strip {
     border-top-right-radius: 0px;
@@ -263,7 +275,7 @@ a {
     }
   }
   #map {
-    height: 85px;
+    height: 115px;
   }
 }
 
