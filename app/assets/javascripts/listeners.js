@@ -455,6 +455,7 @@ $(document).ready(function () {
         .style("stroke", "white")
         .style("stroke-width", 2)
         .style("opacity", 0.9)
+        .style("cursor", "pointer")
         .attr("class", "occupation")
         .attr("height", y.rangeBand())
         .attr("width", 0)
@@ -483,6 +484,7 @@ $(document).ready(function () {
             return "end"
           }
         })
+        .style("pointer-events", "none")
         .text(function(d) {
           var alias = occupation_aliases.filter(function(m) {
             return ("occ_" + m.code) == d.occ_type;
