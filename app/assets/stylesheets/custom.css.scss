@@ -59,6 +59,12 @@ textarea {
   margin-bottom: 10px;
 }
 
+.gutter { 
+  border-bottom: solid black 1px; 
+  margin-top: 5px; 
+  margin-bottom: 5px
+}
+
 .margins {
   margin: 15px;
 }
@@ -127,6 +133,8 @@ textarea {
     stroke-linecap: round;
     stroke-linejoin: round;
   }
+
+
 
   svg {
   min-height: 425px;

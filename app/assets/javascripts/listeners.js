@@ -369,7 +369,7 @@ $(document).ready(function () {
         var max = d3.max(data, function(d) { return parseFloat(d.value); });
         var additionalData = d;
 
-        printWage.text("$" + dollars(d.income_hrly))
+        printWage.text("$" + dollars(d.income_hrly));
 
         y.domain([0, max]);
 
@@ -683,8 +683,7 @@ $(document).ready(function () {
   var pct = d3.format("4%");
 
   var margin = {top: 1, left: 1, bottom: 20, right: 1}, 
-    width = parseInt(d3.select('#national-landscape').style('width')), 
-    width = width - margin.left - margin.right, 
+    width = parseInt(d3.select('#choropleth-map').style('width')) - margin.left - margin.right, 
     mapRatio = .5, 
     height = width * mapRatio,
     active = false;
@@ -696,9 +695,9 @@ $(document).ready(function () {
   var path = d3.geo.path()
       .projection(projection);
 
-  var svg = d3.select("#national-landscape").append("svg")
-      .attr("width", "100%")
-      .attr("height", "100%");
+  var svg = d3.select("#choropleth-map").append("svg")
+      .attr("width", width)
+      .attr("height", height);
 
   svg.append("rect")
       .attr("width", width)
