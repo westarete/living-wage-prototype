@@ -319,8 +319,6 @@ $(document).ready(function () {
         .ticks(10)
         .tickFormat(function(d) { return "$" + formatCurrency(d); });
 
-    var barHeights = 0
-
     x.domain(["income_hrly","minwage_hrly","poverty_hrly"])
 
     var barChartArea = container.append("g")
@@ -344,6 +342,8 @@ $(document).ready(function () {
         .attr("y", function() { return y(0); })
         .attr("width", x.rangeBand())
         .attr("height", 0)
+        // .style("stroke", "white")
+        // .style("stroke-width", 1)
 
     var text = barChartArea.selectAll(".text")  
         .data(x.domain())
@@ -361,11 +361,15 @@ $(document).ready(function () {
           d3.select(this).transition().style("text-decoration", "inherit")
         })
 
+    var printWage = d3.select("#printed-living-wage").append("h1")
+
     dispatch.on("statechange.wages", function(d) {
 
         var data = d.wages;
         var max = d3.max(data, function(d) { return parseFloat(d.value); });
         var additionalData = d;
+
+        printWage.text("$" + dollars(d.income_hrly))
 
         y.domain([0, max]);
 
@@ -414,10 +418,10 @@ $(document).ready(function () {
   });
 
   dispatch.on("load.occupations", function(stateById) {
-
-    var margin = {top: 30, right: 20, bottom: 20, left: 20},
+    console.log(d3.select("#occupations-bar-graph").style('width'), 10);
+    var margin = {top: 0, right: 15, bottom: 0, left: 15},
         width = parseInt(d3.select("#occupations-bar-graph").style('width'), 10) - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        height = 500 - margin.top - margin.bottom;
 
     var data = gon.occupations;
     var highest_salary = d3.max(gon.occupations, function(d) { return d.occ_salary; });
@@ -447,20 +451,18 @@ $(document).ready(function () {
       })
 
     bar.append("rect")
-        .style("fill", "steelblue")
+        .style("fill", "#4682B4")
         .style("stroke", "white")
-        .style("opacity", 0.25)
+        .style("stroke-width", 2)
+        .style("opacity", 0.9)
         .attr("class", function(d) {
           return d.occ_type;
         })
         .attr("height", y.rangeBand())
-        .attr("width", 0)
-        .attr("width", function(d) {
-          return x(d.occ_salary)
-        });
+        .attr("width", 0);
 
     bar.append("text")
-        .attr("y", y.rangeBand()-3)
+        .attr("y", y.rangeBand()-5)
         .attr("x", function(d) {
           return x(d.occ_salary);
         })
@@ -480,62 +482,38 @@ $(document).ready(function () {
           return alias[0].alias;
         });
 
-    var line = chartArea.append("svg:line")
-      .attr("x1", 0)
-      .attr("y1", 0)
-      .attr("x2", 0)
-      .attr("y2", height)
-      .style("stroke", "black")
-      .style("stroke-width", 2)
-      .style("stroke-opacity", 0.15)
-
-    // var livingWageLabel = chartArea.append("text")
-    //       .text("Living Wage")
-    //       .style("text-anchor", "middle")
-    //       .style("fill", "black")
-    //       .attr("id", "occupations-living-wage-label")
-    //       .attr("transform", function(d) {
-    //         return "translate(" + (x(0)) + ",0)"
-    //       });
-
     dispatch.on("statechange.occupations", function(d) {
 
       var living_salary = d.income[0].value;
 
-      // livingWageLabel.transition().attr("transform", function() {
-      //   return "translate(" + (x(living_salary) + 5) + "," + 0 + ")";
-      // });
-
-      line.transition()
-          .attr("x1", function(d) { return x(living_salary); })
-          .attr("x2", function(d) { return x(living_salary); })
-          .attr("y1", 0)
-          .attr("y2", height);
-
-      bar.selectAll("rect").transition(600).style("opacity", function(d) {
+      bar.selectAll("rect").transition().style("opacity", function(d) {
             if (living_salary < d.occ_salary) {
-              return 0.25;
-            } else {
               return 0.6;
+            } else {
+              return 0.9;
             }
+          })
+          .attr("width", function(d) {
+            return x(d.occ_salary)
           });
     });
   });
 
   dispatch.on("load.pie", function(stateById) {
 
-    var width = parseInt(d3.select("#living-wage-pie").style('width'), 10),
+    var width = parseInt(d3.select("#living-wage-append").style('height'), 10),
         height = width,
         radius = height / 2,
         labelr = radius + 15;
 
     var color = d3.scale.ordinal()
         .domain(groups)
-        .range(["#a65628","#377eb8","#e41a1c","#4daf4a","#ff7f00","#984ea3", "#666666"]);
+        .range(["#a65628","#377eb8","#e41a1c","#4daf4a","#ff7f00","#984ea3", "#666666"])
+        .range(["#4682B4"]);
 
     var arc = d3.svg.arc()
         .outerRadius(radius - 10)
-        .innerRadius(radius - 115);
+        .innerRadius(radius - 130);
 
     var pie = d3.layout.pie()
         .sort(null);
@@ -544,12 +522,17 @@ $(document).ready(function () {
         .attr("width", width)
         .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + (width / 2) + "," + height / 2 + ")");
+        .attr("transform", "translate(" + (width / 2) + "," + height / 2 + ")")
+
+
 
     var path = pieChartArea.selectAll("path")
         .data(groups)
       .enter().append("path")
         .style("fill", color)
+        .style("opacity", 0.9)
+        .style("stroke", "white")
+        .style("stroke-width", 2)
         .each(function() { this._current = {startAngle: 0, endAngle: 0}; })
 
     var labels = pieChartArea.selectAll("text")
@@ -569,6 +552,10 @@ $(document).ready(function () {
       .enter().append("svg:text")
         .attr("transform", "translate(0,0)")
         .attr("class", "categories")
+
+    var middleLabel = pieChartArea.append("text")
+        .style("text-anchor", "middle")
+        .text("Living Wage");
 
     dispatch.on("statechange.pie", function(d) {
 
@@ -630,7 +617,7 @@ $(document).ready(function () {
 
             if (d.value !== 0) 
               { 
-                return (d.value/sum * 100).toFixed(0) + "%"; 
+                return (d.value/sum * 100).toFixed(1) + "%"; 
               } 
           })
 
@@ -721,7 +708,8 @@ $(document).ready(function () {
 
   var quartileScale = d3.scale.ordinal()
         .domain([1,2,3,4])
-        .range(["#edf8e9","#bae4b3","#74c476","#238b45"]);
+        .range(["#f1eef6","#bdc9e1","#74a9cf","#0570b0"]);
+
 
   d3.json("../assets/us.json", function(error, us) {
 
@@ -737,13 +725,14 @@ $(document).ready(function () {
         })
         .on("mouseover", function(d) {
           d3.select(this)
-            .style("opacity", "0.5")
+            .style("stroke", "black")
+            .style("stroke-width", 2)
         })
         .on("mouseout", function(d) {
           d3.select(this)
             .transition()
             .duration(350)
-            .style("opacity", "1")
+            .style("stroke-width", 0)
         });
 
     g.append("path")
