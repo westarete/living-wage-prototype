@@ -457,22 +457,22 @@ $(document).ready(function () {
       })
 
     var livingWageLabel = chartArea.append("g")
-          .attr("transform", "translate(" + x(0) + "," + (height + 30) + ")");
+          .attr("transform", "translate(" + x(0) + "," + (height + 33) + ")");
 
     livingWageLabel.append("text")
-          .style("text-anchor", "middle")
+          .style("text-anchor", "beginning")
           .style("fill", "black")
           .attr("id", "occupations-living-wage-label")
-          .attr("x", 0)
-          .attr("y", 0)
+          .attr("x", 5)
+          .attr("y", -height-20)
           .text("Living Wage");
 
     var livingWageSalary = livingWageLabel.append("text")
-          .style("text-anchor", "middle")
+          .style("text-anchor", "beginning")
           .style("fill", "black")
           .attr("id", "occupations-living-salary")
-          .attr("x", 0)
-          .attr("y", 15)
+          .attr("x", 5)
+          .attr("y", 0)
 
     var xAxis = d3.svg.axis()
         .scale(x)
@@ -539,7 +539,7 @@ $(document).ready(function () {
       var living_occupations = [];
 
       livingWageLabel.transition()
-        .attr("transform", "translate(" + x(living_salary) + "," + (height + 30) + ")");
+        .attr("transform", "translate(" + x(living_salary) + "," + (height + 33) + ")");
 
       livingWageSalary.text("$" + commas(living_salary));
 
@@ -547,7 +547,7 @@ $(document).ready(function () {
           .attr("x1", function(d) { return x(living_salary); })
           .attr("x2", function(d) { return x(living_salary); })
           .attr("y1", 0)
-          .attr("y2", height + 25);
+          .attr("y2", height + 35);
 
       bar.selectAll("rect").transition().style("opacity", function(d) {
             if (living_salary < d.occ_salary) {
