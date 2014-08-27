@@ -18,7 +18,7 @@ html {
 body {
   padding-top: 50px;
   background: $grid-paper2;
-  font-family: 'Merriweather', serif;
+  font-family: 'Nunito', helvetica, vedana, arial sans-serif;
   height:100%;
 }
 
@@ -192,7 +192,7 @@ textarea {
   display: block;
   margin: 0 auto;
   .pie-text {
-    font: 300 1.5em Helvetica Neue;
+    font-size: 1.5em;
     fill: white;
     text-anchor: middle;
     cursor: pointer;
@@ -218,7 +218,7 @@ textarea {
 // }
 
 h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
+  // line-height: 1;
 }
 
 h1 {
@@ -281,6 +281,9 @@ a {
     border-bottom: solid gray 1px
   }
   #living-wage-section {
+    p {
+      line-height: 1.9em;
+    }
     .col-sm-6 {
       border-bottom: solid gray 1px
     }
@@ -489,14 +492,13 @@ svg {
   }
 
   .bartext {
-    font: 300 20px Helvetica Neue;
+    font-size: 1.5em;
     fill: white;
     text-anchor: middle;
     cursor: pointer;
   }
 
   .title {
-    font: 300 78px Helvetica Neue;
     fill: #666;
   }
 
@@ -514,6 +516,7 @@ svg {
     opacity: 0.6;
   }
   #bar-income_hrly {
+    font-size: 2em;
     fill: #4682B4;
     opacity: 0.9;
   }
@@ -528,7 +531,7 @@ svg {
 
 
   .pie-text {
-    font: 300 1.5em Helvetica Neue;
+    font-size: 1.5em;
     fill: white;
     text-anchor: middle;
     cursor: pointer;
