@@ -284,14 +284,7 @@ $(document).ready(function () {
 
   dispatch.on("load.wages", function(stateById) {
 
-    dispatch.on("statechange.wages", function(d) {
-
-    });
-  });
-
-  dispatch.on("load.wages", function(stateById) {
-
-    var margin = {top: 20, right: 0, bottom: 50, left: 0},
+    var margin = {top: 20, right: 0, bottom: 50, left: 10},
         width = parseInt(d3.select("#living-wage-append").style('width'), 10) - margin.left - margin.right,
         height = 300;
 
@@ -316,8 +309,8 @@ $(document).ready(function () {
     var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(10)
-        .tickFormat(function(d) { return "$" + formatCurrency(d); });
+        .ticks(2)
+        .tickFormat(function(d) { return "$" + commas(d); });
 
     x.domain(["income_hrly","minwage_hrly","poverty_hrly"])
 
@@ -325,11 +318,15 @@ $(document).ready(function () {
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     barChartArea.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis)
-      .selectAll(".x.axis text")
-        .call(wrap, x.rangeBand());
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .selectAll(".x.axis text")
+      .call(wrap, x.rangeBand())
+
+    var yAxisArea = barChartArea.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + (x(0)-5) + ",0)")
 
     var bars = barChartArea.selectAll(".bar")
         .data(x.domain())
@@ -357,9 +354,9 @@ $(document).ready(function () {
         })
         .on("mouseleave", function(d) {
           d3.select(this).transition().style("text-decoration", "inherit")
-        })
+        });
 
-    var printWage = d3.select("#printed-living-wage").append("h1")
+    var printWage = d3.select("#printed-living-wage").append("h1").text("0")
 
     dispatch.on("statechange.wages", function(d) {
 
@@ -368,16 +365,18 @@ $(document).ready(function () {
         var additionalData = d;
 
         printWage.transition()
-          .duration(250)
+          .duration(300)
           .ease('linear')
           .tween("text", function() {
             var i = d3.interpolate(this.textContent, d.income_hrly);
             return function(t) {
-              this.textContent = "$" + dollars(i(t)) + " / hr";
+              this.textContent = "$" + dollars(i(t)) + " / hr.";
             };
           });
 
         y.domain([0, max]);
+
+        yAxisArea.call(yAxis)
 
         bars.data(data)
           .transition()
@@ -477,8 +476,8 @@ $(document).ready(function () {
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .ticks(4)
-        .tickFormat(function(d) { return "$" + commas(d); });
+        .tickFormat(function(d) { return "$" + commas(d); })
+        .ticks(2);
 
     chartArea.append("g")
         .attr("class", "y axis")
@@ -591,8 +590,6 @@ $(document).ready(function () {
         .attr("height", height)
       .append("g")
         .attr("transform", "translate(" + (width / 2) + "," + height / 2 + ")")
-
-
 
     var path = pieChartArea.selectAll("path")
         .data(groups)

@@ -100,6 +100,14 @@ textarea {
 #living-wage-section {
   background-color: rgba(255,255,255,1); 
   padding-top: 15px;
+  .axis {
+    shape-rendering: crispEdges;
+  }
+  .y.axis line, .y.axis path {
+    fill: none;
+    stroke: #000;
+    opacity: 0.9;
+  }
 }
 
 #occupations-section {
@@ -111,11 +119,12 @@ textarea {
   .y.axis line, .y.axis path {
     fill: none;
     stroke: #000;
+
   }
 }
 
 #occupations-bar-graph {
-  min-width: 500px;
+  min-width: 700px;
   rect {
     shape-rendering: crispEdges;
   }
@@ -475,11 +484,6 @@ svg {
   svg {
     margin-left: 0;
   }
-
-  .y.axis path {
-    display: none;
-  }
-
   .x.axis path {
     display: none;
   }
@@ -489,17 +493,6 @@ svg {
     fill: white;
     text-anchor: middle;
     cursor: pointer;
-  }
-
-  .y.axis line {
-    stroke: #fff;
-    stroke-opacity: .2;
-    shape-rendering: crispEdges;
-  }
-
-  .y.axis .zero line {
-    stroke: #000;
-    stroke-opacity: 1;
   }
 
   .title {
