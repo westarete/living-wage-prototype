@@ -309,7 +309,7 @@ $(document).ready(function () {
     var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
-        .ticks(2)
+        .ticks(3)
         .tickFormat(function(d) { return "$" + commas(d); });
 
     x.domain(["income_hrly","minwage_hrly","poverty_hrly"])
@@ -376,7 +376,7 @@ $(document).ready(function () {
 
         y.domain([0, max]);
 
-        yAxisArea.call(yAxis)
+        yAxisArea.transition().call(yAxis)
 
         bars.data(data)
           .transition()
