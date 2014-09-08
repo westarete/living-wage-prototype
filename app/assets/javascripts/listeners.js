@@ -462,9 +462,11 @@ $(document).ready(function () {
           .style("text-anchor", "beginning")
           .style("fill", "black")
           .attr("id", "occupations-living-wage-label")
-          .attr("x", 5)
+          .attr("x", 0)
           .attr("y", -height-20)
-          .text("Living Wage");
+          .attr("dy", "1em")
+          .text("Jobs that pay the Living Wage")
+          .call(wrap, 120);
 
     var livingWageSalary = livingWageLabel.append("text")
           .style("text-anchor", "beginning")
@@ -497,7 +499,7 @@ $(document).ready(function () {
     bar.append("rect")
         .style("fill", "#4682B4")
         .style("stroke", "white")
-        .style("stroke-width", 1)
+        .style("stroke-width", 2)
         .style("opacity", 0.9)
         .attr("class", "occupation")
         .attr("height", y.rangeBand())
@@ -538,7 +540,7 @@ $(document).ready(function () {
       var living_occupations = [];
 
       livingWageLabel.transition()
-        .attr("transform", "translate(" + x(living_salary) + "," + (height + 33) + ")");
+        .attr("transform", "translate(" + (x(living_salary) + 5) + "," + (height + 33) + ")");
 
       livingWageSalary.text("$" + commas(living_salary));
 

@@ -14,11 +14,7 @@
 </head>
 	<body>
       <%= render 'layouts/header' %>
-      <%= render 'profile/leaflet' %>
-      <%= render 'profile/datapanels' %>
-      <%= render 'profile/recalculate' %>
-      <%= render 'profile/national' %>
-      <%= render 'profile/contribute' %>
+      <%= yield %>
 
       <footer class="footer">
         <%= debug(params) if Rails.env.development? %>

@@ -7,7 +7,7 @@ class State < ActiveRecord::Base
   has_many :aggregations, :as => :explainable
   has_many :occupations, :as => :explainable
 
-  validates :census_id, presence: true, numericality: { less_than_or_equal_to: 56, greater_than: 0 }
+  # validates :census_id, presence: true, numericality: { less_than_or_equal_to: 56, greater_than: 0 }
   validates :name,
              presence: true
 
