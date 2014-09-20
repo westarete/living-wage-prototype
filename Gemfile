@@ -1,10 +1,8 @@
-source 'https://rubygems.org'
+source :rubygems
 ruby "1.9.3", :patchlevel => '374'
 
 gem 'rails', '3.2.13'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'pg', '0.12.2'
 gem 'rabl'
 gem 'jquery-rails'
@@ -25,16 +23,6 @@ gem 'capistrano-rails', '~> 1.1.1'
 gem 'capistrano-rvm', github: "capistrano/rvm"
 gem 'therubyracer', :platforms => :ruby, :require => 'v8'
 gem 'libv8', '~> 3.11.8'  # Update version number as needed
-# gem 'bluecloth'
-# gem 'validates_timeliness', '~> 3.0'
-# gem 'paperclip', '~> 3.0'
-# gem 'aws-sdk'
-
-# gem 'rails_admin'
-
-group :production do
-  # gem 'rails_serve_static_assets'
-end
 
 group :development, :test do
   gem 'rspec-rails'
