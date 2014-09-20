@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "1.9.3"
+ruby "1.9.3", :patchlevel => '374'
 
 gem 'rails', '3.2.13'
 
@@ -33,8 +33,7 @@ gem 'libv8', '~> 3.11.8'  # Update version number as needed
 # gem 'rails_admin'
 
 group :production do
-  gem 'pg', '0.12.2'
-  gem 'rails_serve_static_assets'
+  # gem 'rails_serve_static_assets'
 end
 
 group :development, :test do

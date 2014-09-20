@@ -4,6 +4,11 @@
 # set :application, 'my_app_name'
 # set :repo_url, 'git@example.com:me/my_repo.git'
 
+# steps:
+# install rvm 
+# set chown of deploy-to folder to me.
+
+
 set :application, 'lwc'
 set :repo_url, 'git@github.com:allthesignals/lwc.git'
 
