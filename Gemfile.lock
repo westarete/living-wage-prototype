@@ -94,6 +94,7 @@ GEM
     launchy (2.4.2)
       addressable (~> 2.3)
     leaflet-rails (0.7.3)
+    libv8 (3.11.8.17)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -143,6 +144,7 @@ GEM
     rake (10.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
+    ref (1.0.5)
     request_store (1.0.7)
     rspec-core (3.0.2)
       rspec-support (~> 3.0.0)
@@ -180,6 +182,9 @@ GEM
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    therubyracer (0.11.4)
+      libv8 (~> 3.11.8.12)
+      ref
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -222,6 +227,7 @@ DEPENDENCIES
   jquery-ui-rails
   launchy
   leaflet-rails
+  libv8 (~> 3.11.8)
   pg (= 0.12.2)
   rabl
   rails (= 3.2.13)
@@ -230,5 +236,6 @@ DEPENDENCIES
   rails_serve_static_assets
   rspec-rails
   sass-rails (~> 3.2.3)
+  therubyracer
   uglifier (>= 1.0.3)
   unicorn-rails

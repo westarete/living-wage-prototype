@@ -23,6 +23,8 @@ gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-bundler', '~> 1.1.2'
 gem 'capistrano-rails', '~> 1.1.1'
 gem 'capistrano-rvm', github: "capistrano/rvm"
+gem 'therubyracer', :platforms => :ruby, :require => 'v8'
+gem 'libv8', '~> 3.11.8'  # Update version number as needed
 # gem 'bluecloth'
 # gem 'validates_timeliness', '~> 3.0'
 # gem 'paperclip', '~> 3.0'
