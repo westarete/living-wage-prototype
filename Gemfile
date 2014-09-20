@@ -41,7 +41,6 @@ group :development, :test do
   gem 'capybara', '1.1.2'
   # gem 'factory_girl_rails'
   gem 'launchy'
-  gem 'pg', '0.12.2'  
 end
 
 # Gems used only for assets and not required
