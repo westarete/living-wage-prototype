@@ -12,6 +12,8 @@
 set :application, 'lwc'
 set :repo_url, 'git@github.com:allthesignals/lwc.git'
 
+set :log_level, :debug
+
 set :deploy_to, '/var/www/vhosts/livingwage.mit.edu'
 
 set :linked_files, %w{config/database.yml}
