@@ -9,6 +9,18 @@
         %a{href: "mailto:amyglas@mit.edu", target: "_blank"}
           %h1
             amyglas@mit.edu   
+        %h2
+          OR
+        %h1
+          Share this data:
+        %div.text-center
+          %div.btn-group
+            %a{href: "#", "data-type"=> "twitter", "data-description"=> "See the Living Wage for #{@geography.name}:", "data-via"=>"livingwagecalc", class: "social"}
+              %button.btn.btn-default{type:"button"}
+                Twitter
+            %a{href: "#", "data-type"=> "facebook", "data-title"=> "Living Wage Calculator: #{@geography.name}", "data-description"=> "See the Living Wage for #{@geography.name}:", "data-media"=> "http://sonnyt.com/assets/imgs/prettySocial.png", class: "social"}
+              %button.btn.btn-default{type:"button"}
+                Facebook
   %div.col-sm-6
     %a.twitter-timeline{href: "https://twitter.com/search?q=%23raisethewage+%7C%7C+%23livingwage", "data-widget-id" => "490005140603027456", "data-tweet-limit" => "3"}
 %div.row#contribute-your-story

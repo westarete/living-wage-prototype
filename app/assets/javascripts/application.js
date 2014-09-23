@@ -14,5 +14,6 @@
 //= require lib/leaflet-src.js
 //= require lib/d3.v3.js
 //= require lib/topojson.js
+//= require lib/jquery.prettySocial.min.js
 //= require listeners.js
 

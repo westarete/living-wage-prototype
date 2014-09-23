@@ -875,10 +875,6 @@ $(document).ready(function () {
       });
     })
 
-    $(".occupation").tooltip({
-        'container':'#occupations-section',
-        'trigger': 'hover',
-        'placement':'auto top'
-      });
+    $('.social').prettySocial();
 
 });
