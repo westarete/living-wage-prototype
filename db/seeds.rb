@@ -157,6 +157,6 @@ end
 # states
 # counties
 # metros
-aggregations
-# occupations
+# aggregations
+occupations
 # geographies
