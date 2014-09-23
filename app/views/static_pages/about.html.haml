@@ -1,27 +1,107 @@
-%div#map
-
-%div.row#occupations-section
+%div.row#about
   %div.row
     %div.col-sm-12
+      %p.lead
+        About:
+      %p
+        The Living Wage Calculator, Community Economic Toolbox, and Poverty in America websites were developed by Dr. Amy K. Glasmeier
+      %p.lead
+        Team:
       %div.row
         %div.col-sm-6.col-md-4
           %div.thumbnail
-            %img{"src"=> "assets/new_logo.png"}
-            %div.caption
-              %h3
-                Dr. Amy Glasmeier
+            %h3
+              Dr. Amy Glasmeier
+            %p
+              %strong
+                Professor of Economic Geography and Regional Planning. 
+                %a{href: "http://dusp.mit.edu/faculty/amy-glasmeier", target: "_blank"}
+                  Profile.
         %div.col-sm-6.col-md-4
           %div.thumbnail
-            %img{"src"=> "assets/new_logo.png"}
-            %div.caption
-              %h3
-                Carey Nadeau
+            %h3
+              Carey Nadeau
+            %p
+              %strong
+                Graduate Student, Data Analyst
         %div.col-sm-6.col-md-4
           %div.thumbnail
-            %img{"src"=> "assets/new_logo.png"}
-            %div.caption
-              %h3
-                Matt Gardner
+            %h3
+              Matt Gardner
+            %p
+              %strong
+                Web Developer
+
+      / %p.lead
+      /   History:
+      / %p
+      /   This online tool was developed as part of the Living Wage Project. For more information about this tool and its development, please see the publication Living Wage and Job Gap Study of Beaufort County, South Carolina.
+      /   The Living Wage Calculator is a companion to the Poverty in America website. Be sure to visit it as well!
+      / %strong
+      /   Late 2004
+      / %p
+      /   The first version of the Living Wage Calculator is released.
+      / %strong
+      /   June 2005
+      / %p
+      /   All values are adjusted to 2004 dollars to add consistency across the calculations.
+      / %strong
+      /   July 2007
+      / %p
+      /   The Living Wage Calculator is updated with the prevailing minimum wages at all locations. The site's interface gets a major face lift.
+      / %strong
+      /   November 2008
+      / %p
+      /   All data is updated to the latest available, and the source code behind the site goes through a major reorganization.
+      / %strong
+      /   June 2012
+      / %p
+      /   All data is updated to the latest available. Slight changes made to the calculator’s methodology and data sources.
+      /   The site will continue to be updated periodically with new data, as it becomes available.
+      %p.lead
+        Sources
+      %strong
+        Food
+      %p
+        Food cost is estimated using the US Department of Agriculture’s low-cost food plan as of 2013, adjusted for inflation.  The low-cost plan assumes that all meals (including snacks) are prepared in the home.
+      %strong
+        Child Care
+      %p
+        Child care cost represents the lowest cost option, either family child care or child care center, by state as reported by the National Association of Child Care Resource and Referral Agencies in 2013 and are adjusted for inflation.
+      %strong
+        Healthcare
+      %p
+        Medical costs are the sum of expenses for insurance premiums and (1) health insurance costs for employer sponsored plans, (3) medical services, (3) drugs, and (4) medical supplies.
+      %strong
+        Housing
+      %p
+        Housing costs measure the fair-market rent of rental housing, including utility costs, using HUD Fair Market Rents estimates for 2014.
+      %strong
+        Transportation
+      %p
+        Transportation costs are a measure of the expenses for (1) Used cars and trucks, (2) gasoline and motor oil, (3) other vehicle expenses, and (4) public transportation.  Expenditures for transportation are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation.
+      %strong
+        Other Necessities
+      %p
+        Other necessities include expenses for (1) apparel and services, (2) housekeeping supplies, (3) personal care products and services, (4) reading, and (5) miscellaneous.  Expenditures for other necessities are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation.
+      %strong
+        Taxes
+      %p
+        Taxes include estimates for payroll taxes, state income tax, and federal income taxes. Payroll taxes (Social Security and Medicare taxes) were 6.2% of total wages in 2013, as specified in the Federal Insurance Contributions Act. The state tax rate is taken from the second lowest income tax rate for 2011 as reported in the CCH State Tax Handbook. The federal income tax is calculated by the Tax Policy Center of the Urban Institute and Brookings Institution as of 2013.
+      %strong
+        Wages by Occupational Group
+      %p
+        The median annual wage for 22 major occupations is calculated using the Bureau of Labor Statistics 2013 Occupational and Employment Statistics Survey and is adjusted for inflation.
+      %strong
+        Minimum Wage
+      %p
+        The minimum wage is the lowest wage that is legally allowed in the United States, for most types of work.  Reported here is the national prevailing minimum wage or state minimum wage, whichever is higher, as of 2012.
+      %strong
+        Poverty Level
+      %p
+        The poverty wage is the maximum wage a family may earn and still be considered in poverty and qualify for specific forms of government aid.  The poverty wage should be understood as a yardstick of whether a family is under economic stress, not a measure of basic needs for living expenses.
+
+
 
 
 :javascript
@@ -36,7 +116,7 @@
   map.touchZoom.disable();
   map.doubleClickZoom.disable();
   map.scrollWheelZoom.disable();
-  map.setView(new L.LatLng(39.50, -130.35), 3, { padding: [50,50]});
+  map.setView(new L.LatLng(39.50, -90.35), 3, { padding: [50,50]});
   L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
