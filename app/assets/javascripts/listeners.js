@@ -397,12 +397,13 @@ $(document).ready(function () {
               });
               var variableText = '</tbody></table>';
               if (d.name == "income_hrly") {
-                variableText = '<tr><td>Pre-tax income (hourly):</td><td>$' + dollars(additionalData.income_pretax_hrly).toString() + '</td></tr></tbody></table>';
+                variableText = '<tr><td>Pre-tax income (hourly):</td><td>$' + dollars(additionalData.income_pretax_hrly).toString() + 
+                               '<tr><td>Hourly (per person):</td><td>$' + (dollars(d.value)).toString() + '</td></tr>' +
+                               '<tr><td>Weekly (per person):</td><td>$' + (dollars(d.value * 40)).toString() + '</td></tr>' +
+                               '<tr><td>Annual (per family):</td><td>$' + (dollars(additionalData.income[0].value)).toString() + '</td></tr>' +
+                               '</td></tr></tbody></table>';
               }
               var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
-                     '<tr><td>Hourly (per person):</td><td>$' + (dollars(d.value)).toString() + '</td></tr>' +
-                     '<tr><td>Weekly (per person):</td><td>$' + (dollars(d.value * 40)).toString() + '</td></tr>' +
-                     '<tr><td>Annual (per family):</td><td>$' + (dollars(additionalData.income[0].value)).toString() + '</td></tr>' +
                         variableText
                       + alias[0].description;
               
@@ -654,10 +655,7 @@ $(document).ready(function () {
             var alias = descriptions.filter(function(m) {
               return m.topic == d.data;
             });
-            var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
-                       '<tr><td>Hourly (per person):</td><td>$' + (dollars(d.value / 2080)).toString() + '</td></tr>' +
-                       '<tr><td>Annual (per family):</td><td>$' + (dollars(d.value)).toString() + '</td></tr></tbody><table>' +
-                       alias[0].description;
+            var body = alias[0].description;
             return body;
           })
           .transition()
