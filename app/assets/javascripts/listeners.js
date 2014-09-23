@@ -772,39 +772,59 @@ $(document).ready(function () {
 
   var g = svg.append("g");
 
-  var quartileScale = d3.scale.ordinal()
-        .domain([1,2,3,4])
+  var quartileScale = d3.scale.quantize()
+        .domain([0,.5])
         .range(["#f1eef6","#bdc9e1","#74a9cf","#0570b0"]);
 
 
-  d3.json("../assets/us.json", function(error, us) {
+
+
+
+  d3.json("../assets/us.js", function(error, us) {
 
     g.selectAll("path")
         .data(topojson.feature(us, us.objects.states).features)
-      .enter().append("svg:a")
-        .attr("xlink:href", function(d) { return "../states/" + d.properties.id; })
-      .append("path")
+      .enter().append("path")
         .attr("d", path)
         .attr("class", "feature")
         .style("fill", function(d) {
-          return quartileScale(d.properties.StateShareHH_SubLW_Quartile);
+          var parsed = parseFloat(d.properties.Share_BelowLW_State1_share_BelowLW);
+          if(parsed < 0.307605) {
+            return "#eff3ff";
+          } 
+
+          if(parsed > 0.307606 && parsed < 0.332683) {
+            return "#bdd7e7";
+          } 
+
+          if(parsed >= 0.332683 && parsed < 0.355403) {
+            return "#6baed6";
+          } 
+
+          if(parsed >= 0.355403) {
+            return "#2171b5";
+          } 
         })
-        .on("mouseover", function(d) {
-          d3.select(this)
-            .style("stroke", "black")
-            .style("stroke-width", 2)
+        .attr("data-title", function(d) {
+          return d.properties.StateShareHH_SubLW_state;
         })
-        .on("mouseout", function(d) {
-          d3.select(this)
-            .transition()
-            .duration(350)
-            .style("stroke-width", 0)
+        .attr("data-content", function(d) {
+          return "Rank: " + d.properties.Share_BelowLW_State1_rank;
         });
 
-    g.append("path")
-        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-        .attr("class", "mesh")
-        .attr("d", path);
+      g.append("path")
+          .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+          .attr("class", "mesh")
+          .attr("d", path);
+
+      $(".feature").each( function() {
+        $(this).popover({
+            'container': '#national-landscape', 
+            'trigger': 'hover',
+            'html': true,
+            'placement': 'auto bottom'
+        });
+      });
 
     });
 
@@ -831,6 +851,7 @@ $(document).ready(function () {
         }
       });
     }
+
 
     $("svg text").each( function() {
       $(this).popover({

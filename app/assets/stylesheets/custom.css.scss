@@ -134,17 +134,9 @@ textarea {
 
   .background {
     fill: none;
-    pointer-events: all;
+    // pointer-events: all;
   }
 
-  .feature {
-    fill: #ccc;
-    cursor: pointer;
-  }
-
-  .feature.active {
-    fill: orange;
-  }
 
   .mesh {
     fill: none;
@@ -168,9 +160,10 @@ textarea {
   }
 
   .feature {
-    fill: #ccc;
     cursor: pointer;
+    pointer-events: all;
   }
+
   
   background-color: rgba(255,255,255,1);
 }
