@@ -53,7 +53,12 @@
       fillOpacity: 0.5 };
 
   if (gon.census_type == "state") {
-    url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/04000US" + twoZero(gon.census_id) + "?geom=true";
+    if (gon.census_id == 999999) {
+      url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/01000US?geom=true";
+    } else {
+      url_string = "http://api.censusreporter.org/1.0/geo/tiger2012/04000US" + twoZero(gon.census_id) + "?geom=true";
+    }
+
   }
 
   if (gon.census_type == "county") {
@@ -67,8 +72,14 @@
   $.getJSON(url_string, function(d){
     var data = L.geoJson(d, {style: style});
     data.addTo(map);
-    map.fitBounds(data.getBounds());
-    var offset = map.getSize().x*0.25;
-    // Then move the map
-    map.panBy(new L.Point(-offset, 0), {animate: false});
+    if (gon.census_id !== 999999) {
+      map.fitBounds(data.getBounds());
+      var offset = map.getSize().x*0.25;
+      // Then move the map
+      map.panBy(new L.Point(-offset, 0), {animate: false});
+    } else {
+      map.setView(new L.LatLng(39.50, -130.35), 3, { padding: [50,50]});
+      // map.setZoom(6);
+    }
+
   });
