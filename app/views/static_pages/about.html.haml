@@ -1,1 +1,43 @@
-About.
+%div#map
+
+%div.row#occupations-section
+  %div.row
+    %div.col-sm-12
+      %div.row
+        %div.col-sm-6.col-md-4
+          %div.thumbnail
+            %img{"src"=> "assets/new_logo.png"}
+            %div.caption
+              %h3
+                Dr. Amy Glasmeier
+        %div.col-sm-6.col-md-4
+          %div.thumbnail
+            %img{"src"=> "assets/new_logo.png"}
+            %div.caption
+              %h3
+                Carey Nadeau
+        %div.col-sm-6.col-md-4
+          %div.thumbnail
+            %img{"src"=> "assets/new_logo.png"}
+            %div.caption
+              %h3
+                Matt Gardner
+
+
+:javascript
+
+  var map = L.map('map', {
+    scrollWheelZoom: false,
+    zoomControl: false,
+    attributionControl: false
+  });
+
+  map.dragging.disable();
+  map.touchZoom.disable();
+  map.doubleClickZoom.disable();
+  map.scrollWheelZoom.disable();
+  map.setView(new L.LatLng(39.50, -130.35), 3, { padding: [50,50]});
+  L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+

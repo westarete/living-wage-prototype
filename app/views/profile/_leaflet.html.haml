@@ -22,22 +22,6 @@
   map.doubleClickZoom.disable();
   map.scrollWheelZoom.disable();
 
-  var censusStates = new L.TileLayer.WMS("http://tigerweb.geo.census.gov/ArcGIS/services/tigerWMS/MapServer/WMSServer",
-        {
-            layers: 'States',
-            format: 'image/png',
-            transparent: true,
-            attribution: "U.S. Census TIGERweb"
-        });
-
-  var censusCounties = new L.TileLayer.WMS("http://tigerweb.geo.census.gov/ArcGIS/services/tigerWMS/MapServer/WMSServer",
-          {
-              layers: 'Counties',
-              format: 'image/png',
-              transparent: true,
-              attribution: "U.S. Census TIGERweb"
-          });
-
   L.tileLayer('http://a{s}.acetate.geoiq.com/tiles/acetate-hillshading/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
