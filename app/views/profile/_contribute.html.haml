@@ -2,9 +2,21 @@
   %div.col-sm-12
     %div.gutter
   %div.col-sm-6
-    Contact
+    %div.row
+      %div.col-sm-12#contact
+        %h2
+          Questions? Comments? Contact us.
+        %a{href: "mailto:amyglas@mit.edu", target: "_blank"}
+          %h1
+            amyglas@mit.edu   
   %div.col-sm-6
     %a.twitter-timeline{href: "https://twitter.com/search?q=%23raisethewage+%7C%7C+%23livingwage", "data-widget-id" => "490005140603027456", "data-tweet-limit" => "3"}
+%div.row#contribute-your-story
+  %div.col-sm-12
+    %div.gutter
+  %div.col-sm-12
+    %p{style: "color: gray; text-align: center;"}
+      © 2014 Dr. Amy K. Glasmeier and the Massachusetts Institute of Technology
 
 :javascript
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
