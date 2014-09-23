@@ -17,67 +17,67 @@ $(document).ready(function () {
     {
       "topic": "income_hrly",
       "alias": "Living Wage",
-      "description":"The living wage is an estimate of a family’s basic needs budget.  This wage includes the cost of food, childcare, healthcare costs, housing, transportation and other necessities, each adjusted for inflation when necessary into 2013 dollars. For further detail, please reference the technical documentation here."
+      "description":"The living wage is an estimate of a family’s basic needs budget.  This wage includes the cost of food, childcare, healthcare costs, housing, transportation and other necessities, each adjusted for inflation when necessary into 2013 dollars. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "house_cost",
       "alias": "Housing Cost",
-      "description":"Housing costs measure the fair-market rent of rental housing, including utility costs, using HUD Fair Market Rents estimates for 2014. For further detail, please reference the technical documentation here."
+      "description":"Housing costs measure the fair-market rent of rental housing, including utility costs, using HUD Fair Market Rents estimates for 2014. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "childcare_cost",
       "alias": "Childcare Cost",
-      "description":"Child care cost represents the lowest cost option, either family child care or child care center, by state as reported by the National Association of Child Care Resource and Referral Agencies in 2013 and are adjusted for inflation.For further detail, please reference the technical documentation here."
+      "description":"Child care cost represents the lowest cost option, either family child care or child care center, by state as reported by the National Association of Child Care Resource and Referral Agencies in 2013 and are adjusted for inflation.For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "health_cost",
       "alias": "Healthcare Cost",
-      "description":"Medical costs are the sum of expenses for insurance premiums and (1) health insurance costs for employer sponsored plans, (3) medical services, (3) drugs, and (4) medical supplies.  Health insurance costs were calculated using the Health Insurance Component Analytical Tool (MEPSnet/IC) provided online by the Agency for Healthcare Research and Quality.  All other costs were estimated using 2012 data from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey, adjusted by region and for inflation.For further detail, please reference the technical documentation here."
+      "description":"Medical costs are the sum of expenses for insurance premiums and (1) health insurance costs for employer sponsored plans, (3) medical services, (3) drugs, and (4) medical supplies.  Health insurance costs were calculated using the Health Insurance Component Analytical Tool (MEPSnet/IC) provided online by the Agency for Healthcare Research and Quality.  All other costs were estimated using 2012 data from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey, adjusted by region and for inflation.For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "food_cost",
       "alias": "Food Cost",
-      "description":"Food cost is estimated using the US Department of Agriculture’s low-cost food plan as of 2013, adjusted for inflation.  The low-cost plan assumes that all meals (including snacks) are prepared in the home. For further detail, please reference the technical documentation here."
+      "description":"Food cost is estimated using the US Department of Agriculture’s low-cost food plan as of 2013, adjusted for inflation.  The low-cost plan assumes that all meals (including snacks) are prepared in the home. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "trans_cost",
       "alias": "Transportation Cost",
-      "description": "Transportation costs are a measure of the expenses for (1) Used cars and trucks, (2) gasoline and motor oil, (3) other vehicle expenses, and (4) public transportation.  Expenditures for transportation are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation. For further detail, please reference the technical documentation here."
+      "description": "Transportation costs are a measure of the expenses for (1) Used cars and trucks, (2) gasoline and motor oil, (3) other vehicle expenses, and (4) public transportation.  Expenditures for transportation are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "other_cost",
       "alias": "Other Costs",
-      "description":"Other necessities include expenses for (1) apparel and services, (2) housekeeping supplies, (3) personal care products and services, (4) reading, and (5) miscellaneous.  Expenditures for other necessities are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation. For further detail, please reference the technical documentation here."
+      "description":"Other necessities include expenses for (1) apparel and services, (2) housekeeping supplies, (3) personal care products and services, (4) reading, and (5) miscellaneous.  Expenditures for other necessities are based on 2012 data by household size from the 2013 Bureau of Labor Statistics Consumer Expenditure Survey and are adjusted for regional variation and inflation. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "poverty_hrly",
       "alias": "Poverty Wage",
-      "description": "The poverty wage is the maximum wage a family may earn and still be considered in poverty and qualify for specific forms of government aid.  The poverty wage should be understood as a yardstick of whether a family is under economic stress, not a measure of basic needs for living expenses. For further detail, please reference the technical documentation here."
+      "description": "The poverty wage is the maximum wage a family may earn and still be considered in poverty and qualify for specific forms of government aid.  The poverty wage should be understood as a yardstick of whether a family is under economic stress, not a measure of basic needs for living expenses. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "minwage_hrly",
       "alias": "Minimum Wage",      
-      "description": "The minimum wage is the lowest wage that is legally allowed in the United States, for most types of work.  Reported here is the national prevailing minimum wage or state minimum wage, whichever is higher, as of 2012. For further detail, please reference the technical documentation here."
+      "description": "The minimum wage is the lowest wage that is legally allowed in the United States, for most types of work.  Reported here is the national prevailing minimum wage or state minimum wage, whichever is higher, as of 2012. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "tax",
       "alias": "Taxes",
-      "description": "Taxes include estimates for payroll taxes, state income tax, and federal income taxes. Payroll taxes (Social Security and Medicare taxes) were 6.2% of total wages in 2013, as specified in the Federal Insurance Contributions Act. The state tax rate is taken from the second lowest income tax rate for 2011 as reported in the CCH State Tax Handbook. The federal income tax is calculated by the Tax Policy Center of the Urban Institute and Brookings Institution as of 2013. For further detail, please reference the technical documentation here."
+      "description": "Taxes include estimates for payroll taxes, state income tax, and federal income taxes. Payroll taxes (Social Security and Medicare taxes) were 6.2% of total wages in 2013, as specified in the Federal Insurance Contributions Act. The state tax rate is taken from the second lowest income tax rate for 2011 as reported in the CCH State Tax Handbook. The federal income tax is calculated by the Tax Policy Center of the Urban Institute and Brookings Institution as of 2013. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "adults",
       "alias": "Adults",
-      "description": "Adults are members of a household above 18 years of age working full time, year-round 40 hour work weeks. For further detail, please reference the technical documentation here."
+      "description": "Adults are members of a household above 18 years of age working full time, year-round 40 hour work weeks. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "children",
       "alias": "Children",
-      "description": "Children are those members of the household under 18 years of age. For further detail, please reference the technical documentation here."
+      "description": "Children are those members of the household under 18 years of age. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "occupation",
       "alias": "Occupation Data",
-      "description": "The Bureau of Labor Statistics Occupation Employment Statistics Survey reports median wages for 22 major Standard Occupational Coded occupations in all 50 states, as of 2013. For further detail, please reference the technical documentation here."
+      "description": "The Bureau of Labor Statistics Occupation Employment Statistics Survey reports median wages for 22 major Standard Occupational Coded occupations in all 50 states, as of 2013. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     }
   ]
 
