@@ -402,7 +402,7 @@ $(document).ready(function () {
               var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
                      '<tr><td>Hourly (per person):</td><td>$' + (dollars(d.value)).toString() + '</td></tr>' +
                      '<tr><td>Weekly (per person):</td><td>$' + (dollars(d.value * 40)).toString() + '</td></tr>' +
-                     '<tr><td>Annual (per person):</td><td>$' + (dollars(d.value * 2085)).toString() + '</td></tr>' +
+                     '<tr><td>Annual (per family):</td><td>$' + (dollars(additionalData.income[0].value)).toString() + '</td></tr>' +
                         variableText
                       + alias[0].description;
               
