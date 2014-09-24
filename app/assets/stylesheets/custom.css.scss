@@ -112,7 +112,6 @@ textarea {
 
 #occupations-section {
   background-color: rgba(255,255,255,1); 
-  overflow-x: scroll;
   .axis {
     shape-rendering: crispEdges;
   }
@@ -181,22 +180,7 @@ textarea {
   width: 100%;
 }
 
-#donutchart {
-  display: block;
-  margin: 0 auto;
-  .pie-text {
-    font-size: 1.5em;
-    fill: white;
-    text-anchor: middle;
-    cursor: pointer;
-  }
-  .categories {
-    font: 300 .25em;
-    fill: white;
-    text-anchor: middle;
-  }
-}
-
+// 
 
 #breadcrumb {
   font-size: .6em;
@@ -489,6 +473,7 @@ svg {
     fill: white;
     text-anchor: middle;
     cursor: pointer;
+    pointer-events: none;
   }
 
   .title {
@@ -523,17 +508,22 @@ svg {
     display: block;
   }
 
-
+  path {
+    cursor: pointer;
+  }
   .pie-text {
     font-size: 1.5em;
     fill: white;
     text-anchor: middle;
     cursor: pointer;
+    pointer-events: none;
   }
   .categories {
     font: 300 .25em;
     fill: white;
     text-anchor: middle;
+    cursor: pointer;
+    pointer-events: none;
   }
 }
 

@@ -1,25 +1,15 @@
-%div.row#living-wage-section
-  %div.row
-    %div.col-sm-4#printed-living-wage
-    %div.col-sm-8
-      %p
-        The 
-        %strong
-          Living Wage 
-        is an estimate of a family’s basic needs budget. This wage includes the cost of food, childcare, healthcare costs, housing, transportation, taxes and other necessities, each adjusted for inflation when necessary into 2014 dollars. For further detail, please reference the 
-        %a{href: "/assets/Living-User-Guide-and-Technical-Notes-2014.pdf", target: "_blank"}
-          technical documentation here.
-  %div.col-sm-6
-    %div#living-wage-append
-  %div.col-sm-6
-    %div#living-wage-pie
-  %div.col-sm-12
-    %div.gutter
 %div.row#occupations-section
   %div.col-sm-12
     %p
-      %strong
-        Jobs that pay
-      have a median annual wage above the living wage. The median annual wage for 22 major occupations is calculated using the Bureau of Labor Statistics 2013 Occupational and Employment Statistics Survey and is adjusted for inflation.
+      - if @geography.class.name.downcase != "county" && @geography.census_id != 31700 && @geography.census_id !=39300
+        %strong.lead
+          Jobs that pay
+        have a median annual wage above the living wage. The median annual wage for 22 major occupations is calculated using the Bureau of Labor Statistics 2013 Occupational and Employment Statistics Survey and is adjusted for inflation.
+      - else 
+        %p.text-center
+          %em
+            Note: Occupation data is not available for this geography.
   %div.col-sm-12{style: "padding-left: 0px"}
     %div#occupations-bar-graph
+  %div.col-sm-12
+    %div.gutter
