@@ -15,9 +15,9 @@ $(document).ready(function () {
 
   var descriptions = [
     {
-      "topic": "income_hrly",
+      "topic": "income_pretax_hrly",
       "alias": "Living Wage",
-      "description":"The living wage is an estimate of a family’s basic needs budget.  This wage includes the cost of food, childcare, healthcare costs, housing, transportation and other necessities, each adjusted for inflation when necessary into 2013 dollars. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
+      "description":"The living wage is an estimate of a family’s basic needs budget.  This wage includes the cost of food, childcare, healthcare costs, housing, transportation, taxes, and other necessities, each adjusted for inflation when necessary into 2014 dollars. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "house_cost",
@@ -52,17 +52,17 @@ $(document).ready(function () {
     {
       "topic": "poverty_hrly",
       "alias": "Poverty Wage",
-      "description": "The poverty wage is the maximum wage a family may earn and still be considered in poverty and qualify for specific forms of government aid.  The poverty wage should be understood as a yardstick of whether a family is under economic stress, not a measure of basic needs for living expenses. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
+      "description": "The poverty wage is the average annual poverty threshold, used to determine eligibility for specific programs, converted to hourly wages in $2014. The poverty wage should be understood as a yardstick of whether a family is under economic stress, not a measure of basic needs for living expenses. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "minwage_hrly",
       "alias": "Minimum Wage",      
-      "description": "The minimum wage is the lowest wage that is legally allowed in the United States, for most types of work.  Reported here is the national prevailing minimum wage or state minimum wage, whichever is higher, as of 2012. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
+      "description": "The minimum wage is the lowest wage that is legally allowed in the United States, for most types of work.  Reported here is the average state minimum wage, as of 2014. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "tax",
       "alias": "Taxes",
-      "description": "Taxes include estimates for payroll taxes, state income tax, and federal income taxes. Payroll taxes (Social Security and Medicare taxes) were 6.2% of total wages in 2013, as specified in the Federal Insurance Contributions Act. The state tax rate is taken from the second lowest income tax rate for 2011 as reported in the CCH State Tax Handbook. The federal income tax is calculated by the Tax Policy Center of the Urban Institute and Brookings Institution as of 2013. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
+      "description": "Taxes include estimates for payroll taxes, state income tax, and federal income taxes. Payroll taxes (Social Security and Medicare taxes) were 6.2% of total wages in 2014, as specified in the Federal Insurance Contributions Act. The state tax rate is taken from the second lowest income tax rate for 2011 as reported in the CCH State Tax Handbook. The federal income tax is calculated by the Tax Policy Center of the Urban Institute and Brookings Institution as of 2013. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "adults",
@@ -306,13 +306,8 @@ $(document).ready(function () {
 
     var formatCurrency = d3.format(".1f");
 
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .ticks(3)
-        .tickFormat(function(d) { return "$" + commas(d); });
 
-    x.domain(["income_hrly","minwage_hrly","poverty_hrly"])
+    x.domain(["income_pretax_hrly","minwage_hrly","poverty_hrly"])
 
     var barChartArea = container.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -323,10 +318,6 @@ $(document).ready(function () {
       .call(xAxis)
     .selectAll(".x.axis text")
       .call(wrap, x.rangeBand())
-
-    var yAxisArea = barChartArea.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(" + (x(0)-5) + ",0)")
 
     var bars = barChartArea.selectAll(".bar")
         .data(x.domain())
@@ -368,7 +359,7 @@ $(document).ready(function () {
           .duration(300)
           .ease('linear')
           .tween("text", function() {
-            var i = d3.interpolate(this.textContent, d.income_hrly);
+            var i = d3.interpolate(this.textContent, d.income_pretax_hrly);
             return function(t) {
               this.textContent = "$" + dollars(i(t)) + " / hr.";
             };
@@ -376,14 +367,7 @@ $(document).ready(function () {
 
         y.domain([0, max]);
 
-        yAxisArea.transition().call(yAxis)
-
         bars.data(data)
-          .transition()
-            .attr("y", function(d) { return y(d.value); })
-            .attr("height", function(d) { return height - y(d.value); });
-
-        text.data(data)
             .attr("data-title", function(d) {
               var alias = descriptions.filter(function(m) {
                 return m.topic == d.name;
@@ -396,11 +380,11 @@ $(document).ready(function () {
                 return m.topic == d.name;
               });
               var variableText = '</tbody></table>';
-              if (d.name == "income_hrly") {
-                variableText = '<tr><td>Pre-tax income (hourly):</td><td>$' + dollars(additionalData.income_pretax_hrly).toString() + 
-                               '<tr><td>Hourly (per person):</td><td>$' + (dollars(d.value)).toString() + '</td></tr>' +
-                               '<tr><td>Weekly (per person):</td><td>$' + (dollars(d.value * 40)).toString() + '</td></tr>' +
-                               '<tr><td>Annual (per family):</td><td>$' + (dollars(additionalData.income[0].value)).toString() + '</td></tr>' +
+              if (d.name == "income_pretax_hrly") {
+                variableText = '<tr><td>Hourly wage before taxes (per person):</td><td>$' + (dollars(d.value)).toString() + 
+                               '<tr><td>Hourly wage after taxes (per person):</td><td>$' + dollars(additionalData.income_hrly).toString() + '</td></tr>' +
+                               '<tr><td>Weekly wage (per person):</td><td>$' + (dollars(d.value * 40)).toString() + '</td></tr>' +
+                               '<tr><td>Annual wages (per family):</td><td>$' + (dollars(parseInt(additionalData.income[0].value))).toString() + '</td></tr>' +
                                '</td></tr></tbody></table>';
               }
               var body = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
@@ -409,6 +393,11 @@ $(document).ready(function () {
               
               return body;
             })
+          .transition()
+            .attr("y", function(d) { return y(d.value); })
+            .attr("height", function(d) { return height - y(d.value); });
+
+        text.data(data)
           .transition()
             .attr("x", function(d, i) { return x(i)+x.rangeBand(d.name)/2; })
             .attr("y", function(d) { return y(d.value/2); })
@@ -621,10 +610,6 @@ $(document).ready(function () {
         .attr("transform", "translate(0,0)")
         .attr("class", "categories")
 
-    var middleLabel = pieChartArea.append("text")
-        .style("text-anchor", "middle")
-        .text("Living Wage");
-
     dispatch.on("statechange.pie", function(d) {
 
       var sum = 0;
@@ -728,9 +713,9 @@ $(document).ready(function () {
       pluck.push({ name: prop, value: d[prop] })
     }; 
 
-    contributions = pluck.filter(function(d) { return d.name !== "familycomposition" && d.name !== "minwage_hrly" && d.name !== "income_hrly" && d.name !== "poverty_hrly" && d.name !== "income" });
+    contributions = pluck.filter(function(d) { return d.name !== "familycomposition" && d.name !== "minwage_hrly" && d.name !== "income_pretax_hrly" && d.name !== "poverty_hrly" && d.name !== "income" });
 
-    wages = pluck.filter(function(d) { return d.name == "minwage_hrly" || d.name == "income_hrly" || d.name == "poverty_hrly"  });
+    wages = pluck.filter(function(d) { return d.name == "minwage_hrly" || d.name == "income_pretax_hrly" || d.name == "poverty_hrly"  });
 
     var income = pluck.filter(function(d) { return d.name == "income"; })
 
@@ -774,9 +759,29 @@ $(document).ready(function () {
         .domain([0,.5])
         .range(["#f1eef6","#bdc9e1","#74a9cf","#0570b0"]);
 
+  var legend = g.selectAll('rect')
+      .data(["#9ecae1","#6baed6","#3182bd","#08519c"])
+      .enter()
+      .append('rect')
+      .attr("x", width - 800)
+      .attr("y", function(d, i) {
+        return i * 20;
+      })
+      .attr("width", 10)
+      .attr("height", 10)
+      .style("fill", function(d) {
+        return d;
+      });
 
+  g.append('text')
+      .attr("x", width - 785)
+      .attr("y", 10)
+      .text("Lowest Share")
 
-
+  g.append('text')
+      .attr("x", width - 785)
+      .attr("y", 68)
+      .text("Highest Share")
 
   d3.json("../assets/us.js", function(error, us) {
 
@@ -788,26 +793,31 @@ $(document).ready(function () {
         .style("fill", function(d) {
           var parsed = parseFloat(d.properties.Share_BelowLW_State1_share_BelowLW);
           if(parsed < 0.307605) {
-            return "#eff3ff";
+            return "#9ecae1";
           } 
 
           if(parsed > 0.307606 && parsed < 0.332683) {
-            return "#bdd7e7";
-          } 
-
-          if(parsed >= 0.332683 && parsed < 0.355403) {
             return "#6baed6";
           } 
 
+          if(parsed >= 0.332683 && parsed < 0.355403) {
+            return "#3182bd";
+          } 
+
           if(parsed >= 0.355403) {
-            return "#2171b5";
+            return "#08519c";
           } 
         })
         .attr("data-title", function(d) {
           return d.properties.StateShareHH_SubLW_state;
         })
         .attr("data-content", function(d) {
-          return "Rank: " + d.properties.Share_BelowLW_State1_rank;
+          var variableText = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
+                              '<tr><td>National share:</td><td> 37.3% ' + 
+                               '<tr><td>State Share:</td><td>' + (d.properties.Share_BelowLW_State1_share_BelowLW*100).toFixed(2) + '%</td></tr>' +
+                               '<tr><td>State Rank:</td><td>' + d.properties.Share_BelowLW_State1_rank + '</td></tr>' +
+                               '</td></tr></tbody></table>';
+          return variableText;
         });
 
       g.append("path")
@@ -818,9 +828,24 @@ $(document).ready(function () {
       $(".feature").each( function() {
         $(this).popover({
             'container': '#national-landscape', 
-            'trigger': 'hover',
+            'trigger': 'manual',
             'html': true,
             'placement': 'auto bottom'
+        })
+        .on("mouseenter", function() {
+          var _this = this;
+          $(this).popover("show");
+          $(".popover").on("mouseleave", function () {
+              $(_this).popover('hide');
+          });
+        })
+        .on("mouseleave", function () {
+          var _this = this;
+          setTimeout(function () {
+              if (!$(".popover:hover").length) {
+                  $(_this).popover("hide")
+              }
+        }, 100);
         });
       });
 
@@ -850,6 +875,30 @@ $(document).ready(function () {
       });
     }
 
+
+    $("svg rect").each( function() {
+      $(this).popover({
+          'container': '#living-wage-section', 
+          'trigger': 'manual',
+          'html': true,
+          'placement': 'auto bottom'
+      })
+      .on("mouseenter", function() {
+        var _this = this;
+        $(this).popover("show");
+        $(".popover").on("mouseleave", function () {
+            $(_this).popover('hide');
+        });
+      })
+      .on("mouseleave", function () {
+        var _this = this;
+        setTimeout(function () {
+            if (!$(".popover:hover").length) {
+                $(_this).popover("hide")
+            }
+      }, 100);
+      });
+    })
 
     $("svg text").each( function() {
       $(this).popover({

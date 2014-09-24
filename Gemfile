@@ -23,6 +23,7 @@ gem 'capistrano-rails', '~> 1.1.1'
 gem 'capistrano-rvm', github: "capistrano/rvm"
 gem 'therubyracer', :platforms => :ruby, :require => 'v8'
 gem 'libv8', '~> 3.11.8'  # Update version number as needed
+gem 'mail_form'
 
 group :development, :test do
   gem 'rspec-rails'

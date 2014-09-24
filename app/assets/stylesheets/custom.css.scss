@@ -507,8 +507,9 @@ svg {
   rect {
     fill: #4682B4;
     opacity: 0.6;
+    cursor: pointer;
   }
-  #bar-income_hrly {
+  #bar-income_pretax_hrly {
     font-size: 2em;
     fill: #4682B4;
     opacity: 0.9;
