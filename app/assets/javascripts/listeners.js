@@ -740,7 +740,7 @@ $(document).ready(function () {
 
   var projection = d3.geo.albersUsa()
       .scale(width)
-      .translate([width / 2, height / 2]);
+      .translate([(width / 2 ) + 20, height / 2]);
 
   var path = d3.geo.path()
       .projection(projection);
@@ -763,9 +763,9 @@ $(document).ready(function () {
       .data(["#9ecae1","#6baed6","#3182bd","#08519c"])
       .enter()
       .append('rect')
-      .attr("x", width - 800)
+      .attr("x", 0)
       .attr("y", function(d, i) {
-        return i * 20;
+        return (i * 20)+30;
       })
       .attr("width", 10)
       .attr("height", 10)
@@ -774,13 +774,13 @@ $(document).ready(function () {
       });
 
   g.append('text')
-      .attr("x", width - 785)
-      .attr("y", 10)
+      .attr("x", 15)
+      .attr("y", 40)
       .text("Lowest Share")
 
   g.append('text')
-      .attr("x", width - 785)
-      .attr("y", 68)
+      .attr("x", 15)
+      .attr("y", 98)
       .text("Highest Share")
 
   d3.json("../assets/us.js", function(error, us) {
