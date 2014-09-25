@@ -20,8 +20,8 @@
             for a family of:
           %form#donut-chart-menu
 
-#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
-  .modal-dialog
+#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog"}
+  .modal-dialog.modal-sm
     .modal-content
       .modal-body
         %button.close{"data-dismiss" => "modal", :type => "button"}
@@ -30,12 +30,10 @@
         %div.form-group
           - if @geography
             = form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form form-inline", :role => "form" } do |f|
-              %em
-                in
-              = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => "Search", :value => "", :class => "form-control input-sm", :update_elements => {:census_id => '#census_id_2', :geography_type => '#geography_type_2'}
+              = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => "Search State, Metro, or County", :value => "", :class => "form-control input-sm", :autofocus => "autofocus", :update_elements => {:census_id => '#census_id_2', :geography_type => '#geography_type_2'}
               = f.hidden_field :census_id, :id => "census_id_2", :class => "form-control"
               = f.hidden_field :geography_type, :value=>"state", :id => "geography_type_2", :class => "form-control"
-              = f.submit "Change", :class => "btn btn-default input-sm"
+              = f.submit "Go", :class => "btn btn-default input-sm"
 
 :javascript
 
