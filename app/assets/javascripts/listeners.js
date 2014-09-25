@@ -261,7 +261,7 @@ $(document).ready(function () {
   dispatch.on("load.menu", function(stateById) {
     var select = d3.select("#donut-chart-menu")
       .append("select")
-        .attr("class", "form-control btn-primary input-sm")
+        .attr("class", "form-control btn-default input-sm")
         .on("change", function() { dispatch.statechange(stateById.get(this.value)); })
 
     select.selectAll("option")
