@@ -557,7 +557,7 @@ $(document).ready(function () {
   dispatch.on("load.pie", function(stateById) {
 
     var width = parseInt(d3.select("#living-wage-append").style('height'), 10),
-        height = width - 30,
+        height = width-30,
         radius = height / 2,
         labelr = radius + 15;
 
