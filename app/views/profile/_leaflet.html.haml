@@ -3,23 +3,39 @@
   %div#summary-panel
     %div.row#wage-bar-chart.center-content
       %div.col-md-6
-        %strong
-          Living Wage 
+        %em
+          The Living Wage is: 
         %div#printed-living-wage
       %div.col-md-6
+        .form-group
+          %em
+            in
+          %button.form-control.btn.btn-primary.btn-sm{"data-target" => "#myModal", "data-toggle" => "modal"}
+            = @geography.name
+            .caret
+        %div.form-group
+          %em
+            for a family of:
+          %form#donut-chart-menu
+
+#myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+          %span.sr-only Close
+        %h4#myModalLabel.modal-title Modal title
+      .modal-body
         %div.form-group
           - if @geography
             = form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form form-inline", :role => "form" } do |f|
               %em
                 in
-              = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => @geography.name, :value => "", :size => 20, :class => "form-control input-sm", :update_elements => {:census_id => '#census_id_2', :geography_type => '#geography_type_2'}
+              = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => "Search", :value => "", :size => 20, :class => "form-control input-sm", :update_elements => {:census_id => '#census_id_2', :geography_type => '#geography_type_2'}
               = f.hidden_field :census_id, :id => "census_id_2", :class => "form-control"
               = f.hidden_field :geography_type, :value=>"state", :id => "geography_type_2", :class => "form-control"
               = f.submit "Change", :class => "btn btn-default input-sm"
-        %div.form-group
-          %form.navbar-form.form-inline#donut-chart-menu
-            %em
-              for a family of:
 
 :javascript
 
@@ -70,11 +86,11 @@
     data.addTo(map);
     if (gon.census_id !== 999999) {
       map.fitBounds(data.getBounds());
-      // var offset = map.getSize().x*0.25;
+      var offset = map.getSize().y*0.2;
       // Then move the map
-      // map.panBy(new L.Point(-offset, 0), {animate: false});
+      map.panBy(new L.Point(0, -offset), {animate: false});
     } else {
-      map.setView(new L.LatLng(39.50, -90.35), 3, { padding: [50,50]});
+      map.setView(new L.LatLng(50.50, -90.35), 3, { padding: [50,50]});
       // map.setZoom(6);
     }
 

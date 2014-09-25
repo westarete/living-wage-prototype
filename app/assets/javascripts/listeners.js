@@ -261,7 +261,7 @@ $(document).ready(function () {
   dispatch.on("load.menu", function(stateById) {
     var select = d3.select("#donut-chart-menu")
       .append("select")
-        .attr("class", "form-control input-sm")
+        .attr("class", "form-control btn-primary input-sm")
         .on("change", function() { dispatch.statechange(stateById.get(this.value)); })
 
     select.selectAll("option")
@@ -557,7 +557,7 @@ $(document).ready(function () {
   dispatch.on("load.pie", function(stateById) {
 
     var width = parseInt(d3.select("#living-wage-append").style('height'), 10),
-        height = width,
+        height = width - 30,
         radius = height / 2,
         labelr = radius + 15;
 
@@ -631,8 +631,6 @@ $(document).ready(function () {
               return arc(interpolate(t));
             };
           });
-
-      // path
 
       labels.data(pie.value(function(g) { return d[g]; })(groups))
           .transition()
