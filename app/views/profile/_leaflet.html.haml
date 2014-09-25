@@ -11,8 +11,10 @@
           %small
             in:
           %button.lw-button.form-control.btn.btn-default.btn-sm{"data-target" => "#myModal", "data-toggle" => "modal"}
-            = @geography.name
-            .caret
+            .pull-left 
+              = @geography.name
+            .pull-right
+              .caret
         %div.form-group
           %small
             for a family of:
@@ -30,7 +32,7 @@
             = form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form form-inline", :role => "form" } do |f|
               %em
                 in
-              = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => "Search", :value => "", :size => 20, :class => "form-control input-sm", :update_elements => {:census_id => '#census_id_2', :geography_type => '#geography_type_2'}
+              = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => "Search", :value => "", :class => "form-control input-sm", :update_elements => {:census_id => '#census_id_2', :geography_type => '#geography_type_2'}
               = f.hidden_field :census_id, :id => "census_id_2", :class => "form-control"
               = f.hidden_field :geography_type, :value=>"state", :id => "geography_type_2", :class => "form-control"
               = f.submit "Change", :class => "btn btn-default input-sm"
