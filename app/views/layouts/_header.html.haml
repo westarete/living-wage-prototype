@@ -21,16 +21,16 @@
               %span.caret
             %ul.dropdown-menu{"role" => "menu"}
               %li
-                %a{href: "#living-wage-section"}
+                %a{href: "#living-wage-section-link"}
                   Living Wage
               %li
-                %a{href: "#occupations-section"}
+                %a{href: "#occupations-section-link"}
                   Occupations That Pay
               %li
-                %a{href: "#national-landscape"}
+                %a{href: "#national-landscape-link"}
                   National Landscape
               %li
-                %a{href: "#contribute-your-story"}
+                %a{href: "#contribute-your-story-link"}
                   Contribute Your Story 
               %li.divider
               %li
@@ -39,7 +39,7 @@
           %li
             =link_to "About", :controller => "static_pages", :action => "about"
         - if @geography
-          = form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form navbar-right", :role => "form" } do |f|
+          = form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form navbar-right form-inline", :role => "form" } do |f|
             %div.form-group
               = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => "Search State, Metro, or County", :value => "", :class => "form-control", :update_elements => {:census_id => '#census_id', :geography_type => '#geography_type'}
               = f.hidden_field :census_id, :id => "census_id", :class => "form-control"

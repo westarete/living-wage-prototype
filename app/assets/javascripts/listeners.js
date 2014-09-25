@@ -341,7 +341,7 @@ $(document).ready(function () {
         .attr("text-anchor", "middle")
         .attr("dy", ".35em");
 
-    var printWage = d3.select("#printed-living-wage").append("h1").text("0")
+    var printWage = d3.select("#printed-living-wage").append("h1").append("strong").text("0")
 
     dispatch.on("statechange.wages", function(d) {
 
@@ -806,7 +806,7 @@ $(document).ready(function () {
         .attr("data-content", function(d) {
           var variableText = '<table id="one-column-emphasis"><colgroup><col class="oce-first"></col></colgroup><tbody>' +
                               '<tr><td>National share:</td><td> 37.3% ' + 
-                               '<tr><td>State Share:</td><td>' + (d.properties.Share_BelowLW_State1_share_BelowLW*100).toFixed(2) + '%</td></tr>' +
+                               '<tr><td>State Share:</td><td>' + (d.properties.Share_BelowLW_State1_share_BelowLW*100).toFixed(1) + '%</td></tr>' +
                                '<tr><td>State Rank:</td><td>' + d.properties.Share_BelowLW_State1_rank + '</td></tr>' +
                                '</td></tr></tbody></table>';
           return variableText;

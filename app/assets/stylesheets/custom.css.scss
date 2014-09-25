@@ -48,7 +48,7 @@ textarea {
 .scrollable-modal {
     overflow-y:scroll;
     overflow-x:hidden;
-    max-height:300px;
+    max-height:350px;
 }
 
 .center {
@@ -80,7 +80,7 @@ textarea {
 }
 
 #map {
-  height: 151px;
+  height: 450px;
   margin: 0px;
 }
 
@@ -91,10 +91,9 @@ textarea {
   border-round: 5px;
   margin: 0;
   padding: 0;
-  min-width: 35%;
+  min-width: 45%;
   max-width: 850px;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+  border-radius: 5px;
 }
 
 #living-wage-section {
@@ -131,11 +130,12 @@ textarea {
 
 #national-landscape {
 
+
+
   .background {
     fill: none;
     // pointer-events: all;
   }
-
 
   .mesh {
     fill: none;
@@ -454,6 +454,10 @@ svg {
   z-index: 1000;
 }
 
+.anchor {
+    position: absolute;
+    margin: -50px
+}
 
 .row {
   margin: 0 auto;
