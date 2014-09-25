@@ -1,20 +1,20 @@
 %div#map
 %div.row
   %div#summary-panel
-    %div.row#wage-bar-chart.center-content
+    %div.row
       %div.col-md-6
-        %em
+        %small
           The Living Wage is: 
         %div#printed-living-wage
       %div.col-md-6
         .form-group
-          %em
+          %small
             in:
-          %button.form-control.btn.btn-default.btn-sm{"data-target" => "#myModal", "data-toggle" => "modal"}
+          %button.lw-button.form-control.btn.btn-default.btn-sm{"data-target" => "#myModal", "data-toggle" => "modal"}
             = @geography.name
             .caret
         %div.form-group
-          %em
+          %small
             for a family of:
           %form#donut-chart-menu
 

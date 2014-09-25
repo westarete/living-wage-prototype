@@ -261,7 +261,7 @@ $(document).ready(function () {
   dispatch.on("load.menu", function(stateById) {
     var select = d3.select("#donut-chart-menu")
       .append("select")
-        .attr("class", "form-control btn-default input-sm")
+        .attr("class", "form-control btn-default btn-sm lw-button")
         .on("change", function() { dispatch.statechange(stateById.get(this.value)); })
 
     select.selectAll("option")
@@ -341,7 +341,7 @@ $(document).ready(function () {
         .attr("text-anchor", "middle")
         .attr("dy", ".35em");
 
-    var printWage = d3.select("#printed-living-wage").append("h1").append("strong").text("0")
+    var printWage = d3.select("#printed-living-wage").append("h5").append("strong").text("0")
 
     dispatch.on("statechange.wages", function(d) {
 
