@@ -5,6 +5,9 @@ Lwc::Application.routes.draw do
   # resources :static_pages
   match '/about' => 'static_pages#about'
 
+  match '/contacts',     to: 'contacts#new',             via: 'get'
+  resources "contacts", only: [:new, :create]
+
   resources :counties, :controller => "profile", :type => "County" do
     get :autocomplete_geography_name, :on => :collection
   end
