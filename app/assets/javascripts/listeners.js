@@ -341,7 +341,11 @@ $(document).ready(function () {
         .attr("text-anchor", "middle")
         .attr("dy", ".35em");
 
-    var printWage = d3.select("#printed-living-wage").append("h5").append("strong").text("0")
+    var printWage = d3.select("#printed-living-wage").append("h5")
+
+    var wageValue = printWage.append("strong").text("0");
+
+    printWage.append("sup").text(" / hr.")
 
     dispatch.on("statechange.wages", function(d) {
 
@@ -349,13 +353,13 @@ $(document).ready(function () {
         var max = d3.max(data, function(d) { return parseFloat(d.value); });
         var additionalData = d;
 
-        printWage.transition()
+        wageValue.transition()
           .duration(300)
           .ease('linear')
           .tween("text", function() {
             var i = d3.interpolate(this.textContent, d.income_pretax_hrly);
             return function(t) {
-              this.textContent = "$" + dollars(i(t)) + " / hr.";
+              this.textContent = "$" + dollars(i(t));
             };
           });
 

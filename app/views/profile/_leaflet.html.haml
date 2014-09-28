@@ -3,12 +3,13 @@
   %div#summary-panel
     %div.row
       %div.col-md-6
-        .lead
-          The Living Wage is: 
+        %h5
+          %strong
+            Living Wage: 
         %div#printed-living-wage
-      %div.col-md-6
+      %div.col-md-6{style: "margin-top: 15px;"}
         .form-group
-          %small
+          .lead
             in:
           %button.lw-button.form-control.btn.btn-default.btn-sm{"data-target" => "#myModal", "data-toggle" => "modal"}
             .pull-left 
@@ -16,7 +17,7 @@
             .pull-right
               .caret
         %div.form-group
-          %small
+          .lead
             for a family of:
           %form#donut-chart-menu
 

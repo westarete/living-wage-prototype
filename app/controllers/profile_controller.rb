@@ -5,14 +5,14 @@ class ProfileController < ApplicationController
 
   def index
     @contact = Contact.new
-
     @geography = State.first
     @geography.name = "National Landscape"
+    @search = State.new
   end
 
   def show
     @contact = Contact.new
-
+    @search = State.new
     gon.contributions = @geography.aggregations.select("familycomposition, house_cost, childcare_cost, health_cost, food_cost, trans_cost, other_cost, minwage_hrly, income_pretax_hrly, poverty_hrly, income, tax, income_hrly")
     gon.occupations = @geography.occupations.order("OCC_SALARY ASC");
     gon.census_id = @geography.id
@@ -22,6 +22,9 @@ class ProfileController < ApplicationController
       format.html
       format.csv { render text: @geography.to_csv }
     end
+  end
+
+  def search
   end
 
   def update
