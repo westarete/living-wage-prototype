@@ -754,7 +754,7 @@ $(document).ready(function () {
         .range(["#f1eef6","#bdc9e1","#74a9cf","#0570b0"]);
 
   var legend = g.selectAll('rect')
-      .data(["#9ecae1","#6baed6","#3182bd","#08519c"])
+      .data(["0.25","0.5","0.75","1"])
       .enter()
       .append('rect')
       .attr("x", 0)
@@ -763,7 +763,8 @@ $(document).ready(function () {
       })
       .attr("width", 10)
       .attr("height", 10)
-      .style("fill", function(d) {
+      .style("fill", "#4682B4")
+      .style("opacity",  function(d) {
         return d;
       });
 
@@ -784,22 +785,23 @@ $(document).ready(function () {
       .enter().append("path")
         .attr("d", path)
         .attr("class", "feature")
-        .style("fill", function(d) {
+        .style("fill", "#4682B4")
+        .style("opacity", function(d) {
           var parsed = parseFloat(d.properties.Share_BelowLW_State1_share_BelowLW);
           if(parsed < 0.307605) {
-            return "#9ecae1";
+            return "0.25";
           } 
 
           if(parsed > 0.307606 && parsed < 0.332683) {
-            return "#6baed6";
+            return "0.5";
           } 
 
           if(parsed >= 0.332683 && parsed < 0.355403) {
-            return "#3182bd";
+            return "0.75";
           } 
 
           if(parsed >= 0.355403) {
-            return "#08519c";
+            return "1";
           } 
         })
         .attr("data-title", function(d) {
