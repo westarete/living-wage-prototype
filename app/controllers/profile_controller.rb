@@ -13,8 +13,8 @@ class ProfileController < ApplicationController
   def show
     @contact = Contact.new
     @search = State.new
-    gon.contributions = @geography.aggregations.select("familycomposition, house_cost, childcare_cost, health_cost, food_cost, trans_cost, other_cost, minwage_hrly, income_pretax_hrly, poverty_hrly, income, tax, income_hrly")
-    gon.occupations = @geography.occupations.order("OCC_SALARY ASC");
+    gon.contributions = @geography.aggregations.select("familycomposition, house_cost, childcare_cost, health_cost, food_cost, trans_cost, other_cost, minwage_hrly, income_pretax_hrly, poverty_hrly, income, tax, income_hrly").order("familycomposition ASC")
+    gon.occupations = @geography.occupations.order("OCC_SALARY ASC")
     gon.census_id = @geography.id
     gon.census_type = @geography.class.name.downcase
     
