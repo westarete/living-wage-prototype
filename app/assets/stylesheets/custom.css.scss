@@ -16,7 +16,6 @@ html {
 }
 
 body {
-  padding-top: 50px;
   background: $grid-paper2;
   font-family: 'Nunito', Helvetica, Verdana, arial sans-serif;
   height:100%;
@@ -70,6 +69,23 @@ textarea {
   margin-bottom: 5px
 }
 
+.navbar {
+  min-height: 80px;
+  margin-bottom: 0px;
+}
+
+.nav {
+  font-size: 21px;
+}
+
+.navbar-collapse {
+  margin-top: 15px;
+}
+
+.navbar-brand {
+  font-size: 21px;
+}
+
 .margins {
   margin: 15px;
 }
@@ -91,7 +107,7 @@ textarea {
 
 #summary-panel {
   position:absolute;
-  top:125px;
+  top:165px;
   background-color: rgba(255,255,255,0.9); 
   border-round: 5px;
   margin: 0 auto;
