@@ -38,6 +38,12 @@
                   -link_to raw("Download Dataset <span class='glyphicon glyphicon-download'></span>"), action: :show, format: :csv
           %li
             =link_to "About", :controller => "static_pages", :action => "about"
+          %li
+            %a{href: "#", "data-type"=> "twitter", "data-description"=> "See the Living Wage for #{@geography.name}:", "data-via"=>"livingwagecalc", class: "social"}
+              =image_tag 'twitter.png'
+          %li
+            %a{href: "#", "data-type"=> "facebook","data-url"=>"#{request.original_url}", "data-title"=> "Living Wage Calculator, #{@geography.name}", "data-description"=> "See the Living Wage for #{@geography.name}:", class: "social"}
+              =image_tag 'facebook.png'
         / - if @geography
         /   = form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form navbar-right form-inline", :role => "form" } do |f|
         /     %div.form-group

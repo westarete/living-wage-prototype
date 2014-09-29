@@ -17,15 +17,15 @@
             %div
               = f.button :submit, 'Send message', :class=> "btn btn-default"
 
-        Share this data:
-        %div.text-center
-          %div.btn-group
-            %a{href: "#", "data-type"=> "twitter", "data-description"=> "See the Living Wage for #{@geography.name}:", "data-via"=>"livingwagecalc", class: "social"}
-              %button.btn.btn-default{type:"button"}
-                Twitter
-            %a{href: "#", "data-type"=> "facebook","data-url"=>"#{request.original_url}", "data-title"=> "Living Wage Calculator, #{@geography.name}", "data-description"=> "See the Living Wage for #{@geography.name}:", class: "social"}
-              %button.btn.btn-default{type:"button"}
-                Facebook
+        / Share this data:
+        / %div.text-center
+        /   %div.btn-group
+        /     %a{href: "#", "data-type"=> "twitter", "data-description"=> "See the Living Wage for #{@geography.name}:", "data-via"=>"livingwagecalc", class: "social"}
+        /       %button.btn.btn-default{type:"button"}
+        /         Twitter
+        /     %a{href: "#", "data-type"=> "facebook","data-url"=>"#{request.original_url}", "data-title"=> "Living Wage Calculator, #{@geography.name}", "data-description"=> "See the Living Wage for #{@geography.name}:", class: "social"}
+        /       %button.btn.btn-default{type:"button"}
+        /         Facebook
   %div.col-sm-6
     %a.twitter-timeline{href: "https://twitter.com/search?q=%23raisethewage+%7C%7C+%23livingwage", "data-widget-id" => "490005140603027456", "data-tweet-limit" => "3"}
 %div.row#contribute-your-story
