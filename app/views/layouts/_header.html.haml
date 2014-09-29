@@ -38,13 +38,13 @@
                   -link_to raw("Download Dataset <span class='glyphicon glyphicon-download'></span>"), action: :show, format: :csv
           %li
             =link_to "About", :controller => "static_pages", :action => "about"
-        - if @geography
-          = form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form navbar-right form-inline", :role => "form" } do |f|
-            %div.form-group
-              = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => "Search State, Metro, or County", :value => "", :class => "form-control", :update_elements => {:census_id => '#census_id', :geography_type => '#geography_type'}
-              = f.hidden_field :census_id, :id => "census_id", :class => "form-control"
-              = f.hidden_field :geography_type, :value=>"state", :id => "geography_type", :class => "form-control"
-            = f.submit "Go", :class => "btn btn-default"
+        / - if @geography
+        /   = form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form navbar-right form-inline", :role => "form" } do |f|
+        /     %div.form-group
+        /       = f.autocomplete_field :name, autocomplete_geography_name_states_path, :placeholder => "Search State, Metro, or County", :value => "", :class => "form-control", :update_elements => {:census_id => '#census_id', :geography_type => '#geography_type'}
+        /       = f.hidden_field :census_id, :id => "census_id", :class => "form-control"
+        /       = f.hidden_field :geography_type, :value=>"state", :id => "geography_type", :class => "form-control"
+        /     = f.submit "Go", :class => "btn btn-default"
         / = if @geography.class.name == "County"
         /   - form_for @geography, :as => :geography, :html =>{ :class=>"navbar-form navbar-right", :role => "form" } do |f|
         /     %div.form-group
