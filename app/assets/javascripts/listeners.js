@@ -17,7 +17,7 @@ $(document).ready(function () {
     {
       "topic": "income_pretax_hrly",
       "alias": "Living Wage",
-      "description":"The living wage is an estimate of a family’s basic needs budget.  This wage includes the cost of food, childcare, healthcare costs, housing, transportation, taxes, and other necessities, each adjusted for inflation when necessary into 2014 dollars. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
+      "description":"The living wage is an estimate of a family’s basic needs budget.  This wage includes the cost of food, childcare, health care costs, housing, transportation, taxes, and other necessities, each adjusted for inflation when necessary into 2014 dollars. For further detail, please reference the <a href='/assets/Living-User-Guide-and-Technical-Notes-2014.pdf' target='_blank'>technical documentation here.</a>"
     },
     {
       "topic": "house_cost",
@@ -84,7 +84,7 @@ $(document).ready(function () {
   var fam_composition_aliases = [
     {
       "type": "2A1LF0C", 
-      "alias": "2 adults (1 in laborforce), 0 children"
+      "alias": "2 adults (1 in labor force), 0 children"
     },
     {
       "type": "1A1C", 
@@ -104,7 +104,7 @@ $(document).ready(function () {
     },
     {
       "type": "2A1LF1C", 
-      "alias": "2 adults (1 in laborforce), 1 child"
+      "alias": "2 adults (1 in labor force), 1 child"
     },
     {
       "type": "2A3C", 
@@ -120,7 +120,7 @@ $(document).ready(function () {
     },
     {
       "type": "2A1LF2C", 
-      "alias": "2 adults (1 in laborforce), 2 children"
+      "alias": "2 adults (1 in labor force), 2 children"
     },
     {
       "type": "1A0C", 
@@ -128,7 +128,7 @@ $(document).ready(function () {
     },
     {
       "type": "2A1LF3C", 
-      "alias": "2 adults (1 in laborforce), 3 children"
+      "alias": "2 adults (1 in labor force), 3 children"
     }
   ];
 
@@ -139,7 +139,7 @@ $(document).ready(function () {
     },
     {
       "type": "health_cost",
-      "alias": "Healthcare"
+      "alias": "Health Care"
     },
     {
       "type": "food_cost",
@@ -345,7 +345,7 @@ $(document).ready(function () {
 
     var wageValue = printWage.append("strong").text("0");
 
-    printWage.append("sup").text(" / hr.")
+    printWage.append("sub").text(" / hr.")
 
     dispatch.on("statechange.wages", function(d) {
 

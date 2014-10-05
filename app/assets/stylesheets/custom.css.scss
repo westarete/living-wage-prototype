@@ -108,12 +108,13 @@ textarea {
 
 #summary-panel {
   position:absolute;
-  top:200px;
+  top:175px;
   background-color: rgba(255,255,255,0.9); 
   border-round: 5px;
   margin: 0 auto;
   padding: 0;
-  width: 850px;
+  max-width: 850px;
+  width:100%;
   border-radius: 5px;
   .lead {
     margin-top:0px;
@@ -579,7 +580,7 @@ svg {
 
 #about {
   background-color: rgba(255,255,255,1);
-  padding-top: 25px;
+  padding-top: 120px;
 }
 
 
