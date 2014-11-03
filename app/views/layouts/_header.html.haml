@@ -39,7 +39,7 @@
           %li
             =link_to "About", :controller => "static_pages", :action => "about"
           %li
-            %a{href: "#", "data-type"=> "twitter", "data-description"=> "See the Living Wage for #{ @geography.name ? @geography.name : ''}", class: "social"}
+            %a{href: "#", "data-type"=> "twitter", "data-description"=> "See the Living Wage", class: "social"}
               =image_tag 'twitter.png'
           %li
             %a{href: "#", "data-type"=> "facebook","data-url"=>"#{request.original_url}", "data-title"=> "Living Wage Calculator, #{defined? @geography.name ? @geography.name : ''}", "data-description"=> "See the Living Wage for #{defined? @geography.name ? @geography.name : ''}:", class: "social"}
