@@ -12,7 +12,6 @@ class State < ActiveRecord::Base
              presence: true
 
   def to_csv
-    aggregations
     CSV.generate do |csv|
       column_names = Aggregation.column_names
       csv << column_names

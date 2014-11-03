@@ -345,7 +345,7 @@ $(document).ready(function () {
 
     var wageValue = printWage.append("strong").text("0");
 
-    printWage.append("sub").text(" / hr.")
+    printWage.append("small").text(" / hr.")
 
     dispatch.on("statechange.wages", function(d) {
 

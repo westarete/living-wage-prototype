@@ -14,9 +14,8 @@ class County < ActiveRecord::Base
 
 
   def to_csv
-    aggregations
     CSV.generate do |csv|
-      column_names = Aggregation.column_names
+      column_names = Aggregation.column_names - ["explainable_type","explainable_id", "created_at", "updated_at"]
       csv << column_names
       aggregations.each do |aggregation|
         csv << aggregation.attributes.values_at(*column_names)
