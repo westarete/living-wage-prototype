@@ -1,7 +1,5 @@
 Lwc::Application.routes.draw do
 
-  root to: 'profile#show', :type => "State", :id => 999999
-
   match '/about' => 'static_pages#about'
 
   match '/contacts',     to: 'contacts#new',             via: 'get'
@@ -18,5 +16,7 @@ Lwc::Application.routes.draw do
   resources :states, :controller => "profile", :type => "State" do
     get :autocomplete_geography_name, :on => :collection
   end
+
+  root to: 'profile#show', :type => "State", :id => 999999
 
 end
