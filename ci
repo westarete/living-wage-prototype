@@ -39,8 +39,8 @@ bin/rspec spec/integration
 echo '========== Acceptance Tests ============================================'
 bin/cucumber --no-color
 
-#echo '========== Deploy To Staging ==========================================='
-#bin/cap staging deploy -s branch=$GIT_COMMIT
-#
-#echo '========== System Tests ================================================'
-#bin/rspec spec.system
+echo '========== Deploy To Staging ==========================================='
+bin/cap staging deploy -s branch=$GIT_COMMIT
+
+echo '========== System Tests ================================================'
+bin/rspec spec.system
