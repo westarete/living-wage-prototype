@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/capistrano/rvm.git
-  revision: dc35ec5e7a74a422250bd6ff5e8885c8b742d0e5
-  specs:
-    capistrano-rvm (0.1.1)
-      capistrano (~> 3.0)
-      sshkit (~> 1.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -37,21 +29,27 @@ GEM
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     addressable (2.3.6)
+    airbrake (4.1.0)
+      builder
+      multi_json
     arel (3.0.3)
     be_valid_asset (1.3.0)
       rspec
+    blockenspiel (0.4.5)
     bootstrap-sass (2.1.0.0)
     builder (3.0.4)
-    capistrano (3.1.0)
-      i18n
-      rake (>= 10.0.0)
-      sshkit (~> 1.3)
-    capistrano-bundler (1.1.3)
-      capistrano (~> 3.1)
-      sshkit (~> 1.2)
-    capistrano-rails (1.1.2)
-      capistrano (~> 3.1)
-      capistrano-bundler (~> 1.1)
+    capistrano (2.15.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+    capistrano-ext (1.2.1)
+      capistrano (>= 1.0.0)
+    capistrano-helpers (0.10.0)
+      capistrano (~> 2.0)
+      git (~> 1.0)
+      versionomy (~> 0)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -97,6 +95,7 @@ GEM
     geocoder (1.2.5)
     gherkin (2.12.2)
       multi_json (~> 1.3)
+    git (1.2.8)
     gon (5.2.0)
       actionpack (>= 2.3.0)
       json
@@ -104,6 +103,7 @@ GEM
       request_store (>= 1.0.5)
     haml (4.0.5)
       tilt
+    highline (1.6.21)
     hike (1.2.3)
     i18n (0.6.11)
     journey (1.0.4)
@@ -113,7 +113,6 @@ GEM
     jquery-ui-rails (4.1.2)
       railties (>= 3.1.0)
     json (1.8.1)
-    kgio (2.9.2)
     konacha (3.3.0)
       actionpack (>= 3.1, < 5)
       capybara
@@ -136,7 +135,11 @@ GEM
     multi_test (0.1.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     pg (0.12.2)
@@ -172,7 +175,6 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    raindrops (0.13.0)
     rake (10.4.2)
     rdoc (3.12.2)
       json (~> 1.4)
@@ -213,10 +215,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sshkit (1.5.1)
-      colorize
-      net-scp (>= 1.1.2)
-      net-ssh (>= 2.8.0)
     therubyracer (0.11.4)
       libv8 (~> 3.11.8.12)
       ref
@@ -386,13 +384,8 @@ GEM
     uglifier (2.6.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unicorn (4.8.3)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
-    unicorn-rails (2.2.0)
-      rack
-      unicorn
+    versionomy (0.4.4)
+      blockenspiel (>= 0.4.5)
     websocket-driver (0.4.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -401,12 +394,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  airbrake
   be_valid_asset
   bootstrap-sass (= 2.1)
-  capistrano (~> 3.1.0)
-  capistrano-bundler (~> 1.1.2)
-  capistrano-rails (~> 1.1.1)
-  capistrano-rvm!
+  capistrano-ext
+  capistrano-helpers
   capybara
   coffee-rails
   cucumber-rails
@@ -436,4 +428,3 @@ DEPENDENCIES
   simple_form
   therubyracer
   uglifier (>= 1.0.3)
-  unicorn-rails

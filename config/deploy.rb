@@ -1,86 +1,25 @@
-# config valid only for Capistrano 3.1
-# lock '3.1.0'
+require 'bundler/capistrano'
+require 'capistrano/ext/multistage'     # Support for multiple deploy targets
+require 'capistrano-helpers/branch'     # Ask user what tag to deploy
+require 'capistrano-helpers/passenger'  # Support for Apache passenger
+require 'capistrano-helpers/git'        # Support for git
+require 'capistrano-helpers/shared'     # Symlink shared files after deploying
+require 'capistrano-helpers/migrations' # Run all migrations automatically
+require 'capistrano-helpers/robots'     # Keep robots out of staging and beta
+require './config/boot'
+require 'airbrake/capistrano'
 
-# set :application, 'my_app_name'
-# set :repo_url, 'git@example.com:me/my_repo.git'
+# Location of the source code.
+set :repository,  'git@github.com:westarete/living-wage-calculator.git'
 
-# steps:
-# install rvm 
-# set chown of deploy-to folder to me.
+# The remote user to log in as.
+set :user, 'deploy'
 
+# Our setup does not require or allow sudo.
+set :use_sudo, false
 
-set :application, 'lwc'
-set :repo_url, 'git@github.com:allthesignals/lwc.git'
-
-set :deploy_to, '/var/www/vhosts/livingwage.mit.edu'
-
-set :ssh_options, { :forward_agent => true }
-
-set :linked_files, %w{config/database.yml config/local_env.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-
-namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
-
-  after :publishing, 'deploy:restart'
-  after :finishing, 'deploy:cleanup'
-end
-
-# Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
-
-# Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
-
-# Default value for :scm is :git
-# set :scm, :git
-
-# Default value for :format is :pretty
-# set :format, :pretty
-
-# Default value for :log_level is :debug
-# set :log_level, :debug
-
-# Default value for :pty is false
-# set :pty, true
-
-# Default value for :linked_files is []
-# set :linked_files, %w{config/database.yml}
-
-# Default value for linked_dirs is []
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-
-# Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
-
-# Default value for keep_releases is 5
-# set :keep_releases, 5
-
-# namespace :deploy do
-
-#   desc 'Restart application'
-#   task :restart do
-#     on roles(:app), in: :sequence, wait: 5 do
-#       # Your restart mechanism here, for example:
-#       # execute :touch, release_path.join('tmp/restart.txt')
-#     end
-#   end
-
-#   after :publishing, :restart
-
-#   after :restart, :clear_cache do
-#     on roles(:web), in: :groups, limit: 3, wait: 10 do
-#       # Here we can do anything such as:
-#       # within release_path do
-#       #   execute :rake, 'cache:clear'
-#       # end
-#     end
-#   end
-
-# end
+# Set the files that should be replaced with their private counterparts.
+set :shared, %w{ 
+  config/database.yml
+  config/initializers/secret_token.rb
+}
