@@ -20,6 +20,9 @@ gem 'sass-rails', '~> 3.2.3'
 # Bootstrap, compatible with sass templates
 gem 'bootstrap-sass', '2.1'
 
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails'
+
 # Ruby templating for JSON
 gem 'rabl'
 
@@ -61,6 +64,9 @@ group :development, :test do
 
   # Test object factory
   gem 'factory_girl_rails'
+
+  # Test framework for Javascript
+  gem 'konacha'
 
 end
 

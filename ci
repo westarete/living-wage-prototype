@@ -30,6 +30,9 @@ bin/rspec spec/unit
 echo '========== Component Tests ============================================='
 bin/rspec spec/component
 
+echo '========== Javascript Tests ============================================'
+bin/rake konacha:run
+
 echo '========== Integration Tests ==========================================='
 bin/rspec spec/integration
 
