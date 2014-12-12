@@ -38,6 +38,8 @@ GEM
       multi_json (~> 1.0)
     addressable (2.3.6)
     arel (3.0.3)
+    be_valid_asset (1.3.0)
+      rspec
     bootstrap-sass (2.1.0.0)
     builder (3.0.4)
     capistrano (3.1.0)
@@ -56,9 +58,23 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    cliver (0.3.2)
     colorize (0.7.3)
+    cucumber (1.3.17)
+      builder (>= 2.1.2)
+      diff-lcs (>= 1.1.3)
+      gherkin (~> 2.12)
+      multi_json (>= 1.7.5, < 2.0)
+      multi_test (>= 0.1.1)
+    cucumber-rails (1.4.2)
+      capybara (>= 1.1.2, < 3)
+      cucumber (>= 1.3.8, < 2)
+      mime-types (>= 1.16, < 3)
+      nokogiri (~> 1.5)
+      rails (>= 3, < 5)
     d3-rails (3.4.11)
       railties (>= 3.1)
+    database_cleaner (1.3.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.2.2)
@@ -67,7 +83,13 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    foreigner (1.7.1)
+      activerecord (>= 3.0.0)
+    foreigner-matcher (0.3.0)
+      foreigner (>= 1.0.0)
     geocoder (1.2.5)
+    gherkin (2.12.2)
+      multi_json (~> 1.3)
     gon (5.2.0)
       actionpack (>= 2.3.0)
       json
@@ -98,12 +120,18 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.6.1)
     multi_json (1.10.1)
+    multi_test (0.1.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     pg (0.12.2)
+    poltergeist (1.5.1)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     polyglot (0.3.5)
     rabl (0.11.0)
       activesupport (>= 2.3.14)
@@ -142,6 +170,10 @@ GEM
       json (~> 1.4)
     ref (1.0.5)
     request_store (1.1.0)
+    rspec (3.1.0)
+      rspec-core (~> 3.1.0)
+      rspec-expectations (~> 3.1.0)
+      rspec-mocks (~> 3.1.0)
     rspec-core (3.1.4)
       rspec-support (~> 3.1.0)
     rspec-expectations (3.1.1)
@@ -163,6 +195,8 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    shoulda-matchers (2.7.0)
+      activesupport (>= 3.0.0)
     simple_form (2.1.1)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -351,6 +385,7 @@ GEM
     unicorn-rails (2.2.0)
       rack
       unicorn
+    websocket-driver (0.4.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -358,14 +393,18 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  be_valid_asset
   bootstrap-sass (= 2.1)
   capistrano (~> 3.1.0)
   capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1.1)
   capistrano-rvm!
   capybara
+  cucumber-rails
   d3-rails
+  database_cleaner
   factory_girl_rails
+  foreigner-matcher
   geocoder
   gon
   haml (~> 4.0.5)
@@ -376,12 +415,15 @@ DEPENDENCIES
   libv8
   mail_form
   pg
+  poltergeist
   rabl
   rails (~> 3.2.13)
   rails3-jquery-autocomplete
   rails_12factor
+  rspec
   rspec-rails
   sass-rails (~> 3.2.3)
+  shoulda-matchers
   simple_form
   therubyracer
   uglifier (>= 1.0.3)

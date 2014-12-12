@@ -1,0 +1,7 @@
+require 'spec_helper'
+require 'support/capybara'
+require 'support/rails'
+require 'support/database_cleaner'
+require 'support/factory_girl'
+require 'support/mail'
+require 'support/be_valid_asset'

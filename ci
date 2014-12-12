@@ -24,5 +24,20 @@ bin/rake db:create:all
 bin/rake db:migrate
 bin/rake db:test:clone
 
-echo '========== Run Specs ==================================================='
-bin/rspec
+echo '========== Unit Tests =================================================='
+bin/rspec spec/unit
+
+echo '========== Component Tests ============================================='
+bin/rspec spec/component
+
+echo '========== Integration Tests ==========================================='
+bin/rspec spec/integration
+
+echo '========== Acceptance Tests ============================================'
+bin/cucumber --no-color
+
+#echo '========== Deploy To Staging ==========================================='
+#bin/cap staging deploy -s branch=$GIT_COMMIT
+#
+#echo '========== System Tests ================================================'
+#bin/rspec spec.system

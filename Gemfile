@@ -63,16 +63,39 @@ gem 'capistrano-rvm', github: "capistrano/rvm"
 
 group :development, :test do
 
+  # Test object factory
+  gem 'factory_girl_rails'
+
+end
+
+group :test do
+
   # Default test framework
+  gem 'rspec'
   gem 'rspec-rails'
+
+  # Acceptance testing
+  gem 'cucumber-rails', require: false
+
+  # Clean out database between test runs
+  gem 'database_cleaner'
 
   # DSL for browser based testing
   gem 'capybara'
 
-  # Test object factory
-  gem 'factory_girl_rails'
+  # PhantomJS driver for capybara
+  gem 'poltergeist'
 
   # See what your headless browser is seeing with save_and_open_page
   gem 'launchy'
+
+  # Helpful RSpec matchers for rails
+  gem 'shoulda-matchers', require: false
+
+  # Rspec matchers for foreign keys
+  gem 'foreigner-matcher'
+
+  # Validate HTML and CSS
+  gem 'be_valid_asset'
 
 end
