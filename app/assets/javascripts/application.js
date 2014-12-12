@@ -10,10 +10,10 @@
 //= require jquery.ui.all
 //= require autocomplete-rails
 //= require bootstrap
-//= require lib/sticky-kit.min.js
-//= require lib/leaflet-src.js
-//= require lib/d3.v3.js
-//= require lib/topojson.js
-//= require lib/jquery.prettySocial.min.js
+//= require sticky-kit.min.js
+//= require leaflet-src.js
+//= require d3.v3.js
+//= require topojson.js
+//= require jquery.prettySocial.min.js
 //= require listeners.js
 
