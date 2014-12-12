@@ -50,9 +50,6 @@ gem 'simple_form'
 # Send email straight from forms
 gem 'mail_form'
 
-# Authentication engine
-gem 'devise'
-
 # Serve assets the same way in development/production, and send logs
 # to stdout, based on the ideas at http://12factor.net/
 gem 'rails_12factor'
