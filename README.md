@@ -1,6 +1,7 @@
 # Living Wage Calculator
 
-This is the source code for http://livingwage.mit.edu/, under the research and direction of Dr. Amy K. Glasmeier.
+This is the source code for http://livingwage.mit.edu/, produced under the research and direction of 
+Dr. Amy K. Glasmeier.
 
 ## Development
 
