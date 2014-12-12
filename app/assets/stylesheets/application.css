@@ -12,5 +12,6 @@
  *= require bootstrap
  *= require leaflet.css
  *= require custom.css.scss
+ *= require jquery-ui.css
  *= require_tree .
  */
