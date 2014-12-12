@@ -70,7 +70,7 @@ group :development, :test do
   gem 'rspec-rails'
 
   # DSL for browser based testing
-  gem 'capybara', '1.1.2'
+  gem 'capybara'
 
   # Test object factory
   gem 'factory_girl_rails'
