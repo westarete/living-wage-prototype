@@ -15,7 +15,7 @@ gem 'pg'
 gem 'haml', '~> 4.0.5'
 
 # Alternate stylesheet template language
-gem 'sass-rails',   '~> 3.2.3'
+gem 'sass-rails', '~> 3.2.3'
 
 # Bootstrap, compatible with sass templates
 gem 'bootstrap-sass', '2.1'
