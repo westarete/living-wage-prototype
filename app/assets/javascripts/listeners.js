@@ -778,7 +778,7 @@ $(document).ready(function () {
       .attr("y", 98)
       .text("Highest Share")
 
-  d3.json("../assets/us.js", function(error, us) {
+  d3.json("../../assets/us.js", function(error, us) {
 
     g.selectAll("path")
         .data(topojson.feature(us, us.objects.states).features)
