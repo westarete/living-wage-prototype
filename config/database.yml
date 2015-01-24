@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: living_wage_development
+  database: living_wage_prototype_development
 
 test: &test
   <<: *default
-  database: living_wage_test
+  database: living_wage_prototype_test
 
 cucumber:
   <<: *test
